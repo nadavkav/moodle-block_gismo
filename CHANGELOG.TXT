@@ -1,0 +1,71 @@
+Release 3.1.1 (2013-06-18)
+- Fix: Removed actions "delete post", "update post" and "delete discussion" from the write counter in forum views
+
+Release 3.1 (2013-06-10)
+- Update: compatible with Moodle 2.3.x & 2.4.x & 2.5.x
+- Update: jquery 1.10.0
+- Update: jquery-ui 1.10.3
+- Update: jqplot 1.0.8r1250
+- Fix: Renamed capabilities track-user in trackuser & track-teacher in trackteacher
+- Fix: Renamed Assignment in Assignment 2.2
+- Fix: Solved wiki error on user details
+- Fix: Manual export data fixed some minor bugs
+- Fix: Solved bug on sum of accesses in some charts if gismo exporter run more then once a day
+- Fix: Removed course 1 (sitehome) from gismo data exporter
+- Fix: Solved overlay problem of menu on Chrome
+- New: Added a new chart for new assignment type (available since moodle 2.3)
+- New: Created block settings page
+- New Setting: it's now possible to protect with a password the page for manual export -> lib/gismo/server_side/export_data.php. It can be modified in gismo block settings
+- New Setting: records_limit can be modified in gismo block settings
+- New Setting: run_inf & run_sup can be modified in gismo block settings (run gismo exporter from - until)
+- New Setting: hours_from_last_run can be modified in gismo block settings (run gismo exporter only after X hours)
+- New Setting: debug mode -> print debug messages during export can be modified in gismo block settings
+- New Setting: admin can select if gismo cron has to export data for all courses or only for courses with a block gismo instance (gismo report tool link will be available next "data exporter" execution) 
+- New Setting: admin can select if they want to enable students to see reports via gismo block
+
+Release 3.0.1 beta (2012-05-18)
+- Interface localized with Moodle native approach
+
+Release 3.0.0 beta (2011-11-25)
+- Update: jquery 1.6.4
+- Update: jquery-ui 1.8.16
+- Update: jqplot 1.0.0b2.r1012
+- Fix: assignment scale support
+- Fix: assignments waiting for evaluation appear in a different way from those who do not have any evaluation
+- Fix: quiz grade format set according to the one chosen by the teacher (number of decimals)
+- Fix: memory leaks on client side
+- Fix: chart Y axis better scale
+- Fix: checkbox list + header status consistency
+- Fix: PostgresSQL is now supported
+- New: compatible with Moodle 2.0 or newer
+- New: chats, forums and wikis analysis
+- New: export charts as image
+
+========================= WARNING =========================
+
+Wikis analysis are currently broken due to a moodle bug.
+Further details: http://tracker.moodle.org/browse/MDL-26674
+Seems to be resolved from Moodle version 2.1.6 and 2.2.3 on...
+
+===========================================================
+
+
+Release 2.0.2 (2010-11-30)
+- Update: jquery 1.4.4
+- Update: jquery-ui 1.8.6
+- Fix: assignments without grade are displayed correctly
+- New: option to show/hide hidden items (resources / activities)
+
+
+Release 2.0.1 (2010-09-03)
+- Update: jquery 1.4.2
+- Update: jquery-ui 1.8.4
+- New: remove unsupported analysis from the menu
+- New: display message while processing data to build a new chart 
+- Fix: exporter memory bug
+- Fix: time line start date and end date are now set according to logs 
+- Fix: removed hours & minutes from timeline labels
+
+
+Release 2.0.0 (2010-05-11)
+- First stable release
