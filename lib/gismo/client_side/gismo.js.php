@@ -872,9 +872,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid2, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "read") {
+                                if (this.current_analysis.data[item].context == "write") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                } else if (this.current_analysis.data[item].context == "write") {//Check if Write SUM
+                                } else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
                                 } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
@@ -885,7 +885,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = lines;
-                        prepared_data["genseries"] = new Array({label: 'Read', color: this.get_color("00")}, {label: 'Write', color: "#CCCCCC"});
+                        prepared_data["genseries"] = new Array({label: 'Write', color: this.get_color("00")}, {label: 'Read', color: "#CCCCCC"});
                         prepared_data["xticks"] = xticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 15;
@@ -976,9 +976,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "read") {
+                                if (this.current_analysis.data[item].context == "write") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                }  else if (this.current_analysis.data[item].context == "write") {//Check if Write SUM
+                                }  else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
                                 } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
@@ -989,7 +989,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = lines;
-                        prepared_data["genseries"] = new Array({label: 'Read', color: this.get_color("00")}, {label: 'Write', color: "#CCCCCC"});
+                        prepared_data["genseries"] = new Array({label: 'Write', color: this.get_color("00")}, {label: 'Read', color: "#CCCCCC"});
                         prepared_data["xticks"] = xticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 15;
