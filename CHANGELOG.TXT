@@ -1,3 +1,12 @@
+Release 3.1.2 (2013-09-30)
+- Thanks to Mitsuhiro Yoshida for japanese translation
+- Thanks to Nadav Kavalerchik for hebrew translation
+- Fix: Added capability block/gismo:trackteacher to Manager role
+- Thanks to Corbière Alain for the following fix:
+  Inconsistency of color choices on forums,wiki,chat charts
+  Before: grey = write & red = read
+  Now: red = write & grey = read
+
 Release 3.1.1 (2013-06-18)
 - Fix: Removed actions "delete post", "update post" and "delete discussion" from the write counter in forum views
 
