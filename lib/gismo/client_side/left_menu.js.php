@@ -17,6 +17,8 @@ function left_menu(g) {
     // current visible list
     this.visible_list;
     
+    this.resources_list_names= {"book":"<?php print_string('modulename','book'); ?>","page":"<?php print_string('modulename','page'); ?>","folder":"<?php print_string('modulename','folder'); ?>","resource":"<?php print_string('modulename','resource'); ?>","url":"<?php print_string('modulename','url'); ?>","imscp":"<?php print_string('modulename','imscp'); ?>"};
+     
     // lists
     // this field is a javascript object that provides information for the supported lists of items such as icon & tooltip
     this.lists = {
@@ -232,7 +234,84 @@ function left_menu(g) {
             'lists': ['wikis'],
             'default': 0,
             'details': []
-        }
+        },
+        // Completion -> assignments
+        'teacher@completion-assignments': {
+            'lists': ['users', 'assignments'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-assignments': {
+            'lists': ['assignments'],
+            'default': 0,
+            'details': []
+        },
+        // Completion -> assignments22
+        'teacher@completion-assignments22': {
+            'lists': ['users', 'assignments22'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-assignments22': {
+            'lists': ['assignments22'],
+            'default': 0,
+            'details': []
+        },
+        // Completion -> chats
+        'teacher@completion-chats': {
+            'lists': ['users', 'chats'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-chats': {
+            'lists': ['chats'],
+            'default': 0,
+            'details': []
+        },
+        // Completion -> forums
+        'teacher@completion-forums': {
+            'lists': ['users', 'forums'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-forums': {
+            'lists': ['forums'],
+            'default': 0,
+            'details': []
+        },        
+        // Completion -> quizzes
+        'teacher@completion-quizzes': {
+            'lists': ['users', 'quizzes'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-quizzes': {
+            'lists': ['quizzes'],
+            'default': 0,
+            'details': []
+        },
+        // Completion -> resources
+        'teacher@completion-resources': {
+            'lists': ['users', 'resources'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-resources': {
+            'lists': ['resources'],
+            'default': 0,
+            'details': []
+        },
+        // Completion -> wikis
+        'teacher@completion-wikis': {
+            'lists': ['users', 'wikis'],
+            'default': 0,
+            'details': []
+        },
+        'student@completion-wikis': {
+            'lists': ['wikis'],
+            'default': 0,
+            'details': []
+        }           
     };
     
     // lists methods
@@ -401,17 +480,67 @@ function left_menu(g) {
                             )
                     )
                 );
+                var oldtype; //Used for resources type
+                var typename; //Name of resources type (language difference)
+                
                 // add items checkboxes
-                for (var k=0; k<this.gismo.static_data[item].length; k++) {
+                for (var k=0; k<this.gismo.static_data[item].length; k++) {                
                     if (this.gismo.is_item_visible(this.gismo.static_data[item][k])) {
+                        if(this.gismo.static_data[item][k]['type']!==undefined){ //ONLY RESOURCES HAVE TYPE ATTRIBUTE
+                             
+                            if(oldtype == undefined || oldtype != this.gismo.static_data[item][k]['type']){ //Check if new type then we must print the TYPE instead of the element
+                                oldtype = this.gismo.static_data[item][k]['type'];
+                                typename=this.resources_list_names[oldtype];
+                                cb_item = $('<input></input>').attr("type", "checkbox");
+                                cb_item.attr("value", oldtype);                         
+                                cb_item.attr("name", oldtype);
+                                cb_item.attr("id", oldtype);
+                                cb_item.prop("checked", true);
+                                cb_item.addClass("cb_element");
+                                cb_item.bind("click", {}, function (event) {
+                                    item_value= $(this).prop('checked');//get attribute checked -> true or false
+                                    
+                                    $("input:checkbox[value^="+this.name+"-]").each(function(element){  //get all elements with this type
+                                        $(this).prop('checked', item_value);  //Set attribute checked -> true or false
+                                    });
+                                    
+                                    // manage global checkbox
+                                    var selector = '#resources_list input[id!=resources_cb_control]:checkbox'; //get all checkboxes in resources_list except of resources_cb_control
+                                    var global_checked = ($(selector).length === $(selector + ":checked").length) ? true : false;
+                                    $('input#resources_cb_control').prop('checked', global_checked);
+                                    
+                                    // update chart
+                                    if (lm.gismo.current_analysis.plot != null && lm.gismo.current_analysis.plot != undefined) {
+                                        lm.gismo.update_chart();
+                                    } 
+                                    
+                                }); 
+                                cb_label = $("<label style='float: left;'></label>")
+                                        .html(typename);
+                                cb_label.addClass("cb_label_type");
+                                cb_label.prepend(cb_item);
+                                element.append(
+                                    $("<div></div>").addClass("cb")
+                                    .append(cb_label)                                    
+                                );
+                            }
+                        }   
                         cb_item = $('<input></input>').attr("type", "checkbox");
                         // cb_item.attr("value", this.gismo.static_data[item][k].id);
-                        cb_item.attr("value", this.get_unique_id(item, this.gismo.static_data[item][k], "id", "type"));
+                        cb_item.attr("value", this.get_unique_id(item, this.gismo.static_data[item][k], "id", "type"));                         
                         cb_item.attr("name", item + "_cb[" + this.gismo.static_data[item][k].id + "]");
                         cb_item.attr("id", item + "_cb_" + this.gismo.static_data[item][k].id);
                         cb_item.prop("checked", true);
                         cb_item.addClass("cb_element");
                         cb_item.bind("click", {list: item}, function (event) {
+                        
+                            if(this.value.split("-")[0]!==undefined){ //ONLY RESOURCES HAVE TYPE ATTRIBUTE - update type checkbox value
+                                 // manage type checkbox
+                                 var selector = '#'+event.data.list+'_list input[value^='+this.value.split("-")[0]+'-]:checkbox'; //get all checkboxes in the type list
+                                 var global_checked = ($(selector).length === $(selector + ":checked").length) ? true : false;
+                                 $('input#' + this.value.split("-")[0]).prop('checked', global_checked);
+                            }
+                            
                             // if alt key has been pressed then this is the only one selected
                             if (event.altKey) {
                                 $('#' + event.data.list + '_list input:checkbox').prop('checked', false);
@@ -420,12 +549,13 @@ function left_menu(g) {
                             // manage global cb
                             var selector = '#' + event.data.list + '_list input[id!=' + event.data.list + '_cb_control]:checkbox';
                             var global_checked = ($(selector).length === $(selector + ":checked").length) ? true : false;
-                            $('input#' + event.data.list + '_cb_control').prop('checked', global_checked);
+                            $('input#' + event.data.list + '_cb_control').prop('checked', global_checked);     
+                            
                             // update chart
                             if (lm.gismo.current_analysis.plot != null && lm.gismo.current_analysis.plot != undefined) {
                                 lm.gismo.update_chart();
                             }
-                        });
+                        });                        
                         cb_label = $("<label style='float: left;'></label>")
                                         .html(this.gismo.static_data[item][k].name)
                                         .mouseover(function () {

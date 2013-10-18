@@ -1,3 +1,23 @@
+Release 3.2 (2013-10-15)
+- New: Added books to resources list
+- New: Reorganised resources list by type
+- New: Added completion menu (all completion charts will go in this menu)
+- New: Added resources completion chart
+- New: Added quizzes completion chart
+- New: Added wikis completion chart
+- New: Added assignments completion chart
+- New: Added assignments 2.2 completion chart
+- New: Added chats completion chart
+- New: Added forums completion chart
+- Reorganised gismo main page
+- Fix: Solved some minor bugs and translation or missing strings
+- Fix: Solved bug on assignments student view
+- Thanks to Saad Saleem for the help on the completion charts
+- Thanks to Mitsuhiro Yoshida for japanese translation
+- Thanks to Elisabetta Frick for french translation
+- Thanks to Riccardo Mazza for italian translation
+- Thanks to Anna Pico Schwendener for german translation
+
 Release 3.1.2 (2013-09-30)
 - Thanks to Mitsuhiro Yoshida for japanese translation
 - Thanks to Nadav Kavalerchik for hebrew translation

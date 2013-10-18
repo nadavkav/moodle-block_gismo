@@ -188,4 +188,47 @@ $string['student_reporting'] = '学生レポート';
 $string['student_reporting_desc'] = 'この設定を有効にした場合、学生が自分のログを閲覧することができます。';
 $string['student_reporting_enabled'] = '有効';
 $string['student_reporting_disabled'] = '無効';
+
+//Completion
+$string['completion'] = '完了';
+$string['completion_quiz_menu'] = '小テスト';
+$string['completion_quiz_chart_title'] = '小テスト完了';
+$string['completion_assignment_menu'] = '課題';
+$string['completion_assignment_chart_title'] = '課題完了';
+$string['completion_assignment22_menu'] = '課題2.2';
+$string['completion_assignment22_chart_title'] = '課題2.2完了';
+$string['completion_resource_menu'] = 'リソース';
+$string['completion_resource_chart_title'] = 'リソース完了';
+$string['completion_forum_menu'] = 'フォーラム';
+$string['completion_forum_chart_title'] = 'フォーラム完了';
+$string['completion_wiki_menu'] = 'Wiki';
+$string['completion_wiki_chart_title'] = 'WIki完了';
+$string['completion_chat_menu'] = 'チャット';
+$string['completion_chat_chart_title'] = 'チャット完了';
+$string['completion_completed_on_tooltip'] = '完了:';
+$string['completion_completed_on_tooltip_months'] = '[\'1月\',\'2月\',\'3月\',\'4月\',\'5月\',\'6月\',\'7月\',\'8月\',\'9月\',\'10月\',\'11月\',\'12月\']';
+
+//Added missing string 08.10.2013
+$string['err_missing_data'] = '処理するデータが存在しないため、分析を開始できません!';
+$string['err_no_data'] = 'データなし';
+$string['err_cannot_extract_data'] = 'サーバからデータを抽出できません!';
+$string['err_unknown'] = '不明なエラー!';
+
+//Homepage text
+$string['homepage_title'] = 'GISMOへようこそ';
+$string['homepage_processing_data_wait'] = 'データ処理中、お待ちください!';
+$string['homepage_processing_data'] = 'データ処理中';
+$string['homepage_text'] = 'GISMOはMoodleコース管理システムからトラッキングデータを抽出するグラフィカルインタラクティブ学生モニタリングおよびトラッキングシステムです。GISMOはコースインストラクタおよび学生が学習活動の概要を取得できるよう、有用なグラフ表現も生成します。<br />GISMOの使用を開始するには、このページのトップにあるメニューの1つを選択してください。<br />あなたがチュートリアルを閲覧したい場合、メニュー「ヘルプ > チュートリアル」をクリックしてください。';
+$string['homepage_charts_preview_title'] = 'チャットプレビュー';
+$string['homepage_chart_activities_assignments_overview'] = '活動: 課題概要';
+$string['homepage_chart_resources_access_overview'] = 'リソース: アクセス概要';
+$string['homepage_chart_resources_students_overview'] = 'リソース: 学生概要';
+$string['homepage_chart_students_access_overview_on_resources'] = '学生: リソースにおけるアクセス概要';
+$string['homepage_chart_students_access_overview'] = '学生: アクセス概要';
+$string['homepage_chart_students_accesses_by_students'] = '学生: 学生によるアクセス';
+
+$string['hide_menu'] = 'メニューを隠す';
+$string['show_menu'] = 'メニューを表示する';
+$string['show_details'] = '詳細を表示する';
+
 ?>

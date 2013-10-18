@@ -10,7 +10,7 @@
     require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
 ?>
-function gismo(config, srv_data, static_data, course_start_time, current_time, actor) {
+function gismo(config, srv_data, static_data, course_start_time, current_time, actor, completionenabled) { //Added completionenabled
     // html elements ids
     // header
     this.header_id = 'header';
@@ -34,6 +34,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
     
     // fields
     this.actor = actor;
+    this.completionenabled = completionenabled; //Completion on SITE & COURSE
     this.srv_data = srv_data;
     this.static_data = static_data;
     this.course_start_time = course_start_time;
@@ -206,7 +207,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                 },
             error:
                 function(error) {
-                    response = {error: '1', message: 'Cannot extract data from server!'};    
+                    response = {error: '1', message: '<?php print_string('err_cannot_extract_data', 'block_gismo'); ?>'};    
                 }
         });
         
@@ -215,7 +216,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             if (response['message'] != undefined) {
                 this.show_error(response['message']);
             } else {
-                this.show_error('Unknown error!');    
+                this.show_error('<?php print_string('err_unknown', 'block_gismo'); ?>');    
             }    
         } else {
             // save data
@@ -277,6 +278,19 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         // return colors
         return colors;    
     };
+    
+    //Convert unixtime to time
+    this.timeConverter = function (UNIX_timestamp){
+    var a = new Date(UNIX_timestamp*1000);
+    var months = <?php print_string('completion_completed_on_tooltip_months', 'block_gismo'); ?>;
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var time = date+' '+month+' '+year ;
+        return time;
+    }
+
+
     
     // prepare data
     this.prepare_data = function () {
@@ -998,7 +1012,118 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["y_label"] = "<?php print_string('actions_on', 'block_gismo'); ?>" + this.current_analysis.type; // "Actions on " + this.current_analysis.type;                        
                     }
                 }
+                break;            
+            case 'teacher@completion-assignments':
+            case 'student@completion-assignments':                
+                var completion_type = 'assignments';
+                var completion_chart_y_label = "<?php print_string('assignments', 'block_gismo'); ?>";     
+            case 'teacher@completion-assignments22':
+            case 'student@completion-assignments22':  
+                if(typeof completion_type === 'undefined'){         
+                    var completion_type = 'assignments22';
+                    var completion_chart_y_label = "<?php print_string('assignments22', 'block_gismo'); ?>";   
+                }
+            case 'teacher@completion-resources':
+            case 'student@completion-resources':
+                if(typeof completion_type === 'undefined'){                    
+                    var completion_type = 'resources';
+                    var completion_chart_y_label = "<?php print_string('resources', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-chats':
+            case 'student@completion-chats':
+                if(typeof completion_type === 'undefined'){                    
+                    var completion_type = 'chats';
+                    var completion_chart_y_label = "<?php print_string('chats', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-wikis':
+            case 'student@completion-wikis':
+                if(typeof completion_type === 'undefined'){                    
+                    var completion_type = 'wikis';
+                    var completion_chart_y_label = "<?php print_string('wikis', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-forums':
+            case 'student@completion-forums':
+                if(typeof completion_type === 'undefined'){                    
+                    var completion_type = 'forums';
+                    var completion_chart_y_label = "<?php print_string('forums', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-quizzes':
+            case 'student@completion-quizzes':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'quizzes';
+                    var completion_chart_y_label = "<?php print_string('quizzes', 'block_gismo'); ?>";
+                }
+                
+                if (this.static_data["users"].length > 0 && this.static_data[completion_type].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
+                    // xticks / yticks
+                    for (item in this.static_data["users"]) {
+                        uid = this.lm.get_unique_id("users", this.static_data["users"][item], "id", "type");
+                        if ($.inArray(uid, selected_items["users"]) != -1) {
+                            xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
+                            xticks_pos.push(uid);
+                        }
+                    }
+                    for (item in this.static_data[completion_type]) {
+                        uid = this.lm.get_unique_id(completion_type, this.static_data[completion_type][item], "id", "type");
+                        if ($.inArray(uid, selected_items[completion_type]) != -1) {
+                            yticks.unshift(this.util.intelligent_substring(this.static_data[completion_type][item].name, false));
+                            yticks_pos.unshift(uid);
+                        }    
+                    }
+                    // generate series only for selected users / completion_type
+                    colors = this.get_series_colors();                    
+                    for (item in this.current_analysis.data) {
+                        uid = this.lm.get_unique_id("users", this.current_analysis.data[item], "userid");
+                        if(completion_type == 'resources'){ //if resources check the correct type for resources unique_id
+                            uid2 = this.lm.get_unique_id(this.current_analysis.data[item]["type"], this.current_analysis.data[item], "item_id");
+                        }else{
+                            uid2 = this.lm.get_unique_id(completion_type, this.current_analysis.data[item], "item_id");
+                        }
+                        if ($.inArray(uid, selected_items["users"]) != -1 &&
+                            $.inArray(uid2, selected_items[completion_type]) != -1) {                            
+                            // evaluate serie
+                            num_serie = 0;                                                        
+                            // lines
+                            if (lines[num_serie] == undefined) {
+                                lines[num_serie] = new Array();
+                                genseries[num_serie] = {color: colors[num_serie], markerOptions:{style: "filledSquare" }};
+                            }
+                            lines[num_serie].push(
+                                new Array(
+                                    $.inArray(uid, xticks_pos) + 1,
+                                    $.inArray(uid2, yticks_pos) + 1,
+                                    (parseInt(this.current_analysis.data[item].completionstate) == 1) ? "<?php print_string('completion_completed_on_tooltip', 'block_gismo'); ?>" + this.timeConverter(this.current_analysis.data[item].timemodified) : "",
+                                    this.current_analysis.data[item].completionstate)
+                            );       
+                        }    
+                    }                                        
+                    // keep only used lines
+                    used_lines = new Array();
+                    used_genseries = new Array();
+                    if (lines[0] != undefined && genseries[0] != undefined) { //Check if exist insert values, if not empty array
+                        used_lines.push(lines[0]);
+                        used_genseries.push(genseries[0]); 
+                    }
+                   
+                    
+                    // set prepared data (at least on resource must have been selected)
+                    if (used_lines.length > 0 && xticks.length > 0) {
+                        prepared_data["lines"] = used_lines;
+                        prepared_data["genseries"] = used_genseries;
+                        prepared_data["xticks"] = xticks;
+                        prepared_data["yticks"] = yticks;
+                        prepared_data["xticks_num"] = xticks.length;
+                        prepared_data["xticks_min_len"] = 18;
+                        prepared_data["yticks_num"] = yticks.length;
+                        prepared_data["yticks_min_len"] = 18;
+                        prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
+                        prepared_data["y_label"] = completion_chart_y_label;
+                    }       
+                    
+                }
                 break;
+                
+             
         }
         
         // save prepared data
@@ -1094,7 +1219,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     .css({margin: "0 5px"})
                     .attr({href: "javascript:void(0);"})
                     .append(
-                        $("<img></img>").attr({src: "images/disk.png", alt: "Export chart as image", "title": "Export chart as image"}).css({"margin-top": "6px"})
+                        $("<img></img>").attr({src: "images/disk.png", alt: "<?php print_string('export_chart_as_image', 'block_gismo'); ?>", "title": "<?php print_string('export_chart_as_image', 'block_gismo'); ?>"}).css({"margin-top": "6px"}) //8.10.2013 Added translation
                     )
                     .click(
                         function () {
@@ -1109,8 +1234,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             // update status
             this.current_analysis.status = false;
             // show error
-            this.show_error("Cannot proceed with the analysis beacuse there isn't any data to work on!", "No data");       
-        } else {
+            this.show_error("<?php print_string('err_missing_data', 'block_gismo'); ?>", "<?php print_string('err_no_data', 'block_gismo'); ?>");  //8.10.2013 Added translation     
+        } else {        
             // update status
             this.current_analysis.status = true;
             // set plot dimensions
@@ -1349,10 +1474,24 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                 case 'teacher@resources-students-overview':
                 case 'teacher@assignments22':
                 case 'teacher@assignments':
-                case 'teacher@quizzes':
+                case 'teacher@quizzes':                
                 case 'student@assignments22':                
-                 case 'student@assignments':
-                case 'student@quizzes':
+                case 'student@assignments':
+                case 'student@quizzes':              
+                case 'teacher@completion-quizzes':
+                case 'student@completion-quizzes':             
+                case 'teacher@completion-assignments':
+                case 'student@completion-assignments':          
+                case 'teacher@completion-assignments22':
+                case 'student@completion-assignments22':                         
+                case 'teacher@completion-resources':
+                case 'student@completion-resources':                          
+                case 'teacher@completion-forums':
+                case 'student@completion-forums':                          
+                case 'teacher@completion-chats':
+                case 'student@completion-chats':                          
+                case 'teacher@completion-wikis':
+                case 'student@completion-wikis':
                     var msize = this.get_matrix_entry_side_pixels();
                     var formatString;
                     var yvalues;
@@ -1662,7 +1801,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             },
                         error:
                             function(error) {
-                                response = {error: '1', message: 'Unknown error!'};     
+                                response = {error: '1', message: '<?php print_string('err_unknown', 'block_gismo'); ?>'};     
                             }
                     });
                     // check response for errors
@@ -1670,7 +1809,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if (response['message'] != undefined) {
                             g.show_error(response['message']);
                         } else {
-                            g.show_error('Unknown error!');    
+                            g.show_error('<?php print_string('err_unknown', 'block_gismo'); ?>!');    
                         }    
                     } else {
                         // rebuild left menu
@@ -1770,8 +1909,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         .append($("<legend></legend>").html("Gismo"))
                         .append("<?php print_string('intro_information_about_gismo', 'block_gismo'); ?>")
                         .append($("<p></p>").append($("<ul></ul>")
-                            .append($("<li></li>").append("<?php print_string('gismo_version', 'block_gismo'); ?>: 3.1.2"))
-                            .append($("<li></li>").append("<?php print_string('release_date', 'block_gismo'); ?>: 2013-09-30"))
+                            .append($("<li></li>").append("<?php print_string('gismo_version', 'block_gismo'); ?>: <?php print_string('gismo_version_value', 'block_gismo'); ?>"))
+                            .append($("<li></li>").append("<?php print_string('release_date', 'block_gismo'); ?>: <?php print_string('release_date_value', 'block_gismo'); ?>"))
                         )) 
                     )
                     .append($('<fieldset></fieldset>')
