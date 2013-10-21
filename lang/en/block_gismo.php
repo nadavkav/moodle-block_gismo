@@ -127,7 +127,7 @@ $string['gismo:view'] = "GISMO - Authorization failed";
 
 
 //OTHERS
-$string['welcome'] = "Welcome to GISMO v. 3.1.1";
+$string['welcome'] = "Welcome to GISMO v. 3.2";
 $string['processing_wait'] = "Processing data, please wait!";
 
 //Graphs labels
@@ -240,4 +240,6 @@ $string['homepage_chart_students_access_overview_on_resources']='Students: acces
 $string['homepage_chart_students_access_overview']='Students: accesses overview';
 $string['homepage_chart_students_accesses_by_students']='Students: accesses by students';
 
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='accesses';
 ?>

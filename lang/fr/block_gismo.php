@@ -27,7 +27,7 @@ $string['users'] = 'utilisateur-e-s'; //************
 $string['teachers'] = 'professeur-e-s'; //************
 
 // Students
-$string['students'] = '&Eacute;tudiant-e-s';
+$string['students'] = 'Étudiant-e-s';
 $string['student_accesses'] = 'Acc&egrave;s par les &eacute;tudiant-e-s';
 $string['student_accesses_chart_title'] = '&Eacute;tudiant-e-s : acc&egrave;s par les &eacute;tudiant-e-s';
 $string['student_accesses_overview'] = 'Aperçu des acc&egrave;s';
@@ -51,13 +51,13 @@ $string['assignments'] = 'Devoirs';
 $string['assignments_chart_title'] = 'Activit&eacute;s : aperçu des devoirs';
 $string['assignments22'] = 'Devoirs 2.2';
 $string['assignments22_chart_title'] = 'Activit&eacute;s : aperçu des devoirs 2.2';
-$string['chats'] = 'Discussions';
+$string['chats'] = 'Chats';
 
-$string['chats_over_time'] = 'Discussions &agrave; travers le temps'; //************
+$string['chats_over_time'] = 'Chats &agrave; travers le temps'; //************
 
-$string['chats_chart_title'] = 'Activit&eacute;s : aperçu des discussions';
-$string['chats_ud_chart_title'] = 'Activit&eacute;s : d&eacute;tails des contributions des &eacute;tudiant-e-s aux discussions';
-$string['chats_over_time_chart_title'] = 'Activit&eacute;s : contributions aux discussions &agrave; travers le temps';
+$string['chats_chart_title'] = 'Activit&eacute;s : aperçu des chats';
+$string['chats_ud_chart_title'] = 'Activit&eacute;s : d&eacute;tails des contributions des &eacute;tudiant-e-s aux chats';
+$string['chats_over_time_chart_title'] = 'Activit&eacute;s : contributions aux chats &agrave; travers le temps';
 $string['forums'] = 'Forums';
 
 $string['forums_over_time'] = 'Forums &agrave; travers le temps'; //************
@@ -66,12 +66,12 @@ $string['forums_chart_title'] = 'Activit&eacute;s : aperçu des forums';
 $string['forums_ud_chart_title'] = 'Activit&eacute;s : d&eacute;tails des contributions des &eacute;tudiant-e-s aux forums';
 $string['forums_over_time_chart_title'] = 'Activit&eacute;s : contributions aux forums &agrave; travers le temps';
 
-$string['quizzes'] = 'Questionnaires';
-$string['quizzes_chart_title'] = 'Activit&eacute;s : aperçu des questionnaires';
+$string['quizzes'] = 'Tests';
+$string['quizzes_chart_title'] = 'Activit&eacute;s : aperçu des tests';
 
 $string['wikis'] = 'Wikis';
 
-$string['wikis_over_time'] = 'Wikis over time'; //************
+$string['wikis_over_time'] = 'Wikis à travers le temps'; //************
 
 $string['wikis_chart_title'] = 'Activit&eacute;s : aperçu des wikis';
 $string['wikis_ud_chart_title'] = 'Activit&eacute;s : d&eacute;tails des contributions des &eacute;tudiant-e-s aux wikis';
@@ -119,11 +119,11 @@ $string['gismo:view'] = "GISMO - &Eacute;chec de l\'autorisation";
 
 
 //OTHERS
-$string['welcome'] = "Bienvenue dans GISMO v. 3.1.1";
+$string['welcome'] = "Bienvenue dans GISMO v. 3.2";
 $string['processing_wait'] = "Traitement des donn&eacute;es, veuillez patienter !";
 
 //Graphs labels
-$string['accesses'] = "Acc&egrave;s";
+$string['accesses'] = "Accès";
 $string['timeline'] = "Chronologie";
 $string['actions_on'] = "Actions de ";
 $string['nr_submissions'] = "Nombre de soumissions";
@@ -170,7 +170,7 @@ $string['completion_assignment_chart_title'] = 'Ach&egrave;vement devoirs';
 $string['completion_assignment22_menu'] = 'Devoirs 2.2'; 
 $string['completion_assignment22_chart_title'] = 'Ach&egrave;vement devoirs 2.2'; 
 $string['completion_resource_menu'] = 'Ressources'; 
-$string['completion_resource_chart_title'] = ' ch&egrave;vement ressources'; 
+$string['completion_resource_chart_title'] = 'Ach&egrave;vement ressources'; 
 $string['completion_forum_menu'] = 'Forums'; 
 $string['completion_forum_chart_title'] = 'Ach&egrave;vement forums'; 
 $string['completion_wiki_menu'] = 'Wikis'; 
@@ -181,16 +181,16 @@ $string['completion_completed_on_tooltip'] = 'Achev&eacute; le ';
 $string['completion_completed_on_tooltip_months'] = "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']";
 
 //Added missing string 08.10.2013
-$string['err_missing_data'] ='Il est impossible de proc&eacute;der avec l&#39;analyse car il n&#39;y a aucune donn&eacute;e disponible!'; 
+$string['err_missing_data'] ='Il est impossible de proc&eacute;der &agrave; l&#39;analyse car il n&#39;y a aucune donn&eacute;e disponible!'; 
 $string['err_no_data'] ='Pas de donn&eacute;es'; 
-$string['err_cannot_extract_data'] ='Il est impossible d&#39;extraire des donn&eacute;es  du serveur!'; 
+$string['err_cannot_extract_data'] ='Il est impossible d&#39;extraire des donn&eacute;es du serveur!'; 
 $string['err_unknown'] ='Erreur inconnue!';
 
 //Homepage text
 $string['homepage_title']='Bienvenus sur GISMO'; 
 $string['homepage_processing_data_wait']='Traitement de donn&eacute;es , attendre svp!'; 
 $string['homepage_processing_data']= 'Traitement de donn&eacute;es'; 
-$string['homepage_text']='GISMO est un syst&egrave;me graphique interactif servant d\'outil de contr&ocirc;le et de suivi d\'&eacute;tudiant, celui-ci extrait les donn&eacute;es de suivi &agrave; partir du syst&egrave;me de gestion de cours Moodle. Il produit &eacute;galement des repr&eacute;sentations graphiques tr&egrave;s utiles qui peuvent &ecirc;tre examin&eacute;es par les enseignants et les &eacute;tudiants afin d\'obtenir un aperçu g&eacute;n&eacute;ral des activit&eacute;s d\'apprentissage.<br /> S\'il vous pla&icirc;t s&eacute;lectionner un des menus en haut de cette page pour commencer &agrave; utiliser GISMO.<br /> Si vous souhaitez regarder au tutoriel s\'il vous pla&icirc;t cliquer sur le menu "Aide" > "Tutorial".';
+$string['homepage_text']='GISMO est un syst&egrave;me graphique interactif servant d\'outil de contr&ocirc;le et de suivi d\'&eacute;tudiant, celui-ci extrait les donn&eacute;es de suivi &agrave; partir du syst&egrave;me de gestion de cours Moodle. Il produit &eacute;galement des repr&eacute;sentations graphiques tr&egrave;s utiles qui peuvent &ecirc;tre examin&eacute;es par les enseignants et les &eacute;tudiants afin d\'obtenir un aperçu g&eacute;n&eacute;ral des activit&eacute;s d\'apprentissage.<br /> S\'il vous pla&icirc;t s&eacute;lectionner un des menus en haut de cette page pour commencer &agrave; utiliser GISMO.<br />Si vous souhaitez regarder le tutoriel il vous suffit de cliquer sur le menu "Aide" > "Tutorial".';
 
 $string['hide_menu']='Cacher menu';
 $string['show_menu']='Afficher menu';
@@ -204,4 +204,6 @@ $string['homepage_chart_students_access_overview_on_resources']='&Eacute;tudiant
 $string['homepage_chart_students_access_overview']='&Eacute;tudiant-e-s: aperçu des acc&egrave;s';
 $string['homepage_chart_students_accesses_by_students']='&Eacute;tudiant-e-s: acc&egrave;s par les &eacute;tudiant-e-s';
 
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='acc&egrave;s';
 ?>

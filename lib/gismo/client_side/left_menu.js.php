@@ -428,25 +428,31 @@ function left_menu(g) {
 		switch (item) {
 			case 'users':
 				lab = "<?php print_string('students', 'block_gismo'); ?>";
-			break;
+                                break;
 			case 'teachers': 
 				lab = "<?php print_string('teachers', 'block_gismo'); ?>";  
-			break;  
+                                break;  
 			case 'resources':
 				lab = "<?php print_string('resources', 'block_gismo'); ?>";
-			break;
+                                break;
                         case 'assignments':
 				lab = "<?php print_string('assignments', 'block_gismo'); ?>";
-			break;
+                                break;
 			case 'assignments22':
 				lab = "<?php print_string('assignments22', 'block_gismo'); ?>";
-			break;
+                                break;
 			case 'forums':
 				lab = "<?php print_string('forums', 'block_gismo'); ?>";
-			break;
+                                break;
 			case 'wikis':
 				lab = "<?php print_string('wikis', 'block_gismo'); ?>";
-			break;
+                                break;
+                        case 'chats':
+				lab = "<?php print_string('chats', 'block_gismo'); ?>";
+                                break;
+                        case 'quizzes':
+				lab = "<?php print_string('quizzes', 'block_gismo'); ?>";
+                                break;
 			default:
 				lab = "<?php print_string('items', 'block_gismo'); ?>";
 		}

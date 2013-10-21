@@ -10,7 +10,7 @@ Release 3.2 (2013-10-15)
 - New: Added chats completion chart
 - New: Added forums completion chart
 - Reorganised gismo main page
-- Fix: Solved some minor bugs and translation or missing strings
+- Fix: Solved some minor bugs and translation of missing strings
 - Fix: Solved bug on assignments student view
 - Thanks to Saad Saleem for the help on the completion charts
 - Thanks to Mitsuhiro Yoshida for japanese translation

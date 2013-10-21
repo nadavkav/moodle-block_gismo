@@ -1301,7 +1301,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             sizeAdjust: 2, 
                             tooltipLocation: 'n',
                             tooltipOffset: 2,
-                            formatString:'<div class="charts_tooltip">%s, <span class="hidden">%s</span>%s accesses</div>'
+                            formatString:'<div class="charts_tooltip">%s, <span class="hidden">%s</span>%s <?php print_string('accesses_tooltip', 'block_gismo'); ?></div>'
                         }
                     });
                     break;
