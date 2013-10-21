@@ -14,7 +14,7 @@ Release 3.2 (2013-10-15)
 - Fix: Solved bug on assignments student view
 - Thanks to Saad Saleem for the help on the completion charts
 - Thanks to Mitsuhiro Yoshida for japanese translation
-- Thanks to Elisabetta Frick for french translation
+- Thanks to Elisabetta Frick and Alain Corbière for french translation
 - Thanks to Riccardo Mazza for italian translation
 - Thanks to Anna Pico Schwendener for german translation
 
