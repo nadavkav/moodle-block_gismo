@@ -163,7 +163,7 @@ $string['confirm_exiting'] = 'Sei sicuro di voler uscire da Gismo?';
 
 //Settings
 $string['manualexportpassword'] = 'Password per l\'export dei dati manuale';
-$string['manualexportpassworddesc'] = 'Con questo pametro impostiamo la password per lo script export_data.php, in modo tale che per essere eseguito sia necessario introdurre la password ed evitare azioni illecite, mediante il seguente URL:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />Se questo campo &egrave; vuoto, non &egrave; necessario nessuna password.';
+$string['manualexportpassworddesc'] = 'Con questo pametro impostiamo la password per lo script export_data.php, in modo tale che per essere eseguito sia necessario introdurre la password ed evitare azioni illecite, mediante il seguente URL:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />Se questo campo &egrave; vuoto, non &egrave; necessario nessuna password.';
 $string['manualexportpassworderror'] = 'Password per l\'export dei dati per GISMO mancante o errata';
 $string['export_data_limit_records'] = 'Limita il numero di record nelle query SQL per l\'analisi dei dati';
 $string['export_data_limit_recordsdesc'] = 'Limita il numero di record nelle query SQL per l\'analisi dei dati nel processo di export di Gismo (GISMOdata_manager.php).<br /> Non modificare questo valore se non si sa bene cosa si sta facendo.';

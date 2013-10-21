@@ -165,7 +165,7 @@ $string['confirm_exiting'] = '本当にGismoを終了してもよろしいです
 
 //Settings
 $string['manualexportpassword'] = '手動エクスポートパスワード';
-$string['manualexportpassworddesc'] = 'この設定により、パスワードなしでは下記URIからexport_data.phpスクリプトを実行できないようになります。:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />空白の場合、パスワードは要求されません。';
+$string['manualexportpassworddesc'] = 'この設定により、パスワードなしでは下記URIからexport_data.phpスクリプトを実行できないようになります。:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />空白の場合、パスワードは要求されません。';
 $string['manualexportpassworderror'] = 'GISMO手動エクスポートパスワードが設定されていないか間違っています。';
 $string['export_data_limit_records'] = 'SQLクエリのレコード制限';
 $string['export_data_limit_recordsdesc'] = 'データエクスポート中、それぞれのクエリ (GISMOdata_manager.php内) に対して選択されるレコード数を制限します。

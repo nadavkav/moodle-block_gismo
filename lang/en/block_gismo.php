@@ -171,7 +171,7 @@ $string['confirm_exiting'] = 'Do you really want to exit Gismo?';
 
 //Settings
 $string['manualexportpassword'] = 'Manual export password';
-$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
+$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
 $string['manualexportpassworderror'] = 'GISMO manual export password missing or wrong';
 $string['export_data_limit_records'] = 'Limit Records in SQL queries';
 $string['export_data_limit_recordsdesc'] = 'Limit the number of records selected for each query during data export (in GISMOdata_manager.php).
