@@ -1092,7 +1092,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 new Array(
                                     $.inArray(uid, xticks_pos) + 1,
                                     $.inArray(uid2, yticks_pos) + 1,
-                                    (parseInt(this.current_analysis.data[item].completionstate) == 1) ? "<?php print_string('completion_completed_on_tooltip', 'block_gismo'); ?>" + this.timeConverter(this.current_analysis.data[item].timemodified) : "",
+                                    ((parseInt(this.current_analysis.data[item].completionstate) == 1) || (parseInt(this.current_analysis.data[item].completionstate) == 2)) ? "<?php print_string('completion_completed_on_tooltip', 'block_gismo'); ?>" + this.timeConverter(this.current_analysis.data[item].timemodified) : "Failed", //completionstate = 1 OR 2 -> complete AND completionstate = 3 -> failed
                                     this.current_analysis.data[item].completionstate)
                             );       
                         }    

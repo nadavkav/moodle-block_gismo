@@ -616,15 +616,20 @@ switch ($query) {
         $result->links = null;
         // chart data
 
+        //Completed when:
+        //COMPLETION_COMPLETE = 1
+        //COMPLETION_COMPLETE_PASS = 2
+        //COMPLETION_COMPLETE_FAIL = 3
+        
         $qry = "
                 SELECT cmc.id as cmc_id, cm.instance as item_id, cmc.completionstate as completionstate, cmc.timemodified as timemodified, cmc.userid as userid, m.name as type
             FROM mdl_course_modules_completion cmc
             INNER JOIN mdl_course_modules cm ON cmc.coursemoduleid = cm.id
             INNER JOIN mdl_modules m ON cm.module = m.id
-            WHERE cmc.completionstate = 1
+            WHERE (cmc.completionstate = 1 OR cmc.completionstate = 2)
             AND (m.name = '" . $itemtype . "')
             AND cm.course = " . intval($course_id) . " AND cmc.timemodified BETWEEN " . $from . " AND " . $to;
-
+        
         // need to filter on user id ?
         if ($query === "student@completion-assignments" || $query === "student@completion-assignments22" || $query === "student@completion-chats" || $query === "student@completion-forums" ||  $query === "student@completion-wikis" || $query === "student@completion-quizzes" || $query === "student@completion-resources") {
             $qry .= " AND cmc.userid = " . $current_user_id;
