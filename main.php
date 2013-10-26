@@ -62,10 +62,11 @@ $gismo_static_data->init();
                 static_data['course_full_name'] = '<?php echo str_replace("'", "\\'", $gismo_static_data->fullname); ?>';
                 var course_start_time = <?php echo $gismo_static_data->start_time; ?>;
                 var current_time = <?php echo $gismo_static_data->end_time; ?>;
-                var actor = '<?php echo $actor; ?>';
-
+                var actor = '<?php echo $actor; ?>';                
+                var completionenabled = <?php if($CFG->enablecompletion && $course->enablecompletion){echo "true";}else{ echo "false";}  ?>; //Added completionenabled  
+                
                 // gismo instance
-                var g = new gismo(config, srv_data, static_data, course_start_time, current_time, actor);
+                var g = new gismo(config, srv_data, static_data, course_start_time, current_time, actor,completionenabled); //Added completionenabled
                 
                 // initialize application
                 $(document).ready(function() {

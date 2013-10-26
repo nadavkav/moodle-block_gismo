@@ -120,7 +120,7 @@ $string['gismo:view'] = "GISMO - Autorisierung nicht möglich";
 
 
 //OTHERS
-$string['welcome'] = "Willkommen zu GISMO v. 3.1.1";
+$string['welcome'] = "Willkommen zu GISMO v. 3.2";
 $string['processing_wait'] = "Die Daten werden aufbereitet, bitte warten Sie!";
 
 //Graphs labels
@@ -161,5 +161,51 @@ $string['authors'] = 'Autoren ';
 $string['contact_us']= 'Bei Fragen oder wenn Sie irgendwelche Fehler melden möchten, wenden Sie sich bitte an die Autoren unter den nachstehenden Adressen: ';
 $string['close'] = 'Schliessen';
 $string['confirm_exiting'] = 'Möchten Sie Gismo wirklich verlassen?';
+
+
+//Ende
+$string['completion'] = 'Abschluss';
+$string['completion_quiz_menu'] = 'Quizfragen';
+$string['completion_quiz_chart_title'] = 'Abschluss der Quizfragen';
+$string['completion_assignment_menu'] = 'Aufgaben';
+$string['completion_assignment_chart_title'] = 'Abschluss der Aufgaben';
+$string['completion_assignment22_menu'] = 'Aufgaben 2.2';
+$string['completion_assignment22_chart_title'] = 'Abschluss der Aufgaben 2.2';
+$string['completion_resource_menu'] = 'Ressourcen';
+$string['completion_resource_chart_title'] = 'Abschluss der Ressourcen';
+$string['completion_forum_menu'] = 'Forums';
+$string['completion_forum_chart_title'] = 'Abschluss der Forums';
+$string['completion_wiki_menu'] = 'Wikis';
+$string['completion_wiki_chart_title'] = 'Abschluss der Wikis';
+$string['completion_chat_menu'] = 'Chats';
+$string['completion_chat_chart_title'] = 'Abschluss der Chats';
+$string['completion_completed_on_tooltip'] = 'Beendet am ';
+$string['completion_completed_on_tooltip_months'] = "['Jan','Feb','M&auml;r','Apr','Mai','Jun','Jul','Aug','Sep','Oct','Nov','Dez']";
+
+// Fehlende Reihen hinzugefügt am 08.10.2013
+$string['err_missing_data'] ='Kann nicht mit der Analyse fortfahren, weil keine Daten zur Verf&uuml;gung stehen!';
+$string['err_no_data'] ='Keine Daten';
+$string['err_cannot_extract_data'] ='Kann nicht auf Serverdaten zugreifen!';
+$string['err_unknown'] ='Unbekannter Fehler!';
+
+//Homepage Text
+$string['homepage_title']='Wilkommen bei GISMO';
+$string['homepage_processing_data_wait']='Datenverarbeitung, bitte warten!';
+$string['homepage_processing_data']='Datenverarbeitung';
+$string['homepage_text']='GISMO ist ein grafisches, interaktives System, das &uuml;ber ein Tool, Tracking-Daten aus dem Moodle Course Management-System extrahiert, mit denen Dozierende und Studierende ihre Aktivit&auml;ten &uuml;berwachen k&ouml;nnen.<br />
+Um GISMO zu starten w&auml;hlen Sie ein Men&uuml; oben auf dieser Seite aus.<br />
+Wenn Sie die Tutorials anschauen m&ouml;chten, klicken Sie bitte auf das Men&uuml; "Hilfe" > "Tutorials".';
+
+$string['hide_menu']='Menu verstecken';
+$string['show_menu']='Menu zeigen';
+$string['show_details']='Details zeigen';
+
+$string['homepage_charts_preview_title']='Diagramm Vorschau';
+$string['homepage_chart_activities_assignments_overview']='Aktivit&auml;ten: &Uuml;bersicht der Aufgaben';
+$string['homepage_chart_resources_access_overview']='Ressourcen: Zugriffs&uuml;bersicht';
+$string['homepage_chart_resources_students_overview']='Ressourcen: Studenten&uuml;bersicht';
+$string['homepage_chart_students_access_overview_on_resources']='Studenten: Studenentzugriffe und ressourcen';
+$string['homepage_chart_students_access_overview']='Studenten: Zugriffs&uuml;bersicht';
+$string['homepage_chart_students_accesses_by_students']='Studenten: Zugriffe durch Studenten';
 
 ?>

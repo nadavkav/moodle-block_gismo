@@ -4,13 +4,13 @@
 
     // define constants
     define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
-    define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);    
+    define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);
 
     // include moodle config file
     require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
 ?>
-function gismo(config, srv_data, static_data, course_start_time, current_time, actor) {
+function gismo(config, srv_data, static_data, course_start_time, current_time, actor, completionenabled) { //Added completionenabled
     // html elements ids
     // header
     this.header_id = 'header';
@@ -31,9 +31,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
     this.date_slider_id = 'date_slider';
     this.from_date_id = 'from_date';
     this.to_date_id = 'to_date';
-    
+
     // fields
     this.actor = actor;
+    this.completionenabled = completionenabled; //Completion on SITE & COURSE
     this.srv_data = srv_data;
     this.static_data = static_data;
     this.course_start_time = course_start_time;
@@ -48,23 +49,23 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         plot: null,
         status: false
     };
-    
+
     // resize management
     this.resize_scheduled = false;
     this.last_resize = 0;
-    
+
     // config
     this.cfg = config;
-    
+
     // util
     this.util = new gismo_util(this);
-    
+
     // composite (instances)
     this.tm = new top_menu(this);
     this.lm = new left_menu(this);
     this.cht = null;
     this.tl = new time_line(this);
-    
+
     // init method
     this.init = function () {
         // show content section
@@ -82,7 +83,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         // set course
         $("#" + this.ch_header_id + " #course_name").html(this.util.intelligent_substring(this.static_data["course_full_name"], true, 100, 5));
     };
-    
+
     // reset methods
     this.reset = function () {
         this.reset_data();
@@ -105,39 +106,39 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             $("<div></div>").attr({"id": this.plot_id})
         );
     }
-    
+
     // this method return type & subtype combined (used to decide how to prepare date / create chart)
     this.get_full_type = function () {
         var full_type = null;
         if (this.current_analysis.type != null) {
             full_type = this.actor + "@" + this.current_analysis.type;
-            if (this.current_analysis.options != null && 
-                this.current_analysis.options.subtype != undefined && 
+            if (this.current_analysis.options != null &&
+                this.current_analysis.options.subtype != undefined &&
                 this.current_analysis.options.subtype != null) {
-                full_type = full_type + ":" + this.current_analysis.options.subtype;    
-            }    
+                full_type = full_type + ":" + this.current_analysis.options.subtype;
+            }
         }
-        return full_type;   
+        return full_type;
     };
-    
+
     this.days_between = function (iso_date1, iso_date2) {   // date yyyy-mm-dd
         // milliseconds in a day
         var day_ms = 1000 * 60 * 60 * 24;
         var date1 = iso_date1.split("-");
         var date2 = iso_date2.split("-");
-        
+
         // Convert both dates to milliseconds
         var date1_ms = (new Date(date1[0], date1[1], date1[2], 0, 0, 0, 0)).getTime();
         var date2_ms = (new Date(date2[0], date2[1], date2[2], 0, 0, 0, 0)).getTime();
 
         // Calculate the difference in milliseconds
         var difference_ms = Math.abs(date1_ms - date2_ms);
-        
+
         // Convert back to days and return
         return Math.round(difference_ms / day_ms);
 
     };
-    
+
     this.show_error = function (message, title) {
         var t = (title == undefined) ? "An error has occurred" : title;
         // hide welcome page
@@ -156,7 +157,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         // show message
         $("#" + this.error_message_id).show();
     };
-    
+
     this.show_processing = function () {
         // hide welcome page
         $("#welcome_page").hide();
@@ -170,53 +171,53 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         // show processing
         $("#" + this.processing_id).show();
     };
-    
+
     // analyse method
     this.analyse = function (type, options) {
         // variables
         var response;
-        
+
         // options
         var opt = ""
         if (options != undefined) {
             for (var k in options) {
-                opt += "&" + k + "=" + options[k];        
+                opt += "&" + k + "=" + options[k];
             }
         }
-        
+
         // show content section
         this.show_content();
-        
+
         // reset data (variables / existing chart)
         this.reset();
-        
+
         // show processing
         this.show_processing();
-        
+
         // extract data from server
         $.ajax({
             url: 'ajax.php',
-            async: false, 
+            async: false,
             type: 'POST',
-            data: 'q=' + this.actor + "@" + type + opt + '&srv_data=' + this.srv_data + '&from=' + this.tl.get_from(true) + '&to=' + this.tl.get_to(true) + '&token=' + Math.random(), 
+            data: 'q=' + this.actor + "@" + type + opt + '&srv_data=' + this.srv_data + '&from=' + this.tl.get_from(true) + '&to=' + this.tl.get_to(true) + '&token=' + Math.random(),
             dataType: 'json',
-            success: 
+            success:
                 function(json) {
                     response = json;
                 },
             error:
                 function(error) {
-                    response = {error: '1', message: 'Cannot extract data from server!'};    
+                    response = {error: '1', message: '<?php print_string('err_cannot_extract_data', 'block_gismo'); ?>'};
                 }
         });
-        
+
         // check response for errors
         if (response['error'] != undefined && response['error'] == '1') {
             if (response['message'] != undefined) {
                 this.show_error(response['message']);
             } else {
-                this.show_error('Unknown error!');    
-            }    
+                this.show_error('<?php print_string('err_unknown', 'block_gismo'); ?>');
+            }
         } else {
             // save data
             this.current_analysis.type = type;
@@ -225,38 +226,38 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             this.current_analysis.links = response.links;
             this.current_analysis.data = response.data;
             this.current_analysis.extra_info = response.extra_info;
-            
+
             // show / hide menus
             this.lm.set_menu(true);
-            
+
             // show / hide details controls
             this.lm.init_lm_content_details();
-            
+
             // draw chart
-            this.create_chart();    
+            this.create_chart();
         }
     };
-    
+
     // get color
     this.get_color = function (secondary_channels_colors) {
         var tmp;
         // color
         switch (this.cfg.chart_base_color) {
             case 1:
-                tmp = "#ff" + secondary_channels_colors + secondary_channels_colors; 
+                tmp = "#ff" + secondary_channels_colors + secondary_channels_colors;
                 break;
             case 2:
-                tmp = "#" + secondary_channels_colors + "ff" + secondary_channels_colors; 
+                tmp = "#" + secondary_channels_colors + "ff" + secondary_channels_colors;
                 break;
             case 3:
             default:
-                tmp = "#" + secondary_channels_colors + secondary_channels_colors + "ff"; 
+                tmp = "#" + secondary_channels_colors + secondary_channels_colors + "ff";
                 break;
         }
         // return color
-        return tmp;        
+        return tmp;
     };
-    
+
     // get series colors (for matrix)
     this.get_series_colors = function (num_series, base_color) {
         var colors = new Array();
@@ -266,18 +267,31 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             if (k > 0) {
                 tmp = (256 - Math.floor((parseFloat(k) / parseFloat((this.cfg.matrix_num_series_limit - 1))) * 256)).toString(16);
                 while (tmp.length < 2) {
-                    tmp = "0" + tmp; 
+                    tmp = "0" + tmp;
                 }
             } else {
                 tmp = "00";
             }
             // store color
-            colors[k] = this.get_color(tmp);            
+            colors[k] = this.get_color(tmp);
         }
         // return colors
-        return colors;    
+        return colors;
     };
-    
+
+    //Convert unixtime to time
+    this.timeConverter = function (UNIX_timestamp){
+    var a = new Date(UNIX_timestamp*1000);
+    var months = <?php print_string('completion_completed_on_tooltip_months', 'block_gismo'); ?>;
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var time = date+' '+month+' '+year ;
+        return time;
+    }
+
+
+
     // prepare data
     this.prepare_data = function () {
         // get selected items
@@ -301,13 +315,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // build line
                     for (item in this.current_analysis.data) {
                         uid = this.lm.get_unique_id("users", this.current_analysis.data[item], "userid");
                         if ($.inArray(uid, selected_items["users"]) != -1) {
-                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));      
+                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));
                         }
                     }
                     // set prepared data (at least on resource must have been selected)
@@ -322,15 +336,15 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 13;
                         prepared_data["x_label"] = "<?php print_string('timeline', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('accesses', 'block_gismo'); ?>";
-                    }       
-                } 
+                    }
+                }
                 break;
             case 'teacher@student-accesses-overview':
                 if (this.static_data["users"].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
                     date = null;
                     tmp = new Array();
                     // build line
-                    for (item in this.current_analysis.data) {    
+                    for (item in this.current_analysis.data) {
                         uid = this.lm.get_unique_id("users", this.current_analysis.data[item], "userid");
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             // sum user contribute if date already in the list, add new entry otherwise
@@ -340,7 +354,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 tmp[date] = new Array(date, parseInt(count));
                             } else {
                                 tmp[date][1] += parseInt(count);
-                            }                            
+                            }
                         }
                     }
                     values = new Array();
@@ -349,7 +363,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         for (item in tmp) {
                             lines.push(tmp[item]);
                             values.push(tmp[item][1]);
-                        }        
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0) {
@@ -361,8 +375,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yaxis_max"] = this.get_yaxis_max(values, 1);
                         prepared_data["x_label"] = "<?php print_string('timeline', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('accesses', 'block_gismo'); ?>";
-                    }      
-                } 
+                    }
+                }
                 break;
             case 'teacher@student-resources-access':
                 if (this.static_data["users"].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
@@ -382,9 +396,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid2, selected_items["resources"]) != -1) {
                             if ($.inArray(uid, yticks) != -1) {
                                 index = $.inArray(uid, yticks);
-                                lines[index] += parseInt(this.current_analysis.data[item].numval);    
-                            }        
-                        }    
+                                lines[index] += parseInt(this.current_analysis.data[item].numval);
+                            }
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
@@ -394,9 +408,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["xticks_min_len"] = 15;
                         prepared_data["yaxis_max"] = this.get_yaxis_max(lines, 1);
                         prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
-                        prepared_data["y_label"] = "<?php print_string('student_resources_overview', 'block_gismo'); ?>"; //"Accesses on resources";                        
+                        prepared_data["y_label"] = "<?php print_string('student_resources_overview', 'block_gismo'); ?>"; //"Accesses on resources";
                     }
-                }   
+                }
                 break;
             case 'teacher@student-resources-access:users-details':
                 if (this.static_data["resources"].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
@@ -406,13 +420,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["resources"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["resources"][item].name, false));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // build line
                     for (item in this.current_analysis.data) {
                         uid = this.lm.get_unique_id("resources", this.current_analysis.data[item], "resid", "restype");
                         if ($.inArray(uid, selected_items["resources"]) != -1) {
-                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));      
+                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));
                         }
                     }
                     // set prepared data (at least on resource must have been selected)
@@ -427,7 +441,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 13;
                         prepared_data["x_label"] = "<?php print_string('timeline', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('resources', 'block_gismo'); ?>";
-                    }       
+                    }
                 }
                 break;
             case "student@resources-students-overview":
@@ -436,24 +450,24 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     var userid, resid, val;
                     var max;
                     // xticks / yticks
-                    
+
 		    for (item in this.static_data["resources"]) {
                         uid = this.lm.get_unique_id("resources", this.static_data["resources"][item], "id", "type");
                         if ($.inArray(uid, selected_items["resources"]) != -1) {
                             xticks.unshift(this.util.intelligent_substring(this.static_data["resources"][item].name, false));
                             xticks_pos.unshift(uid);
-                        }    
+                        }
                     }
-		    
+
                     for (item in this.static_data["users"]) {
                         uid = this.lm.get_unique_id("users", this.static_data["users"][item], "id", "type");
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             yticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             yticks_pos.push(uid);
-                        }    
-                    }			
-			
-			
+                        }
+                    }
+
+
 		//
 		    /*
 		    for (item in this.static_data["resources"]) {
@@ -461,18 +475,18 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["resources"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["resources"][item].name, false));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
-		    
+
                     for (item in this.static_data["users"]) {
                         uid = this.lm.get_unique_id("users", this.static_data["users"][item], "id", "type");
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             xticks_pos.push(uid);
-                        }    
+                        }
                     }
 		    //*/
-		    
+
                     // aggregate data (keep only selected users / resources)
                     var aggregated_data = new Array();
                     for (item in this.current_analysis.data) {
@@ -483,7 +497,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(userid, selected_items["users"]) != -1 &&
                             $.inArray(resid, selected_items["resources"]) != -1) {
                             if (aggregated_data[key] == undefined) {
-                                aggregated_data[key] = 0;    
+                                aggregated_data[key] = 0;
                             }
                             aggregated_data[key] = parseInt(aggregated_data[key]) + val;
                         }
@@ -492,7 +506,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     max = this.current_analysis.extra_info.max_value;   // MAX MUST BE ALWAYS THE SAME (MUST NOT DEPEND ON TIME RANGE)
                     // generate series
                     colors = this.get_series_colors();
-                    for (item in aggregated_data) {                        
+                    for (item in aggregated_data) {
                         // evaluate serie
                         num_serie = Math.round(parseFloat(aggregated_data[item])/parseFloat(max)*(this.cfg.matrix_num_series_limit - 2)) + 1;
                         // userid & resid
@@ -511,41 +525,41 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 $.inArray(resid, yticks_pos) + 1,
 				//*/
 				$.inArray(resid, xticks_pos) + 1,
-                                $.inArray(userid, yticks_pos) + 1,			
+                                $.inArray(userid, yticks_pos) + 1,
                                 aggregated_data[item],
                                 max
                             )
-                        );    
-                    }  
+                        );
+                    }
                     // keep only used lines
                     used_lines = new Array();
                     used_genseries = new Array();
                     for (k=0; k<this.cfg.matrix_num_series_limit;k++) {
                         if (lines[k] != undefined && genseries[k] != undefined) {
                             used_lines.push(lines[k]);
-                            used_genseries.push(genseries[k]);   
+                            used_genseries.push(genseries[k]);
                         }
-                    }                    
+                    }
                     // set prepared data (at least on resource must have been selected)
                     if (used_lines.length > 0 && xticks.length > 0) {
-                        
+
 			prepared_data["lines"] = used_lines;
 			prepared_data["genseries"] = used_genseries;
 			prepared_data["xticks"] = xticks;
-			prepared_data["yticks"] = yticks;	   
+			prepared_data["yticks"] = yticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 18;
                         prepared_data["yticks_num"] = yticks.length;
                         prepared_data["yticks_min_len"] = 18;
 			prepared_data["x_label"] = "<?php print_string('resources', 'block_gismo'); ?>";
-                        prepared_data["y_label"] = "<?php print_string('students', 'block_gismo'); ?>";   
-			    
+                        prepared_data["y_label"] = "<?php print_string('students', 'block_gismo'); ?>";
+
 			//
-			    /*    
+			    /*
 			prepared_data["lines"] = used_lines;
                         prepared_data["genseries"] = used_genseries;
 			prepared_data["xticks"] = xticks;
-                        prepared_data["yticks"] = yticks;	    			    
+                        prepared_data["yticks"] = yticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 18;
                         prepared_data["yticks_num"] = yticks.length;
@@ -553,7 +567,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
 			prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('resources', 'block_gismo'); ?>";
 			//*/
-                    }       
+                    }
                 }
                 break;
             case 'teacher@resources-access':
@@ -566,7 +580,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             lines.push(0);
                             xticks.push(this.util.intelligent_substring(this.static_data["resources"][item].name, true));
                             yticks_pos.push(uid);
-                        }    
+                        }
                     }
                     // sum contributes for each user that is selected in the left menu
                     for (item in this.current_analysis.data) {
@@ -575,9 +589,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid2, selected_items["users"]) != -1) {
                             index = $.inArray(uid, yticks_pos);
                             if (index != -1) {
-                                lines[index] += parseInt(this.current_analysis.data[item].numval);    
-                            }        
-                        }    
+                                lines[index] += parseInt(this.current_analysis.data[item].numval);
+                            }
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
@@ -599,13 +613,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // build line
-                    for (item in this.current_analysis.data) {                        
+                    for (item in this.current_analysis.data) {
                         uid = this.lm.get_unique_id("users", this.current_analysis.data[item], "userid");
                         if ($.inArray(uid, selected_items["users"]) != -1) {
-                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));      
+                            lines.push(new Array(this.current_analysis.data[item].timedate, $.inArray(uid, yticks_pos) + 1, this.current_analysis.data[item].numval));
                         }
                     }
                     // set prepared data (at least on resource must have been selected)
@@ -620,7 +634,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 13;
                         prepared_data["x_label"] = "<?php print_string('timeline', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('students', 'block_gismo'); ?>";
-                    }       
+                    }
                 }
                 break;
             case 'teacher@assignments':
@@ -632,14 +646,14 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             xticks_pos.push(uid);
-                        }    
+                        }
                     }
                     for (item in this.static_data["assignments"]) {
                         uid = this.lm.get_unique_id("assignments", this.static_data["assignments"][item], "id", "type");
                         if ($.inArray(uid, selected_items["assignments"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["assignments"][item].name, true));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // generate series only for selected users / assignments
                     colors = this.get_series_colors();
@@ -648,10 +662,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         uid2 = this.lm.get_unique_id("assignments", this.current_analysis.data[item], "test_id");
                         if ($.inArray(uid, selected_items["users"]) != -1 &&
                             $.inArray(uid2, selected_items["assignments"]) != -1) {
-                            
+
                             // evaluate serie
                             num_serie = 0;
-                            if (parseInt(this.current_analysis.data[item].user_grade) != -1) { 
+                            if (parseInt(this.current_analysis.data[item].user_grade) != -1) {
                                 num_serie = Math.round(parseFloat(this.current_analysis.data[item].user_grade)/parseFloat(this.current_analysis.data[item].test_max_grade)*(this.cfg.matrix_num_series_limit - 2)) + 1;
                             } else {
                                 if (parseInt(this.current_analysis.data[item].test_max_grade) != 0) {
@@ -660,7 +674,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                     num_serie = this.cfg.matrix_num_series_limit + 10;
                                 }
                             }
-                            
+
                             // lines
                             if (lines[num_serie] == undefined) {
                                 lines[num_serie] = new Array();
@@ -673,7 +687,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                     (parseInt(this.current_analysis.data[item].user_grade) == -1) ? ((parseInt(this.current_analysis.data[item].test_max_grade) !== 0) ? "Grade has not been assigned yet." : "There isn't any grade scale associated to the assignment.") : "Grade: " + this.current_analysis.data[item].user_grade_label
                                 )
                             );
-                        }    
+                        }
                     }
                     // keep only used lines
                     used_lines = new Array();
@@ -681,10 +695,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     for (k=0; k<genseries.length;k++) {
                         if (lines[k] != undefined && genseries[k] != undefined) {
                             used_lines.push(lines[k]);
-                            used_genseries.push(genseries[k]);   
+                            used_genseries.push(genseries[k]);
                         }
                     }
-                    
+
                     // set prepared data (at least on resource must have been selected)
                     if (used_lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = used_lines;
@@ -697,9 +711,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 18;
                         prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('assignments', 'block_gismo'); ?>";
-                    }       
+                    }
                 }
-                break;    
+                break;
             case 'teacher@assignments22':
             case 'student@assignments22':
                 if (this.static_data["users"].length > 0 && this.static_data["assignments22"].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
@@ -709,14 +723,14 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             xticks_pos.push(uid);
-                        }    
+                        }
                     }
                     for (item in this.static_data["assignments22"]) {
                         uid = this.lm.get_unique_id("assignments22", this.static_data["assignments22"][item], "id", "type");
                         if ($.inArray(uid, selected_items["assignments22"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["assignments22"][item].name, true));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // generate series only for selected users / assignments22
                     colors = this.get_series_colors();
@@ -725,10 +739,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         uid2 = this.lm.get_unique_id("assignments22", this.current_analysis.data[item], "test_id");
                         if ($.inArray(uid, selected_items["users"]) != -1 &&
                             $.inArray(uid2, selected_items["assignments22"]) != -1) {
-                            
+
                             // evaluate serie
                             num_serie = 0;
-                            if (parseInt(this.current_analysis.data[item].user_grade) != -1) { 
+                            if (parseInt(this.current_analysis.data[item].user_grade) != -1) {
                                 num_serie = Math.round(parseFloat(this.current_analysis.data[item].user_grade)/parseFloat(this.current_analysis.data[item].test_max_grade)*(this.cfg.matrix_num_series_limit - 2)) + 1;
                             } else {
                                 if (parseInt(this.current_analysis.data[item].test_max_grade) != 0) {
@@ -737,7 +751,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                     num_serie = this.cfg.matrix_num_series_limit + 10;
                                 }
                             }
-                            
+
                             // lines
                             if (lines[num_serie] == undefined) {
                                 lines[num_serie] = new Array();
@@ -750,7 +764,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                     (parseInt(this.current_analysis.data[item].user_grade) == -1) ? ((parseInt(this.current_analysis.data[item].test_max_grade) !== 0) ? "Grade has not been assigned yet." : "There isn't any grade scale associated to the assignment.") : "Grade: " + this.current_analysis.data[item].user_grade_label
                                 )
                             );
-                        }    
+                        }
                     }
                     // keep only used lines
                     used_lines = new Array();
@@ -758,10 +772,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     for (k=0; k<genseries.length;k++) {
                         if (lines[k] != undefined && genseries[k] != undefined) {
                             used_lines.push(lines[k]);
-                            used_genseries.push(genseries[k]);   
+                            used_genseries.push(genseries[k]);
                         }
                     }
-                    
+
                     // set prepared data (at least on resource must have been selected)
                     if (used_lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = used_lines;
@@ -774,7 +788,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 18;
                         prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('assignments22', 'block_gismo'); ?>";
-                    }       
+                    }
                 }
                 break;
             case 'teacher@quizzes':
@@ -786,14 +800,14 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items["users"]) != -1) {
                             xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             xticks_pos.push(uid);
-                        }    
+                        }
                     }
                     for (item in this.static_data["quizzes"]) {
                         uid = this.lm.get_unique_id("quizzes", this.static_data["quizzes"][item], "id", "type");
                         if ($.inArray(uid, selected_items["quizzes"]) != -1) {
                             yticks.unshift(this.util.intelligent_substring(this.static_data["quizzes"][item].name, true));
                             yticks_pos.unshift(uid);
-                        }    
+                        }
                     }
                     // generate series only for selected users / quizzes
                     colors = this.get_series_colors();
@@ -802,13 +816,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         uid2 = this.lm.get_unique_id("quizzes", this.current_analysis.data[item], "test_id");
                         if ($.inArray(uid, selected_items["users"]) != -1 &&
                             $.inArray(uid2, selected_items["quizzes"]) != -1) {
-                            
+
                             // evaluate serie
                             num_serie = 0;
-                            if ((parseInt(this.current_analysis.data[item].user_grade) != -1)) { 
+                            if ((parseInt(this.current_analysis.data[item].user_grade) != -1)) {
                                 num_serie = Math.round(parseFloat(this.current_analysis.data[item].user_grade)/parseFloat(this.current_analysis.data[item].test_max_grade)*(this.cfg.matrix_num_series_limit - 2)) + 1;
                             }
-                            
+
                             // lines
                             if (lines[num_serie] == undefined) {
                                 lines[num_serie] = new Array();
@@ -820,8 +834,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                     $.inArray(uid2, yticks_pos) + 1,
                                     (parseInt(this.current_analysis.data[item].user_grade) == -1) ? "Grade has not been assigned yet." : "Grade: " + this.current_analysis.data[item].user_grade_label,
                                     this.current_analysis.data[item].test_max_grade)
-                            );       
-                        }    
+                            );
+                        }
                     }
                     // keep only used lines
                     used_lines = new Array();
@@ -829,10 +843,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     for (k=0; k<this.cfg.matrix_num_series_limit;k++) {
                         if (lines[k] != undefined && genseries[k] != undefined) {
                             used_lines.push(lines[k]);
-                            used_genseries.push(genseries[k]);   
+                            used_genseries.push(genseries[k]);
                         }
                     }
-                    
+
                     // set prepared data (at least on resource must have been selected)
                     if (used_lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = used_lines;
@@ -845,7 +859,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 18;
                         prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('quizzes', 'block_gismo'); ?>";
-                    }       
+                    }
                 }
                 break;
             case 'teacher@chats':
@@ -863,7 +877,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             lines[1].push(0);
                             xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             yticks.push(uid);
-                        }    
+                        }
                     }
                     // sum contributes for each activity that is selected in the left menu
                     for (item in this.current_analysis.data) {
@@ -872,26 +886,26 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid2, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "read") {
+                                if (this.current_analysis.data[item].context == "write") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                } else if (this.current_analysis.data[item].context == "write") {//Check if Write SUM
+                                } else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
                                 } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
                                 }
-                            }        
-                        }    
+                            }
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = lines;
-                        prepared_data["genseries"] = new Array({label: 'Read', color: this.get_color("00")}, {label: 'Write', color: "#CCCCCC"});
+                        prepared_data["genseries"] = new Array({label: 'Write', color: this.get_color("00")}, {label: 'Read', color: "#CCCCCC"});
                         prepared_data["xticks"] = xticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 15;
                         prepared_data["yaxis_max"] = this.get_yaxis_max(lines, 2);
                         prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
-                        prepared_data["y_label"] = "<?php print_string('actions_on', 'block_gismo'); ?>" + this.current_analysis.type;     //"action on" + this.current_analysis.type; 
+                        prepared_data["y_label"] = "<?php print_string('actions_on', 'block_gismo'); ?>" + this.current_analysis.type;     //"action on" + this.current_analysis.type;
                     }
                 }
                 break;
@@ -926,7 +940,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 tmp[date] = new Array(date, parseInt(count));
                             } else {
                                 tmp[date][1] += parseInt(count);
-                            }                            
+                            }
                         }
                     }
                     values = new Array();
@@ -935,7 +949,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         for (item in tmp) {
                             lines.push(tmp[item]);
                             values.push(tmp[item][1]);
-                        }        
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0) {
@@ -947,7 +961,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yaxis_max"] = this.get_yaxis_max(values, 1);
                         prepared_data["x_label"] = "<?php print_string('timeline', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('nr_submissions', 'block_gismo'); ?>"; // "Number of submissions";
-                    }      
+                    }
                 }
                 break;
             case 'teacher@chats:users-details':
@@ -976,35 +990,146 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "read") {
+                                if (this.current_analysis.data[item].context == "write") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                }  else if (this.current_analysis.data[item].context == "write") {//Check if Write SUM
+                                }  else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
                                 } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
                                 }
-                            }        
-                        }    
+                            }
+                        }
                     }
                     // set prepared data (at least on resource must have been selected)
                     if (lines.length > 0 && xticks.length > 0) {
                         prepared_data["lines"] = lines;
-                        prepared_data["genseries"] = new Array({label: 'Read', color: this.get_color("00")}, {label: 'Write', color: "#CCCCCC"});
+                        prepared_data["genseries"] = new Array({label: 'Write', color: this.get_color("00")}, {label: 'Read', color: "#CCCCCC"});
                         prepared_data["xticks"] = xticks;
                         prepared_data["xticks_num"] = xticks.length;
                         prepared_data["xticks_min_len"] = 15;
                         prepared_data["yaxis_max"] = this.get_yaxis_max(lines, 2);
                         prepared_data["x_label"] = this.util.ucfirst(this.current_analysis.type);
-                        prepared_data["y_label"] = "<?php print_string('actions_on', 'block_gismo'); ?>" + this.current_analysis.type; // "Actions on " + this.current_analysis.type;                        
+                        prepared_data["y_label"] = "<?php print_string('actions_on', 'block_gismo'); ?>" + this.current_analysis.type; // "Actions on " + this.current_analysis.type;
                     }
                 }
                 break;
+            case 'teacher@completion-assignments':
+            case 'student@completion-assignments':
+                var completion_type = 'assignments';
+                var completion_chart_y_label = "<?php print_string('assignments', 'block_gismo'); ?>";
+            case 'teacher@completion-assignments22':
+            case 'student@completion-assignments22':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'assignments22';
+                    var completion_chart_y_label = "<?php print_string('assignments22', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-resources':
+            case 'student@completion-resources':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'resources';
+                    var completion_chart_y_label = "<?php print_string('resources', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-chats':
+            case 'student@completion-chats':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'chats';
+                    var completion_chart_y_label = "<?php print_string('chats', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-wikis':
+            case 'student@completion-wikis':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'wikis';
+                    var completion_chart_y_label = "<?php print_string('wikis', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-forums':
+            case 'student@completion-forums':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'forums';
+                    var completion_chart_y_label = "<?php print_string('forums', 'block_gismo'); ?>";
+                }
+            case 'teacher@completion-quizzes':
+            case 'student@completion-quizzes':
+                if(typeof completion_type === 'undefined'){
+                    var completion_type = 'quizzes';
+                    var completion_chart_y_label = "<?php print_string('quizzes', 'block_gismo'); ?>";
+                }
+
+                if (this.static_data["users"].length > 0 && this.static_data[completion_type].length > 0 && this.util.get_assoc_array_length(this.current_analysis.data) > 0) {
+                    // xticks / yticks
+                    for (item in this.static_data["users"]) {
+                        uid = this.lm.get_unique_id("users", this.static_data["users"][item], "id", "type");
+                        if ($.inArray(uid, selected_items["users"]) != -1) {
+                            xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
+                            xticks_pos.push(uid);
+                        }
+                    }
+                    for (item in this.static_data[completion_type]) {
+                        uid = this.lm.get_unique_id(completion_type, this.static_data[completion_type][item], "id", "type");
+                        if ($.inArray(uid, selected_items[completion_type]) != -1) {
+                            yticks.unshift(this.util.intelligent_substring(this.static_data[completion_type][item].name, false));
+                            yticks_pos.unshift(uid);
+                        }
+                    }
+                    // generate series only for selected users / completion_type
+                    colors = this.get_series_colors();
+                    for (item in this.current_analysis.data) {
+                        uid = this.lm.get_unique_id("users", this.current_analysis.data[item], "userid");
+                        if(completion_type == 'resources'){ //if resources check the correct type for resources unique_id
+                            uid2 = this.lm.get_unique_id(this.current_analysis.data[item]["type"], this.current_analysis.data[item], "item_id");
+                        }else{
+                            uid2 = this.lm.get_unique_id(completion_type, this.current_analysis.data[item], "item_id");
+                        }
+                        if ($.inArray(uid, selected_items["users"]) != -1 &&
+                            $.inArray(uid2, selected_items[completion_type]) != -1) {
+                            // evaluate serie
+                            num_serie = 0;
+                            // lines
+                            if (lines[num_serie] == undefined) {
+                                lines[num_serie] = new Array();
+                                genseries[num_serie] = {color: colors[num_serie], markerOptions:{style: "filledSquare" }};
+                            }
+                            lines[num_serie].push(
+                                new Array(
+                                    $.inArray(uid, xticks_pos) + 1,
+                                    $.inArray(uid2, yticks_pos) + 1,
+                                    ((parseInt(this.current_analysis.data[item].completionstate) == 1) || (parseInt(this.current_analysis.data[item].completionstate) == 2)) ? "<?php print_string('completion_completed_on_tooltip', 'block_gismo'); ?>" + this.timeConverter(this.current_analysis.data[item].timemodified) : "Failed", //completionstate = 1 OR 2 -> complete AND completionstate = 3 -> failed
+                                    this.current_analysis.data[item].completionstate)
+                            );
+                        }
+                    }
+                    // keep only used lines
+                    used_lines = new Array();
+                    used_genseries = new Array();
+                    if (lines[0] != undefined && genseries[0] != undefined) { //Check if exist insert values, if not empty array
+                        used_lines.push(lines[0]);
+                        used_genseries.push(genseries[0]);
+                    }
+
+
+                    // set prepared data (at least on resource must have been selected)
+                    if (used_lines.length > 0 && xticks.length > 0) {
+                        prepared_data["lines"] = used_lines;
+                        prepared_data["genseries"] = used_genseries;
+                        prepared_data["xticks"] = xticks;
+                        prepared_data["yticks"] = yticks;
+                        prepared_data["xticks_num"] = xticks.length;
+                        prepared_data["xticks_min_len"] = 18;
+                        prepared_data["yticks_num"] = yticks.length;
+                        prepared_data["yticks_min_len"] = 18;
+                        prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
+                        prepared_data["y_label"] = completion_chart_y_label;
+                    }
+
+                }
+                break;
+
+
         }
-        
+
         // save prepared data
-        this.current_analysis.prepared_data = prepared_data;    
+        this.current_analysis.prepared_data = prepared_data;
     };
-    
+
     // this method returns the Y axis max
     this.get_yaxis_max = function (series, num_series) {
         var result = null;
@@ -1014,7 +1139,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                 max = new Array();
                 for (k=0; k<series.length; k++) {
                     if ($.isArray(series[k]) && series[k].length > 0) {
-                        max.push(Array.max(series[k]));    
+                        max.push(Array.max(series[k]));
                     }
                 }
                 if (max.length > 0) {
@@ -1032,7 +1157,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         }
         return result;
     };
-                
+
     // this method sets the correct plot area width and height
     this.set_plot_dimensions = function () {
         if (this.current_analysis.status == true) {
@@ -1043,7 +1168,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                 var plot_width = $("#" + this.plot_id).width();
                 var required_width = this.current_analysis.prepared_data.xticks_min_len*this.current_analysis.prepared_data.xticks_num + 50;
                 w = (required_width < visible_width) ? visible_width : required_width;
-                $("#" + this.plot_id).width(w);    
+                $("#" + this.plot_id).width(w);
             }
             $("#" + this.plot_id).width(w);
             // height
@@ -1053,12 +1178,12 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             if (this.current_analysis.prepared_data.yticks_num != undefined) {
                 var plot_height = $("#" + this.plot_id).height();
                 var required_height = this.current_analysis.prepared_data.yticks_min_len*this.current_analysis.prepared_data.yticks_num + 50;
-                h = (required_height < visible_height) ? visible_height : required_height;    
+                h = (required_height < visible_height) ? visible_height : required_height;
             }
             $("#" + this.plot_id).height(h);
-        }    
+        }
     };
-    
+
     // this method retrieve number of pixel available for matrix entry
     this.get_matrix_entry_side_pixels = function () {
         var num_pixel = 12;
@@ -1073,11 +1198,11 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             var min_h = parseFloat(this.current_analysis.prepared_data.yticks_min_len) - 4.0;
             num_pixel = (num_pixel < min_w) ? min_w : num_pixel;
             num_pixel = (num_pixel < min_h) ? min_h : num_pixel;
-            */    
+            */
         }
-        return num_pixel;    
+        return num_pixel;
     };
-    
+
     // create chart method
     this.create_chart = function () {
         // prepare data
@@ -1094,11 +1219,11 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     .css({margin: "0 5px"})
                     .attr({href: "javascript:void(0);"})
                     .append(
-                        $("<img></img>").attr({src: "images/disk.png", alt: "Export chart as image", "title": "Export chart as image"}).css({"margin-top": "6px"})
+                        $("<img></img>").attr({src: "images/disk.png", alt: "<?php print_string('export_chart_as_image', 'block_gismo'); ?>", "title": "<?php print_string('export_chart_as_image', 'block_gismo'); ?>"}).css({"margin-top": "6px"}) //8.10.2013 Added translation
                     )
                     .click(
                         function () {
-                            g.save_as_image(); 
+                            g.save_as_image();
                             $(this).blur();
                         }
                     )
@@ -1109,7 +1234,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             // update status
             this.current_analysis.status = false;
             // show error
-            this.show_error("Cannot proceed with the analysis beacuse there isn't any data to work on!", "No data");       
+            this.show_error("<?php print_string('err_missing_data', 'block_gismo'); ?>", "<?php print_string('err_no_data', 'block_gismo'); ?>");  //8.10.2013 Added translation
         } else {
             // update status
             this.current_analysis.status = true;
@@ -1136,11 +1261,11 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         },
                         axes:{
                             xaxis:{
-                                renderer:$.jqplot.DateAxisRenderer, 
+                                renderer:$.jqplot.DateAxisRenderer,
                                 min: data.min_date,
                                 max: data.max_date,
                                 label: data.x_label,
-                                labelRenderer: $.jqplot.CanvasAxisLabelRenderer, 
+                                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
                                 tickInterval: '1 month',
                                 tickRenderer: $.jqplot.CanvasAxisTickRenderer,
                                 tickOptions: {
@@ -1164,19 +1289,19 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         seriesDefaults: {
                             pointLabels: {show: false},
                             color: this.get_color("00"),
-                            showLine: false,  
+                            showLine: false,
                             markerOptions:{style:'filledSquare', size:3, shadow: false}
                         },
                         highlighter: {
                             show: true,
                             tooltipAxes: 'xy',
-                            tooltipFade: false, 
-                            yvalues: 2, 
-                            useAxesFormatters: true, 
-                            sizeAdjust: 2, 
+                            tooltipFade: false,
+                            yvalues: 2,
+                            useAxesFormatters: true,
+                            sizeAdjust: 2,
                             tooltipLocation: 'n',
                             tooltipOffset: 2,
-                            formatString:'<div class="charts_tooltip">%s, <span class="hidden">%s</span>%s accesses</div>'
+                            formatString:'<div class="charts_tooltip">%s, <span class="hidden">%s</span>%s <?php print_string('accesses_tooltip', 'block_gismo'); ?></div>'
                         }
                     });
                     break;
@@ -1195,11 +1320,11 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         },
                         axes:{
                             xaxis:{
-                                renderer:$.jqplot.DateAxisRenderer, 
+                                renderer:$.jqplot.DateAxisRenderer,
                                 min: data.min_date,
                                 max: data.max_date,
                                 label: data.x_label,
-                                labelRenderer: $.jqplot.CanvasAxisLabelRenderer, 
+                                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
                                 tickInterval: '1 month',
                                 tickRenderer: $.jqplot.CanvasAxisTickRenderer,
                                 tickOptions: {
@@ -1208,8 +1333,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 autoscale: false
                             },
                             yaxis: {
-                              rendererOptions: { 
-                                forceTickAt0: true 
+                              rendererOptions: {
+                                forceTickAt0: true
                               },
                               padMin: 0,
                               label: data.y_label,
@@ -1234,10 +1359,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         highlighter: {
                             show: true,
                             tooltipAxes: 'xy',
-                            tooltipFade: false, 
-                            yvalues: 2, 
-                            useAxesFormatters: true, 
-                            sizeAdjust: 2, 
+                            tooltipFade: false,
+                            yvalues: 2,
+                            useAxesFormatters: true,
+                            sizeAdjust: 2,
                             tooltipLocation: 'n',
                             tooltipOffset: 6,
                             formatString:'<div class="charts_tooltip">%s, %s</div>'
@@ -1280,8 +1405,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                           }
                         },
                         yaxis: {
-                          rendererOptions: { 
-                            forceTickAt0: true 
+                          rendererOptions: {
+                            forceTickAt0: true
                           },
                           padMin: 0,
                           label: data.y_label,
@@ -1331,8 +1456,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                           }
                         },
                         yaxis: {
-                          rendererOptions: { 
-                            forceTickAt0: true 
+                          rendererOptions: {
+                            forceTickAt0: true
                           },
                           padMin: 0,
                           label: data.y_label,
@@ -1350,9 +1475,23 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                 case 'teacher@assignments22':
                 case 'teacher@assignments':
                 case 'teacher@quizzes':
-                case 'student@assignments22':                
-                 case 'student@assignments':
+                case 'student@assignments22':
+                case 'student@assignments':
                 case 'student@quizzes':
+                case 'teacher@completion-quizzes':
+                case 'student@completion-quizzes':
+                case 'teacher@completion-assignments':
+                case 'student@completion-assignments':
+                case 'teacher@completion-assignments22':
+                case 'student@completion-assignments22':
+                case 'teacher@completion-resources':
+                case 'student@completion-resources':
+                case 'teacher@completion-forums':
+                case 'student@completion-forums':
+                case 'teacher@completion-chats':
+                case 'student@completion-chats':
+                case 'teacher@completion-wikis':
+                case 'student@completion-wikis':
                     var msize = this.get_matrix_entry_side_pixels();
                     var formatString;
                     var yvalues;
@@ -1395,7 +1534,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                                 ticks: data.yticks,
                                 renderer: $.jqplot.CategoryAxisRenderer,
                                 tickRenderer: $.jqplot.CanvasAxisTickRenderer
-                            }           
+                            }
                         },
                         cursor: {
                             show: false
@@ -1403,16 +1542,16 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         highlighter: {
                             show: true,
                             tooltipAxes: 'y',
-                            tooltipFade: false, 
-                            yvalues: yvalues, 
-                            useAxesFormatters: true, 
-                            sizeAdjust: 4.5, 
+                            tooltipFade: false,
+                            yvalues: yvalues,
+                            useAxesFormatters: true,
+                            sizeAdjust: 4.5,
                             tooltipLocation: 'n',
                             tooltipOffset: 2,
                             formatString: formatString
                         }
                     });
-                    break;  
+                    break;
                 case 'teacher@chats':
                 case 'teacher@forums':
                 case 'teacher@wikis':
@@ -1462,8 +1601,8 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                           }
                         },
                         yaxis: {
-                          rendererOptions: { 
-                            forceTickAt0: true 
+                          rendererOptions: {
+                            forceTickAt0: true
                           },
                           padMin: 0,
                           min: (data.yaxis_max == null) ? null : 0,
@@ -1477,17 +1616,17 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     });
                     break;
             }
-        }   
+        }
     };
-    
+
     // update chart method
     this.update_chart = function () {
         // reset DOM
         this.reset_dom();
         // recreate chart
-        this.create_chart();          
+        this.create_chart();
     };
-    
+
     // resize method
     this.resize = function () {
         // adjust left menu and chart height
@@ -1498,7 +1637,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         $("#" + this.ch_content_id).height($("#" + this.chart_id).height() - $("#" + this.ch_header_id).height());
         $("#" + this.plot_id).height($("#" + this.ch_content_id).height() - parseInt($("#" + this.plot_id).css("marginTop")) - parseInt($("#" + this.plot_id).css("marginBottom")));
         // timeline width
-        $("#" + this.date_slider_id).width($("body").width() - $("#" + this.from_date_id).width() - $("#" + this.to_date_id).width() - 35);    
+        $("#" + this.date_slider_id).width($("body").width() - $("#" + this.from_date_id).width() - $("#" + this.to_date_id).width() - 35);
         // redraw chart
         if (this.current_analysis != undefined && this.current_analysis.plot != undefined && this.current_analysis.plot != null) {
             if (this.resize_scheduled == false) {
@@ -1513,10 +1652,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     g.update_chart();
                     // resize not scheduled anymore
                     g.resize_scheduled = false;
-                    g.last_resize = (new Date()).getTime();    
+                    g.last_resize = (new Date()).getTime();
                 }, (this.last_resize + this.cfg.resize_delay < (new Date()).getTime()) ? 5 : this.cfg.resize_delay);
-            }    
-        }    
+            }
+        }
     };
 
     this.is_item_visible = function (item) {
@@ -1552,10 +1691,10 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             // submit the form
             $("#save_form").submit();
         } else {
-            this.util.show_modal_dialog("<?php print_string('export_chart_as_image', 'block_gismo'); ?>", "<p><?php print_string('no_chart_at_the_moment', 'block_gismo'); ?></p>");    
-        } 
+            this.util.show_modal_dialog("<?php print_string('export_chart_as_image', 'block_gismo'); ?>", "<p><?php print_string('no_chart_at_the_moment', 'block_gismo'); ?></p>");
+        }
     };
-    
+
     // options
     this.options = function () {
         // self
@@ -1619,18 +1758,18 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             .append($('<option></option>').attr({value: parseInt(4.5 * 1000.0)}).html("4.5"))
                             .append($('<option></option>').attr({value: parseInt(5.0 * 1000.0)}).html("5.0"))
                         )
-                    );           
+                    );
         dialog.html("<p><?php print_string('option_intro', 'block_gismo'); ?></p>" + $('<div></div>').append(form).html());
         dialog.attr("title", "<?php print_string('options', 'block_gismo'); ?>");
-        dialog.dialog({ 
-            resizable: false, 
-            modal: true, 
+        dialog.dialog({
+            resizable: false,
+            modal: true,
             draggable: false,
             width: 500,
             buttons: {
                 '<?php print_string('cancel', 'block_gismo'); ?>': function() {
-                    // close dialog 
-                    $(this).dialog('destroy'); 
+                    // close dialog
+                    $(this).dialog('destroy');
                 },
                 '<?php print_string('save', 'block_gismo'); ?>': function() {
                     var response = true;
@@ -1644,25 +1783,25 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     // update settings
                     var config_data = "";
                     for (var k in g.cfg) {
-                        config_data += "config_data[" + k + "]=" + g.cfg[k] + "&";        
+                        config_data += "config_data[" + k + "]=" + g.cfg[k] + "&";
                     }
                     $.ajax({
                         url: 'ajax_config.php',
-                        async: false, 
+                        async: false,
                         type: 'POST',
-                        data: 'q=save&' + config_data + 'srv_data=' + g.srv_data + '&token=' + Math.random(), 
+                        data: 'q=save&' + config_data + 'srv_data=' + g.srv_data + '&token=' + Math.random(),
                         dataType: 'json',
-                        success: 
+                        success:
                             function(json) {
                                 if (!(json["status"] != undefined && json["status"] == "true")) {
-                                    response = {error: '1', message: 'Cannot save settings to the database!'};    
+                                    response = {error: '1', message: 'Cannot save settings to the database!'};
                                 } else {
                                     response = true;
                                 }
                             },
                         error:
                             function(error) {
-                                response = {error: '1', message: 'Unknown error!'};     
+                                response = {error: '1', message: '<?php print_string('err_unknown', 'block_gismo'); ?>'};
                             }
                     });
                     // check response for errors
@@ -1670,21 +1809,21 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if (response['message'] != undefined) {
                             g.show_error(response['message']);
                         } else {
-                            g.show_error('Unknown error!');    
-                        }    
+                            g.show_error('<?php print_string('err_unknown', 'block_gismo'); ?>!');
+                        }
                     } else {
                         // rebuild left menu
                         g.lm.init();
-                        // replot the chart using new settings 
+                        // replot the chart using new settings
                         if (g.current_analysis.status == true) {
                             g.update_chart();
                         }
                         // set menu (visible lists icons)
                         g.lm.set_menu(false);
                     }
-                    // close dialog 
-                    $(this).dialog('destroy'); 
-                }                            
+                    // close dialog
+                    $(this).dialog('destroy');
+                }
             }
         });
         // set form values
@@ -1696,9 +1835,9 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         $("#dialog #chart_axis_label_max_len").val(g.cfg.chart_axis_label_max_len);
         $("#dialog #chart_axis_label_max_offset").val(g.cfg.chart_axis_label_max_offset);
         $("#dialog #matrix_num_series_limit").val(g.cfg.matrix_num_series_limit);
-        $("#dialog #resize_delay").val(g.cfg.resize_delay);                                   
+        $("#dialog #resize_delay").val(g.cfg.resize_delay);
     };
-    
+
     // show content
     this.show_content = function () {
         // hide help section
@@ -1709,7 +1848,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
         // show footer
         $("div#footer").show();
     }
-    
+
     // show help
     this.show_help = function () {
         // reset
@@ -1723,18 +1862,18 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
 	$("div#short_overview").hide();
         $("div#help").show();
     };
-    
+
     // show short_overview
     this.show_short_overview = function () {
 	<?php
-	
+
 	$path_teacher="";
 	$path_student="";
-	
+
 	if(!isset($SESSION->lang)){
 		$SESSION->lang=$USER->lang;
 	}
-	
+
 	switch($SESSION->lang){
 		case "de":
 			$path_teacher="http://moclog.ch/de/tutorials/moclog-gismo-fur-dozenten/";
@@ -1747,18 +1886,18 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
 		case "it":
 			$path_teacher="http://moclog.ch/it/tutorials/moclog-gismo-per-docenti/";
 			$path_student="http://moclog.ch/it/tutorials/moclog-gismo-per-studenti/";
-		break;	
+		break;
 		case 'en':
 		default:
 			$path_teacher="http://moclog.ch/tutorials/moclog-gismo-for-instructors/";
-			$path_student="http://moclog.ch/tutorials/moclog-gismo-for-students/";	
+			$path_student="http://moclog.ch/tutorials/moclog-gismo-for-students/";
 		break;
 	}
 	?>
 	if(this.actor=='teacher'){ path="<?php echo $path_teacher; ?>"; }else{ path="<?php echo $path_student; ?>"; }
         window.open(path,"_blank","toolbar=no, locaqtion=no, directories=no, swtatus=no,nemubvar=no, scrollabrs=auto, resizable=yes, copyhistory=no");
-    };    
-    
+    };
+
     this.about = function () {
         // self
         var g = this;
@@ -1770,15 +1909,15 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         .append($("<legend></legend>").html("Gismo"))
                         .append("<?php print_string('intro_information_about_gismo', 'block_gismo'); ?>")
                         .append($("<p></p>").append($("<ul></ul>")
-                            .append($("<li></li>").append("<?php print_string('gismo_version', 'block_gismo'); ?>: 3.1.1"))
-                            .append($("<li></li>").append("<?php print_string('release_date', 'block_gismo'); ?>: 2013-06-18"))
-                        )) 
+                            .append($("<li></li>").append("<?php print_string('gismo_version', 'block_gismo'); ?>: <?php print_string('gismo_version_value', 'block_gismo'); ?>"))
+                            .append($("<li></li>").append("<?php print_string('release_date', 'block_gismo'); ?>: <?php print_string('release_date_value', 'block_gismo'); ?>"))
+                        ))
                     )
                     .append($('<fieldset></fieldset>')
                         .addClass("local_fieldset")
                         .append($("<legend></legend>").html("<?php print_string('authors', 'block_gismo'); ?>"))
                         .append("<?php print_string('contact_us', 'block_gismo'); ?>")
-                        .append($("<p></p>").append($("<ul></ul>")                        
+                        .append($("<p></p>").append($("<ul></ul>")
                             .append($("<li></li>").append("Christian Milani (christian.milani _AT_ usi.ch)"))
                             .append($("<li></li>").append("Riccardo Mazza (riccardo.mazza _AT_ usi.ch)"))
 			    .append($("<li></li>").append("Luca Mazzola (mazzola.luca _AT_ gmail.com)"))
@@ -1787,20 +1926,20 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                     )
         dialog.html(about.html());
         dialog.attr("title", "<?php print_string('about_gismo', 'block_gismo'); ?>");
-        dialog.dialog({ 
-            resizable: false, 
-            modal: true, 
+        dialog.dialog({
+            resizable: false,
+            modal: true,
             draggable: false,
             width: 500,
             buttons: {
                 '<?php print_string('close', 'block_gismo'); ?>': function() {
-                    // close dialog 
-                    $(this).dialog('destroy'); 
-                }                            
+                    // close dialog
+                    $(this).dialog('destroy');
+                }
             }
-        });   
+        });
     };
-    
+
     // exit
     this.exit = function () {
         return this.util.show_exit_confirmation("GISMO - Exit", "<?php print_string('confirm_exiting', 'block_gismo'); ?>");

@@ -118,7 +118,7 @@ $string['gismo:view'] = "GISMO - Autorizzazione fallita";
 
 
 //OTHERS
-$string['welcome'] = "Benvenuti a GISMO v. 3.1.1";
+$string['welcome'] = "Benvenuti a GISMO v. 3.2";
 $string['processing_wait'] = "Calcolando i dati, per favore attendere!";
 
 //Graphs labels
@@ -163,7 +163,7 @@ $string['confirm_exiting'] = 'Sei sicuro di voler uscire da Gismo?';
 
 //Settings
 $string['manualexportpassword'] = 'Password per l\'export dei dati manuale';
-$string['manualexportpassworddesc'] = 'Con questo pametro impostiamo la password per lo script export_data.php, in modo tale che per essere eseguito sia necessario introdurre la password ed evitare azioni illecite, mediante il seguente URL:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />Se questo campo è vuoto, non è necessario nessuna password.';
+$string['manualexportpassworddesc'] = 'Con questo pametro impostiamo la password per lo script export_data.php, in modo tale che per essere eseguito sia necessario introdurre la password ed evitare azioni illecite, mediante il seguente URL:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />Se questo campo &egrave; vuoto, non &egrave; necessario nessuna password.';
 $string['manualexportpassworderror'] = 'Password per l\'export dei dati per GISMO mancante o errata';
 $string['export_data_limit_records'] = 'Limita il numero di record nelle query SQL per l\'analisi dei dati';
 $string['export_data_limit_recordsdesc'] = 'Limita il numero di record nelle query SQL per l\'analisi dei dati nel processo di export di Gismo (GISMOdata_manager.php).<br /> Non modificare questo valore se non si sa bene cosa si sta facendo.';
@@ -181,4 +181,52 @@ $string['debug_mode'] = 'Modalit&agrave; debug';
 $string['debug_modedesc'] = 'Se abilitato, alcuni messaggi di debug verranno visualizzati durante il processo di export di Gismo.';
 $string['debug_mode_true'] = 'Abilitato';
 $string['debug_mode_false'] = 'Disabilitato';
+
+//Completion
+$string['completion'] = 'Completamento';
+$string['completion_quiz_menu'] = 'Quiz';
+$string['completion_quiz_chart_title'] = 'Completamento dei quiz';
+$string['completion_assignment_menu'] = 'Compiti';
+$string['completion_assignment_chart_title'] = 'Completamento dei compiti';
+$string['completion_assignment22_menu'] = 'Compiti 2.2';
+$string['completion_assignment22_chart_title'] = 'Completamento dei compiti 2.2';
+$string['completion_resource_menu'] = 'Risorse';
+$string['completion_resource_chart_title'] = 'Completamento delle risorse';
+$string['completion_forum_menu'] = 'Forum';
+$string['completion_forum_chart_title'] = 'Completamento dei forum';
+$string['completion_wiki_menu'] = 'Wiki';
+$string['completion_wiki_chart_title'] = 'Completamento dei wiki';
+$string['completion_chat_menu'] = 'Chat';
+$string['completion_chat_chart_title'] = 'Completamento delle chat';
+$string['completion_completed_on_tooltip'] = 'Completato il ';
+$string['completion_completed_on_tooltip_months'] = "['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic']";
+
+//Added missing string 08.10.2013
+$string['err_missing_data'] ='Non posso procedere con l&#39;analisi perch&eacute; non ci sono dati';
+$string['err_no_data'] ='Non ci sono dati';
+$string['err_cannot_extract_data'] ='Impossibile estrarre i dati dal server!';
+$string['err_unknown'] ='Errore generico!';
+
+//Homepage text
+$string['homepage_title']='Benvenuti su GISMO';
+$string['homepage_processing_data_wait']='Sto analizzando i dati, attendere ...';
+$string['homepage_processing_data']='Analisi dei dati';
+$string['homepage_text']='GISMO &egrave uno strumento di monitoraggio interattivo degli studenti, che si basa sui dati di traccimanto delle attivita del Course Management System Moodle. Esso genera anche delle utili rappresentazioni grafiche che possono essere analizzate dal docente del corso e dagli studenti per avere una visione generale delle attivit&agrave didattiche.<br />
+Seleziona per favore una delle voci di menu dalla barra in alto a questa pagina per cominciare ad usare GISMO.<br />
+Se desiderate vedere il tutorial, per favore scegliete la voce di menu "Aiuto"> "Tutorial".';
+
+$string['hide_menu']='Nascondi menu';
+$string['show_menu']='Mostra menu';
+$string['show_details']='Mostra dettagli';
+
+$string['homepage_charts_preview_title']='Anteprima grafici';
+$string['homepage_chart_activities_assignments_overview']='Attivit&agrave;: panoramica compiti';
+$string['homepage_chart_resources_access_overview']='Risorse: panoramica degli accessi';
+$string['homepage_chart_resources_students_overview']='Risorse: panoramica degli studenti';
+$string['homepage_chart_students_access_overview_on_resources']='Studenti: panoramica degli accessi alle risorse';
+$string['homepage_chart_students_access_overview']='Studenti: panoramica accessi';
+$string['homepage_chart_students_accesses_by_students']='Studenti: accessi per ogni studente';
+
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='accessi';
 ?>

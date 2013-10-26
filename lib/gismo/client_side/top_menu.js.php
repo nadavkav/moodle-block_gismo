@@ -8,7 +8,7 @@
 
     // include moodle config file
     require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
-
+  
 ?>
 function top_menu(g) {
     // gismo instance
@@ -177,6 +177,64 @@ function top_menu(g) {
                 }
             )
         },
+        // Completion menu
+        {
+            "label": "<?php print_string('completion', 'block_gismo'); ?>",
+            "action": null,
+            "roles": new Array("teacher", "student"),
+            "require": "COMPLETION_ENABLED", //Require completion enabled on SITE & COURSE
+            "sub": new Array(   
+                { 
+                    "label": "<?php print_string('completion_assignment_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-assignments')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("assignments"), 
+                    "sub": null 
+                },
+                { 
+                    "label": "<?php print_string('completion_assignment22_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-assignments22')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("assignments22"), 
+                    "sub": null 
+                },
+                { 
+                    "label": "<?php print_string('completion_chat_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-chats')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("chats"), 
+                    "sub": null 
+                },
+                { 
+                    "label": "<?php print_string('completion_forum_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-forums')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("forums"), 
+                    "sub": null 
+                },             
+                { 
+                    "label": "<?php print_string('completion_quiz_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-quizzes')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("quizzes"), 
+                    "sub": null 
+                },
+                { 
+                    "label": "<?php print_string('completion_resource_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-resources')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("resources"), 
+                    "sub": null 
+                },
+                { 
+                    "label": "<?php print_string('completion_wiki_menu', 'block_gismo'); ?>", 
+                    "action": "g.analyse('completion-wikis')", 
+                    "roles": new Array("teacher", "student"), 
+                    "require": new Array("wikis"), 
+                    "sub": null 
+                }
+            )
+        },        
         // Help menu
         {
             "label": "<?php print_string('help', 'block_gismo'); ?>",
@@ -248,6 +306,8 @@ function top_menu(g) {
                 for (i=0; i<items[k].require.length; i++) {
                     check = check && this.lists_status[items[k].require[i]];
                 }
+            }else if(items[k].require=="COMPLETION_ENABLED"){ //Require completion on SITE & COURSE
+                check = check && g.completionenabled;
             }
             // build item and sub items only if check is true
             if (check) {

@@ -51,13 +51,13 @@ $string['assignments'] = 'Devoirs';
 $string['assignments_chart_title'] = 'Activités : aperçu des devoirs';
 $string['assignments22'] = 'Devoirs 2.2';
 $string['assignments22_chart_title'] = 'Activités : aperçu des devoirs 2.2';
-$string['chats'] = 'Discussions';
+$string['chats'] = 'Chats';
 
-$string['chats_over_time'] = 'Discussions à travers le temps'; //************
+$string['chats_over_time'] = 'Chats à travers le temps'; //************
 
-$string['chats_chart_title'] = 'Activités : aperçu des discussions';
-$string['chats_ud_chart_title'] = 'Activités : détails des contributions des étudiant-e-s aux discussions';
-$string['chats_over_time_chart_title'] = 'Activités : contributions aux discussions à travers le temps';
+$string['chats_chart_title'] = 'Activités : aperçu des chats';
+$string['chats_ud_chart_title'] = 'Activités : détails des contributions des étudiant-e-s aux chats';
+$string['chats_over_time_chart_title'] = 'Activités : contributions aux chats à travers le temps';
 $string['forums'] = 'Forums';
 
 $string['forums_over_time'] = 'Forums à travers le temps'; //************
@@ -66,12 +66,12 @@ $string['forums_chart_title'] = 'Activités : aperçu des forums';
 $string['forums_ud_chart_title'] = 'Activités : détails des contributions des étudiant-e-s aux forums';
 $string['forums_over_time_chart_title'] = 'Activités : contributions aux forums à travers le temps';
 
-$string['quizzes'] = 'Questionnaires';
-$string['quizzes_chart_title'] = 'Activités : aperçu des questionnaires';
+$string['quizzes'] = 'Tests';
+$string['quizzes_chart_title'] = 'Activités : aperçu des tests';
 
 $string['wikis'] = 'Wikis';
 
-$string['wikis_over_time'] = 'Wikis over time'; //************
+$string['wikis_over_time'] = 'Wikis à travers le temps'; //************
 
 $string['wikis_chart_title'] = 'Activités : aperçu des wikis';
 $string['wikis_ud_chart_title'] = 'Activités : détails des contributions des étudiant-e-s aux wikis';
@@ -119,7 +119,7 @@ $string['gismo:view'] = "GISMO - Échec de l\'autorisation";
 
 
 //OTHERS
-$string['welcome'] = "Bienvenue dans GISMO v. 3.1.1";
+$string['welcome'] = "Bienvenue dans GISMO v. 3.2";
 $string['processing_wait'] = "Traitement des données, veuillez patienter !";
 
 //Graphs labels
@@ -161,4 +161,49 @@ $string['contact_us']= 'N\'hésitez pas à contacter les auteurs pour des questi
 $string['close'] = 'Fermer';
 $string['confirm_exiting'] = 'Souhaitez vous vraiment quitter Gismo?';
 
+//Completion
+$string['completion'] = 'Achèvement';
+$string['completion_quiz_menu'] = 'Tests'; 
+$string['completion_quiz_chart_title'] = 'Achèvement tests'; 
+$string['completion_assignment_menu'] = 'Devoirs'; 
+$string['completion_assignment_chart_title'] = 'Achèvement devoirs'; 
+$string['completion_assignment22_menu'] = 'Devoirs 2.2'; 
+$string['completion_assignment22_chart_title'] = 'Achèvement devoirs 2.2'; 
+$string['completion_resource_menu'] = 'Ressources'; 
+$string['completion_resource_chart_title'] = 'Achèvement ressources'; 
+$string['completion_forum_menu'] = 'Forums'; 
+$string['completion_forum_chart_title'] = 'Achèvement forums'; 
+$string['completion_wiki_menu'] = 'Wikis'; 
+$string['completion_wiki_chart_title'] = 'Achèvement wikis'; 
+$string['completion_chat_menu'] = 'Chats';
+$string['completion_chat_chart_title'] = 'Achèvement chats'; 
+$string['completion_completed_on_tooltip'] = 'Achevé le '; 
+$string['completion_completed_on_tooltip_months'] = "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']";
+
+//Added missing string 08.10.2013
+$string['err_missing_data'] ='Il est impossible de procéder à l&#39;analyse car il n&#39;y a aucune donnée disponible!'; 
+$string['err_no_data'] ='Pas de données'; 
+$string['err_cannot_extract_data'] ='Il est impossible d&#39;extraire des données du serveur!'; 
+$string['err_unknown'] ='Erreur inconnue!';
+
+//Homepage text
+$string['homepage_title']='Bienvenus sur GISMO'; 
+$string['homepage_processing_data_wait']='Traitement de données , attendre svp!'; 
+$string['homepage_processing_data']= 'Traitement de données'; 
+$string['homepage_text']='GISMO est un système graphique interactif servant d\'outil de contrôle et de suivi d\'étudiant, celui-ci extrait les données de suivi à partir du système de gestion de cours Moodle. Il produit également des représentations graphiques très utiles qui peuvent être examinées par les enseignants et les étudiants afin d\'obtenir un aperçu général des activités d\'apprentissage.<br /> S\'il vous plaît sélectionner un des menus en haut de cette page pour commencer à utiliser GISMO.<br />Si vous souhaitez regarder le tutoriel il vous suffit de cliquer sur le menu "Aide" > "Tutorial".';
+
+$string['hide_menu']='Cacher menu';
+$string['show_menu']='Afficher menu';
+$string['show_details']='Afficher details';
+
+$string['homepage_charts_preview_title']='Aperçu des graphiques';
+$string['homepage_chart_activities_assignments_overview']='Activités: aperçu des devoirs';
+$string['homepage_chart_resources_access_overview']='Ressources: aperçu des accès';
+$string['homepage_chart_resources_students_overview']='Ressources: aperçu des étudiant-e-s';
+$string['homepage_chart_students_access_overview_on_resources']='Étudiant-e-s: aperçu des accès aux ressources';
+$string['homepage_chart_students_access_overview']='Étudiant-e-s: aperçu des accès';
+$string['homepage_chart_students_accesses_by_students']='Étudiant-e-s: accès par les étudiant-e-s';
+
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='accès';
 ?>

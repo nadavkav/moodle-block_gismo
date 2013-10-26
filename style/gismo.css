@@ -181,7 +181,7 @@ img {
     background: url(../images/htoogle.png) no-repeat 0 0;
 }
 #lm_header img {
-    margin: 5px 5px 5px 5px;
+    margin: 5px 3px;
 }
 #lm_content {
     width: 250px;
@@ -349,4 +349,24 @@ a.guide{
 	background-color: #EEEEEE; 
 	color:#CC9999;
 	font-size: +3;
+}
+
+/* ADDED 10.10.2013 */
+#lm_content .cb .cb_label_type { /* New resource separator by type */
+    display: block;
+    width: 210px;
+    padding:2px;
+    padding-left: 15px;
+    text-indent: -15px;
+    font-weight: bold;
+    text-transform:uppercase;
+    background-color:#666;
+    margin-top:5px;
+    margin-bottom:5px;    
+}
+
+#lm_content #resources_list .cb .cb_label { /* If resources indent the element under the type*/
+    padding-left: 25px; /* Indent 10px */
+    text-indent: -15px;    
+    width: 175px; /* Must make smaller for the detail eye */
 }

@@ -1,5 +1,10 @@
 <?php
 //GISMO EN language file
+
+//ONLY IN ENGLISH
+$string['gismo_version_value']='3.2';
+$string['release_date_value']='2013-10-15';
+
 // block title
 $string['pluginname'] = 'Gismo';
 $string['gismo'] = 'Gismo';
@@ -122,7 +127,7 @@ $string['gismo:view'] = "GISMO - Authorization failed";
 
 
 //OTHERS
-$string['welcome'] = "Welcome to GISMO v. 3.1.1";
+$string['welcome'] = "Welcome to GISMO v. 3.2";
 $string['processing_wait'] = "Processing data, please wait!";
 
 //Graphs labels
@@ -151,7 +156,7 @@ $string['save'] = 'Save';
 $string['cancel'] = 'Cancel';
 
 
-$string['export_chart_as_image'] = 'GISMO - Export chart as image';
+$string['export_chart_as_image'] = 'Export chart as image';
 $string['no_chart_at_the_moment'] = 'There isn\'t any chart at the moment!';
 
 
@@ -166,7 +171,7 @@ $string['confirm_exiting'] = 'Do you really want to exit Gismo?';
 
 //Settings
 $string['manualexportpassword'] = 'Manual export password';
-$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
+$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
 $string['manualexportpassworderror'] = 'GISMO manual export password missing or wrong';
 $string['export_data_limit_records'] = 'Limit Records in SQL queries';
 $string['export_data_limit_recordsdesc'] = 'Limit the number of records selected for each query during data export (in GISMOdata_manager.php).
@@ -189,4 +194,52 @@ $string['student_reporting'] = 'Students reporting';
 $string['student_reporting_desc'] = 'If enabled students will be able to see their logs';
 $string['student_reporting_enabled'] = 'Enabled';
 $string['student_reporting_disabled'] = 'Disabled';
+
+//Completion
+$string['completion'] = 'Completion';
+$string['completion_quiz_menu'] = 'Quizzes';
+$string['completion_quiz_chart_title'] = 'Quizzes completions';
+$string['completion_assignment_menu'] = 'Assignments';
+$string['completion_assignment_chart_title'] = 'Assignments completions';
+$string['completion_assignment22_menu'] = 'Assignments 2.2';
+$string['completion_assignment22_chart_title'] = 'Assignments 2.2 completions';
+$string['completion_resource_menu'] = 'Resources';
+$string['completion_resource_chart_title'] = 'Resources completions';
+$string['completion_forum_menu'] = 'Forums';
+$string['completion_forum_chart_title'] = 'Forums completions';
+$string['completion_wiki_menu'] = 'Wikis';
+$string['completion_wiki_chart_title'] = 'Wikis completions';
+$string['completion_chat_menu'] = 'Chats';
+$string['completion_chat_chart_title'] = 'Chats completions';
+$string['completion_completed_on_tooltip'] = 'Completed on ';
+$string['completion_completed_on_tooltip_months'] = "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']";
+
+//Added missing string 08.10.2013
+$string['err_missing_data'] ='Cannot proceed with the analysis beacuse there isn\'t any data to work on!'; 
+$string['err_no_data'] ='No data'; 
+$string['err_cannot_extract_data'] ='Cannot extract data from server!'; 
+$string['err_unknown'] ='Unknown error!'; 
+
+//Homepage text
+$string['homepage_title']='Welcome to GISMO';
+$string['homepage_processing_data_wait']='Processing data, please wait!';
+$string['homepage_processing_data']='Processing data';
+$string['homepage_text']='GISMO is a graphical interactive student monitoring and tracking system tool that extracts tracking data from the Moodle Course Management System. It generates also useful graphical representations that can be explored by course instructors and students to get an overview of the learning activities.<br />
+Please select one of the menus on the top of this page to start using GISMO.<br />
+If you would like to have a look at the tutorial please click on the menu "Help"> "Tutorial".';
+
+$string['hide_menu']='Hide menu';
+$string['show_menu']='Show menu';
+$string['show_details']='Show details';
+
+$string['homepage_charts_preview_title']='Charts preview';
+$string['homepage_chart_activities_assignments_overview']='Activities: assignments overview';
+$string['homepage_chart_resources_access_overview']='Resources: accesses overview';
+$string['homepage_chart_resources_students_overview']='Resources: students overview';
+$string['homepage_chart_students_access_overview_on_resources']='Students: accesses overview on resources';
+$string['homepage_chart_students_access_overview']='Students: accesses overview';
+$string['homepage_chart_students_accesses_by_students']='Students: accesses by students';
+
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='accesses';
 ?>
