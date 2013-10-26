@@ -1,9 +1,9 @@
 <?php
 //GISMO EN language file
 // block title
-$string['pluginname'] = 'דוחות GISMO';
-$string['gismo'] = 'Gismo';
-$string['gismo_report_launch'] = 'תצוגת דוחות קורס';
+$string['pluginname'] = 'דוחות פעילות קורס GISMO';
+$string['gismo'] = 'דוחות GISMO - פעילות תלמידים בקורס';
+$string['gismo_report_launch'] = 'תצוגת דוחות פעילות התלמידים בקורס';
 $string['exportlogs_missing'] = 'Missing exportlogs parameter';
 $string['exportlogs_missingcourselogs'] = 'Log analysis process runs on fixed hours, usually at nighttime. Your course data will be available within 24 hours';
 
@@ -16,14 +16,14 @@ $string['gismo:addinstance'] = 'הוספת משבצת דוחות GISMO חדשה'
 $string['gismo_help'] = "<p>Gismo works on those courses that meet the following requirements:</p><ul><li>there is at least one student enrolled to the course</li><li>there is at least one instance of one of the following modules:<ul><li>Resources</li><li>Assignments</li><li>Quizzes</li></ul></li></ul>";
 
 // General
-$string['page_title'] = "Gismo - ";
+$string['page_title'] = "GISMO - ";
 $string['file'] = 'קובץ';
 $string['options'] = 'אפשרויות';
 $string['save'] = 'יצוא גרף לקובץ';
 $string['print'] = 'הדפסה';
 $string['exit'] = 'יציאה';
 $string['help'] = 'עזרה';
-$string['home'] = 'Gismo ראשי';
+$string['home'] = 'GISMO ראשי';
 $string['close'] = 'סיום';
 
 $string['users'] = 'משתמשים'; //************
@@ -118,7 +118,7 @@ $string['gismo:view'] = "GISMO - Authorization failed";
 
 
 //OTHERS
-$string['welcome'] = "Welcome to GISMO v. 3.1.1";
+$string['welcome'] = "Welcome to GISMO v. 3.2";
 $string['processing_wait'] = "Processing data, please wait!";
 
 //Graphs labels
@@ -131,38 +131,38 @@ $string['nr_submissions'] = "מספר הגשות";
 
 //OPTIONS
 $string['option_intro'] = 'This section let you customize specific applications options.';
-$string['option_general_settings'] = 'General settings';
-$string['option_include_hidden_items'] = 'Include hidden items';
-$string['option_chart_settings'] = 'Chart settings';
-$string['option_base_color'] = 'Base color';
-$string['option_red'] = 'Red';
-$string['option_green'] = 'Green';
-$string['option_blue'] = 'Blue';
+$string['option_general_settings'] = 'הגדרות כלליוץ';
+$string['option_include_hidden_items'] = 'שקלול ציונים חבויים';
+$string['option_chart_settings'] = 'הגדרות גרף';
+$string['option_base_color'] = 'צבע בסיס';
+$string['option_red'] = 'אדום';
+$string['option_green'] = 'ירוק';
+$string['option_blue'] = 'כחול';
 $string['option_axes_label_max_length'] = 'Axes label max length (characters)';
 $string['option_axes_label_max_offset'] = 'Axes label max offset (characters)';
-$string['option_number_of_colors'] = 'Number of colors (matrix charts)';
+$string['option_number_of_colors'] = 'מינעד צבעים (matrix charts)';
 $string['option_other_settings'] = 'Other settings';
 $string['option_window_resize_delay_seconds'] = 'Window resize delay (seconds)';
-$string['save'] = 'Save';
-$string['cancel'] = 'Cancel';
+$string['save'] = 'שמירה';
+$string['cancel'] = 'ביטול';
 
 
-$string['export_chart_as_image'] = 'GISMO - Export chart as image';
+$string['export_chart_as_image'] = 'GISMO - יצוא גרף כתמונה';
 $string['no_chart_at_the_moment'] = 'There isn\'t any chart at the moment!';
 
 
-$string['about_gismo'] = 'About GISMO';
+$string['about_gismo'] = 'אודות GISMO';
 $string['intro_information_about_gismo'] = 'Information about this release is reported below:';
-$string['gismo_version'] = 'Version ';
-$string['release_date'] = 'Release date ';
-$string['authors'] = 'Authors ';
+$string['gismo_version'] = 'גרסה ';
+$string['release_date'] = 'תאריך גירסה ';
+$string['authors'] = 'מחברים ';
 $string['contact_us']= 'Please feel free to contact authors for questions or for reporting bugs at the following addresses: ';
-$string['close'] = 'Close';
+$string['close'] = 'סיום';
 $string['confirm_exiting'] = 'Do you really want to exit Gismo?';
 
 //Settings
 $string['manualexportpassword'] = 'Manual export password';
-$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />'.$CFG->wwwroot.'/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
+$string['manualexportpassworddesc'] = 'This means that the export_data.php script cannot be run from a web browser without supplying the password using the following form of URL:<br /><br />http://site.example.com/blocks/gismo/lib/gismo/server_side/export_data.php?password=something<br /><br />If this is left empty, no password is required.';
 $string['manualexportpassworderror'] = 'GISMO manual export password missing or wrong';
 $string['export_data_limit_records'] = 'Limit Records in SQL queries';
 $string['export_data_limit_recordsdesc'] = 'Limit the number of records selected for each query during data export (in GISMOdata_manager.php).
@@ -185,4 +185,52 @@ $string['student_reporting'] = 'Students reporting';
 $string['student_reporting_desc'] = 'If enabled students will be able to see their logs';
 $string['student_reporting_enabled'] = 'Enabled';
 $string['student_reporting_disabled'] = 'Disabled';
+
+//Completion
+$string['completion'] = 'השלמת פעילות';
+$string['completion_quiz_menu'] = 'בחנים';
+$string['completion_quiz_chart_title'] = 'השלמת פעילות: בחנים';
+$string['completion_assignment_menu'] = 'מטלות';
+$string['completion_assignment_chart_title'] = 'השלמת פעילות: מטלות';
+$string['completion_assignment22_menu'] = 'מטלות 2.2';
+$string['completion_assignment22_chart_title'] = 'השלמת פעילות: מטלות 2.2';
+$string['completion_resource_menu'] = 'משאבים';
+$string['completion_resource_chart_title'] = 'השלמת פעילות: משאבים';
+$string['completion_forum_menu'] = 'פורומים (קבוצות־דיון)';
+$string['completion_forum_chart_title'] = 'השלמת פעילות: פורומים (קבוצות־דיון)';
+$string['completion_wiki_menu'] = 'ויקי (תוצר־משותף)';
+$string['completion_wiki_chart_title'] = 'השלמת פעילות: ויקי (תוצר־משותף)';
+$string['completion_chat_menu'] = 'רב־שיח';
+$string['completion_chat_chart_title'] = 'השלמת פעילות: רב־שיח';
+$string['completion_completed_on_tooltip'] = 'הושלמה ב: ';
+$string['completion_completed_on_tooltip_months'] = "['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','צדמבר']";
+
+//Added missing string 08.10.2013
+$string['err_missing_data'] ='Cannot proceed with the analysis because there isn\'t any data to work on!';
+$string['err_no_data'] ='נתוני הקורס טרם עובדו';
+$string['err_cannot_extract_data'] ='Cannot extract data from server!';
+$string['err_unknown'] ='Unknown error!';
+
+//Homepage text
+$string['homepage_title']='Welcome to GISMO';
+$string['homepage_processing_data_wait']='Processing data, please wait!';
+$string['homepage_processing_data']='Processing data';
+$string['homepage_text']='GISMO is a graphical interactive student monitoring and tracking system tool that extracts tracking data from the Moodle Course Management System. It generates also useful graphical representations that can be explored by course instructors and students to get an overview of the learning activities.<br />
+Please select one of the menus on the top of this page to start using GISMO.<br />
+If you would like to have a look at the tutorial please click on the menu "Help"> "Tutorial".';
+
+$string['hide_menu']='הסתרת תפריט';
+$string['show_menu']='תצוגת תפריט';
+$string['show_details']='תצוגת פירוט';
+
+$string['homepage_charts_preview_title']='תצוגת גרפים מקדימה';
+$string['homepage_chart_activities_assignments_overview']='מבט כולל על פעילות מטלה';
+$string['homepage_chart_resources_access_overview']='מבט כולל על גישה למשאבים';
+$string['homepage_chart_resources_students_overview']='מבט כולל על פעילות תלמידים';
+$string['homepage_chart_students_access_overview_on_resources']='מבט כולל על צפיה של תלמידים במשאבים';
+$string['homepage_chart_students_access_overview']='מבט כולל על תלמידים';
+$string['homepage_chart_students_accesses_by_students']='מבט כולל על צפיה של תלמידים';
+
+//Added missing string 21.10.2013
+$string['accesses_tooltip']='צפיות/פעילות/גישה לקורס';
 
