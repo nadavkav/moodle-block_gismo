@@ -26,18 +26,18 @@ class block_gismo extends block_base {
 
         // init content
         $this->content = new stdClass;
-        
+
         //Get block_gismo settings
         $gismoconfig = get_config('block_gismo');
-        
+
         if (isset($gismoconfig->student_reporting)) {
             if($gismoconfig->student_reporting === "false"){
                 //check gismo:view capability
-                if (!has_capability('block/gismo:view', get_context_instance(CONTEXT_BLOCK, $this->instance->id))) {        
+                if (!has_capability('block/gismo:view', context_block::instance($this->instance->id) )) {
                     // return empty content
                     return $this->content;
                 }
-            }  
+            }
         }
         //Check if setting exportlogs exists
         if (empty($gismoconfig->exportlogs)) {
@@ -76,7 +76,7 @@ class block_gismo extends block_base {
             $this->content->text .= $OUTPUT->help_icon('gismo', 'block_gismo');
         }
         $this->content->footer = '';
-        
+
 
         // return content
         return $this->content;
@@ -138,7 +138,7 @@ class block_gismo extends block_base {
         // trace end
         mtrace("GISMO - cron (end)!");
 
-        // ok     
+        // ok
         return true;
     }
 

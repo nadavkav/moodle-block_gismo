@@ -90,7 +90,7 @@ class FetchStaticDataMoodle {
         switch ($this->actor) {
             case "teacher":
                 // fetch students
-                $context = get_context_instance(CONTEXT_COURSE, $this->course->id);
+                $context = context_course::instance($this->course->id);
                 if ($context !== FALSE) {
                     $users = get_users_by_capability($context, "block/gismo:trackuser", "", "lastname, firstname");
                     // save data
@@ -130,7 +130,7 @@ class FetchStaticDataMoodle {
         switch ($this->actor) {
             case "teacher":
                 // fetch teachers
-                $context = get_context_instance(CONTEXT_COURSE, $this->course->id);
+                $context = context_course::instance($this->course->id);
                 if ($context !== FALSE) {
                     $teachers = get_users_by_capability($context, "block/gismo:trackteacher", "", "lastname, firstname");
                     // save data
@@ -185,7 +185,7 @@ class FetchStaticDataMoodle {
                     $modules[$tm->coursemodule] = $tm;
                 }
                 unset($tmp_modules);
-                
+
                 //If orderbytype (resources) return the list ordered by name
                 if ($orderbytype) {
                     return $modules;
@@ -414,7 +414,7 @@ class FetchStaticDataMoodle {
 
     // fetch start date and time
     protected function FetchStartDateAndTime() {
-        global $DB;
+        global $DB, $CFG;
 
         // check variable
         $check = true;
