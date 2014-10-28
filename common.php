@@ -156,7 +156,7 @@ if (!$course = $DB->get_record("course", array("id" => intval($srv_data->course_
 
 // context 
 
-$context_obj = get_context_instance(CONTEXT_BLOCK, intval($srv_data->block_instance_id));
+$context_obj = context_block::instance(intval($srv_data->block_instance_id));
 
 
 //Get block_gismo settings

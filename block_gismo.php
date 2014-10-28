@@ -33,7 +33,7 @@ class block_gismo extends block_base {
         if (isset($gismoconfig->student_reporting)) {
             if($gismoconfig->student_reporting === "false"){
                 //check gismo:view capability
-                if (!has_capability('block/gismo:view', get_context_instance(CONTEXT_BLOCK, $this->instance->id))) {        
+                if (!has_capability('block/gismo:view', context_block::instance($this->instance->id))) {        
                     // return empty content
                     return $this->content;
                 }
