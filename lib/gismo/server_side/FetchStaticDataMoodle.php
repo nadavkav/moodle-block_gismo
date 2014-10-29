@@ -414,7 +414,7 @@ class FetchStaticDataMoodle {
 
     // fetch start date and time
     protected function FetchStartDateAndTime() {
-        global $DB;
+        global $DB,$CFG;
 
         // check variable
         $check = true;
