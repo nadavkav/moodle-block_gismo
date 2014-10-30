@@ -3,9 +3,6 @@
 class GISMOdata_manager {
 
     // New fields from block_gismo settings
-    protected $run_inf = "02:00:00";
-    protected $run_sup = "04:00:00";
-    protected $hours_from_last_run = 12;
     protected $limit_records = 20000;
     protected $debug_mode = false;
     protected $exportlogs = "all";
@@ -26,15 +23,6 @@ class GISMOdata_manager {
 
         if (isset($config->export_data_limit_records)) {
             $this->limit_records = $config->export_data_limit_records;
-        }
-        if (isset($config->export_data_hours_from_last_run)) {
-            $this->hours_from_last_run = $config->export_data_hours_from_last_run;
-        }
-        if (isset($config->export_data_run_inf_hour) && isset($config->export_data_run_inf_minute)) {
-            $this->run_inf = str_pad($config->export_data_run_inf_hour, 2, "0", STR_PAD_LEFT) . ":" . str_pad($config->export_data_run_inf_minute, 2, "0", STR_PAD_LEFT) . ":00";
-        }
-        if (isset($config->export_data_run_sup_hour) && isset($config->export_data_run_sup_minute)) {
-            $this->run_sup = str_pad($config->export_data_run_sup_hour, 2, "0", STR_PAD_LEFT) . ":" . str_pad($config->export_data_run_sup_minute, 2, "0", STR_PAD_LEFT) . ":00";
         }
         if (isset($config->debug_mode)) {
             $this->debug_mode = ($config->debug_mode === 'true'); //Convert string to boolean
@@ -71,9 +59,6 @@ class GISMOdata_manager {
     }
 
     // sync data
-    // This method ensures that data is syncronized only if:
-    // 1) Now time is between 'run_inf' and 'run_sup'
-    // 2) Data hasn't been syncronized in the last 'hours_from_last_run' hours
     public function sync_data() {
         global $CFG, $DB;
 
@@ -110,9 +95,7 @@ class GISMOdata_manager {
         $max_log_id = intval(array_pop($max_log_id)->id);
 
         // sync ???                    
-        if ($this->debug_mode === true OR
-                ((($this->now_time - intval($last_export_time->value) > $this->hours_from_last_run * 3600) AND
-                (($this->now_hms >= $this->run_inf AND $this->now_hms <= $this->run_sup))) OR $this->manual === true)) {
+        if ($this->debug_mode === true OR $this->manual === true) {
             // lock gismo tables
             // TODO
 
