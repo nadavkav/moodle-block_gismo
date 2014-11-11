@@ -263,6 +263,12 @@ class GISMOdata_manager {
                         "objecttable" => array('forum_discussions', 'forum_posts', 'forum'),
                         "target" => array('post', 'discussion', 'course_module'),
                         "eventname" => array('%mod_forum%')
+                    ),
+                    "wiki" => array(
+                        "action" => array('viewed', 'created', 'deleted', 'updated'),
+                        "objecttable" => array('wiki', 'wiki_pages'),
+                        "target" => array('page', 'course_module'),
+                        "eventname" => array('%mod_wiki%')
                     )
                 );
 
@@ -357,8 +363,8 @@ class GISMOdata_manager {
                 if ($this->debug_mode) {
                     echo "\nMEMORY USAGE (AFTER ACCESSES ON ACTIVITIES): " . number_format(memory_get_usage(), 0, ".", "'");
                 }
-                
-                
+
+
                 /*
                  * SYNC block_gismo_sl table (GISMO Students Actions)
                  */
@@ -410,123 +416,100 @@ class GISMOdata_manager {
                 if ($this->debug_mode) {
                     echo "\nMEMORY USAGE (AFTER GISMO STUDENTS LOGIN): " . number_format(memory_get_usage(), 0, ".", "'");
                 }
-                
-                
-                
-                
-                
-                
+
+
+
+                /*
+                 * SYNC block_gismo_resource table (GISMO Resources Access Overview)
+                 */
+
+                $offset = 0;
+                $loop = true;
+
+                // retrieve accesses on resources
+                $qry = "SELECT MAX(id), " . $this->get_time2date_code("timecreated") . " AS date_val, MAX(timecreated) AS time, userid, component AS res_type, "
+                        . "contextid AS res_id, COUNT(contextid) AS count FROM {logstore_standard_log} "
+                        . "WHERE courseid = " . $course->id . " AND action = 'viewed' AND "
+                        . "component IN('mod_resource','mod_book','mod_folder','mod_url','mod_page','mod_imscp') $filter GROUP BY res_type, res_id, date_val, userid LIMIT " . $this->limit_records . " OFFSET ";
+                //'folder', 'imscp', 'page', 'resource', 'url', 'book'
+                // loop
+                while ($loop === true) {
+                    $actions = $DB->get_records_sql($qry . $offset);
+
+                    // DEBUG: MEMORY USAGE
+                    if ($this->debug_mode) {
+                        echo "\nMEMORY USAGE (MIDDLE ACCESSES ON RESOURCES): " . number_format(memory_get_usage(), 0, ".", "'");
+                    }
+
+                    // add entries
+                    if (is_array($actions) AND count($actions) > 0) {
+                        foreach ($actions as $key => $action) {
+                            $res_entry = new stdClass();
+                            $res_entry->course = $course->id;
+                            $res_entry->resid = $action->res_id;
+                            $res_entry->restype = $action->res_type;
+                            $res_entry->userid = $action->userid;
+                            $res_entry->timedate = $action->date_val;
+                            $res_entry->time = $action->time;
+                            $res_entry->numval = $action->count;
+                            // try to add record
+                            try {
+                                $DB->insert_record("block_gismo_resource", $res_entry, true, "id");
+                            } catch (Exception $e) {
+                                return $this->return_error("Cannot add entry in block_gismo_resource table.", __FILE__, __FUNCTION__, __LINE__);
+                            }
+                            // free memory
+                            unset($res_entry, $actions[$key]);
+                        }
+                        unset($actions);
+                    } else {
+                        $loop = false;
+                    }
+
+                    // increment offset
+                    $offset += $this->limit_records;
+                }
+
+                // update export max log id for courses
+                if ($this->exportlogs == 'course') {
+                    $last_export_max_log_id->value = $max_log_id;
+                    if ($DB->update_record("block_gismo_config", $last_export_max_log_id) === FALSE) {
+                        return $this->return_error("Cannot update last export max log id value.", __FILE__, __FUNCTION__, __LINE__);
+                    }
+                }
+
+                // DEBUG: MEMORY USAGE
+                if ($this->debug_mode) {
+                    echo "\nMEMORY USAGE (AFTER ACCESSES ON RESOURCES): " . number_format(memory_get_usage(), 0, ".", "'");
+                    echo "\n----------\n";
+                }
             }
         }
+
+        // update export time value and max log id
+        $last_export_time->value = $this->now_time;
+        if ($DB->update_record("block_gismo_config", $last_export_time) === FALSE) {
+            return $this->return_error("Cannot update last export time value.", __FILE__, __FUNCTION__, __LINE__);
+        }
+        // update export max log id for all courses
+        if ($this->exportlogs == 'all') {
+            $last_export_max_log_id->value = $max_log_id;
+            if ($DB->update_record("block_gismo_config", $last_export_max_log_id) === FALSE) {
+                return $this->return_error("Cannot update last export max log id value.", __FILE__, __FUNCTION__, __LINE__);
+            }
+        }
+
+        // unlock gismo tables
+        // TODO        
+        // DEBUG: MEMORY USAGE
+        if ($this->debug_mode) {
+            echo "\nMEMORY USAGE AFTER: " . number_format(memory_get_usage(), 0, ".", "'") . "\n";
+        }
+        
+        return $result;
     }
 
-    // sync data
-//    public function sync_data() {
-//        global $CFG, $DB;
-//
-//        if (!(is_array($courses) AND count($courses) > 0)) {
-//            return $this->return_error("There isn't any course at the moment.", __FILE__, __FUNCTION__, __LINE__);
-//        } else {
-//
-//
-//            // sync data for each course
-//            foreach ($courses as $course) {
-//
-//
-//                /*
-//                 * SYNC block_gismo_resource table (GISMO Resources Access Overview)
-//                 */
-//
-//                $offset = 0;
-//                $loop = true;
-//
-//                // retrieve accesses on resources
-//                $qry = "SELECT MAX({log}.id), " . $this->get_time2date_code("{log}.time") . " AS date_val, MAX({log}.time) AS time, {log}.userid AS userid, {log}.module AS res_type, " .
-//                        "{course_modules}.instance AS res_id, COUNT({course_modules}.instance) AS count FROM {log}, " .
-//                        "{course_modules} WHERE {course_modules}.id = {log}.cmid AND " .
-//                        "{log}.course = " . $course->id . " AND {log}.action = 'view' AND " .
-//                        "{log}.module IN('folder', 'imscp', 'page', 'resource', 'url', 'book') $filter GROUP BY res_type, res_id, date_val, userid LIMIT " . $this->limit_records . " OFFSET ";
-//
-//                // loop
-//                while ($loop === true) {
-//                    $actions = $DB->get_records_sql($qry . $offset);
-//
-//                    // DEBUG: MEMORY USAGE
-//                    if ($this->debug_mode) {
-//                        echo "\nMEMORY USAGE (MIDDLE ACCESSES ON RESOURCES): " . number_format(memory_get_usage(), 0, ".", "'");
-//                    }
-//
-//                    // add entries
-//                    if (is_array($actions) AND count($actions) > 0) {
-//                        foreach ($actions as $key => $action) {
-//                            $res_entry = new stdClass();
-//                            $res_entry->course = $course->id;
-//                            $res_entry->resid = $action->res_id;
-//                            $res_entry->restype = $action->res_type;
-//                            $res_entry->userid = $action->userid;
-//                            $res_entry->timedate = $action->date_val;
-//                            $res_entry->time = $action->time;
-//                            $res_entry->numval = $action->count;
-//                            // try to add record
-//                            try {
-//                                $DB->insert_record("block_gismo_resource", $res_entry, true, "id");
-//                            } catch (Exception $e) {
-//                                return $this->return_error("Cannot add entry in block_gismo_resource table.", __FILE__, __FUNCTION__, __LINE__);
-//                            }
-//                            // free memory
-//                            unset($res_entry, $actions[$key]);
-//                        }
-//                        unset($actions);
-//                    } else {
-//                        $loop = false;
-//                    }
-//
-//                    // increment offset
-//                    $offset += $this->limit_records;
-//                }
-//
-//                // update export max log id for courses
-//                if ($this->exportlogs == 'course') {
-//                    $last_export_max_log_id->value = $max_log_id;
-//                    if ($DB->update_record("block_gismo_config", $last_export_max_log_id) === FALSE) {
-//                        return $this->return_error("Cannot update last export max log id value.", __FILE__, __FUNCTION__, __LINE__);
-//                    }
-//                }
-//
-//                // DEBUG: MEMORY USAGE
-//                if ($this->debug_mode) {
-//                    echo "\nMEMORY USAGE (AFTER ACCESSES ON RESOURCES): " . number_format(memory_get_usage(), 0, ".", "'");
-//                    echo "\n----------\n";
-//                }
-//            }
-//        }
-//
-//        // update export time value and max log id
-//        $last_export_time->value = $this->now_time;
-//        if ($DB->update_record("block_gismo_config", $last_export_time) === FALSE) {
-//            return $this->return_error("Cannot update last export time value.", __FILE__, __FUNCTION__, __LINE__);
-//        }
-//        // update export max log id for all courses
-//        if ($this->exportlogs == 'all') {
-//            $last_export_max_log_id->value = $max_log_id;
-//            if ($DB->update_record("block_gismo_config", $last_export_max_log_id) === FALSE) {
-//                return $this->return_error("Cannot update last export max log id value.", __FILE__, __FUNCTION__, __LINE__);
-//            }
-//        }
-//
-//        // unlock gismo tables
-//        // TODO        
-//      
-//        // DEBUG: MEMORY USAGE
-//        if ($this->debug_mode) {
-//            echo "\nMEMORY USAGE AFTER: " . number_format(memory_get_usage(), 0, ".", "'") . "\n";
-//        }
-//
-//        // return result
-//        return $result;
-//    }
-//
-//    // purge data
+    // purge data
     // This method removes old data according to the moodle log life time
     public function purge_data() {
         global $CFG, $DB;
