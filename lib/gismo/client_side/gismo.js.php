@@ -886,13 +886,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid2, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "write") {
+                                if (this.current_analysis.data[item].context == "sent" || this.current_analysis.data[item].context == "created") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                } else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
+                                } else if (this.current_analysis.data[item].context == "viewed") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
-                                } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
+                                }/* else if (this.current_analysis.data[item].context == "deleted") {//Check if Delete SUBTRACT DISABLED
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
-                                }
+                                }*/
                             }        
                         }    
                     }
@@ -990,13 +990,13 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         if ($.inArray(uid, selected_items[this.current_analysis.type]) != -1) {
                             index = $.inArray(uid, yticks);
                             if (index != -1) {
-                                if (this.current_analysis.data[item].context == "write") {
+                                if (this.current_analysis.data[item].context == "created" || this.current_analysis.data[item].context == "sent") {
                                     lines[0][index] += parseInt(this.current_analysis.data[item].numval);
-                                }  else if (this.current_analysis.data[item].context == "read") {//Check if Read SUM
+                                }  else if (this.current_analysis.data[item].context == "viewed") {//Check if Read SUM
                                     lines[1][index] += parseInt(this.current_analysis.data[item].numval);
-                                } else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
+                                } /*else if (this.current_analysis.data[item].context == "delete") {//Check if Delete SUBTRACT
                                     lines[1][index] -= parseInt(this.current_analysis.data[item].numval);
-                                }
+                                }*/
                             }        
                         }    
                     }
