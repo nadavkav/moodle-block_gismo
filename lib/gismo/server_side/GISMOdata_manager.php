@@ -317,10 +317,10 @@ class GISMOdata_manager {
 
                     $params = array_merge(array(intval($course->id)), $action_params, $objecttable_params, $target_params, $activity['eventname']);
 
-                    $qry = "SELECT MAX(id) as id, " . $this->get_time2date_code("timecreated") . " AS timedate, MAX(timecreated) as time, userid, " .
-                            "contextinstanceid AS actid, COUNT(contextinstanceid) AS numval, action " .
-                            "FROM {logstore_standard_log} " .
-                            "WHERE courseid = ? AND action $action_sql AND objecttable $objecttable_sql AND target $target_sql AND $eventname_sql $filter " . //AND eventname like '%mod_forum%' " .
+                    $qry = "SELECT MAX({logstore_standard_log}.id) as id, " . $this->get_time2date_code("timecreated") . " AS timedate, MAX({logstore_standard_log}.timecreated) as time, userid, " .
+                            "{course_modules}.instance AS actid, COUNT({logstore_standard_log}.contextinstanceid) AS numval, {logstore_standard_log}.action " .
+                            "FROM {logstore_standard_log}, {course_modules} " .
+                            "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = ? AND {logstore_standard_log}.action $action_sql AND {logstore_standard_log}.objecttable $objecttable_sql AND {logstore_standard_log}.target $target_sql AND $eventname_sql $filter " . //AND eventname like '%mod_forum%' " .
                             "GROUP BY contextinstanceid, component, action, timedate, userid ORDER BY timedate";
 
                     // loop
