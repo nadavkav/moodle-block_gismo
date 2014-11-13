@@ -453,7 +453,7 @@ class GISMOdata_manager {
                             $res_entry = new stdClass();
                             $res_entry->course = $course->id;
                             $res_entry->resid = $action->res_id;
-                            $res_entry->restype = $action->res_type;
+                            $res_entry->restype = substr($action->res_type,4,strlen($action->res_type)); //Remove mod_
                             $res_entry->userid = $action->userid;
                             $res_entry->timedate = $action->date_val;
                             $res_entry->time = $action->time;
