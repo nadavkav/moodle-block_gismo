@@ -433,10 +433,10 @@ class GISMOdata_manager {
                 $loop = true;
 
                 // retrieve accesses on resources
-                $qry = "SELECT MAX(id), " . $this->get_time2date_code("timecreated") . " AS date_val, MAX(timecreated) AS time, userid, component AS res_type, "
-                        . "contextid AS res_id, COUNT(contextid) AS count FROM {logstore_standard_log} "
-                        . "WHERE courseid = " . $course->id . " AND action = 'viewed' AND "
-                        . "component IN('mod_resource','mod_book','mod_folder','mod_url','mod_page','mod_imscp') $filter GROUP BY res_type, res_id, date_val, userid LIMIT " . $this->limit_records . " OFFSET ";
+                $qry = "SELECT MAX({logstore_standard_log}.id), " . $this->get_time2date_code("timecreated") . " AS date_val, MAX({logstore_standard_log}.timecreated) AS time, {logstore_standard_log}.userid, {logstore_standard_log}.component AS res_type, "
+                        . "{course_modules}.instance AS res_id, COUNT({logstore_standard_log}.contextid) AS count FROM {logstore_standard_log}, {course_modules} "
+                        . "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = " . $course->id . " AND {logstore_standard_log}.action = 'viewed' AND "
+                        . "{logstore_standard_log}.component IN('mod_resource','mod_book','mod_folder','mod_url','mod_page','mod_imscp') $filter GROUP BY res_type, res_id, date_val, userid LIMIT " . $this->limit_records . " OFFSET ";
                 //'folder', 'imscp', 'page', 'resource', 'url', 'book'
                 // loop
                 while ($loop === true) {
