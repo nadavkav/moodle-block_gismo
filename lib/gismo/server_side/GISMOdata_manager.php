@@ -269,6 +269,12 @@ class GISMOdata_manager {
                         "objecttable" => array('wiki', 'wiki_pages'),
                         "target" => array('page', 'course_module'),
                         "eventname" => array('%mod_wiki%')
+                    ),
+                    "chat" => array(
+                        "action" => array('viewed', 'sent'),
+                        "objecttable" => array('chat', 'chat_messages'),
+                        "target" => array('message', 'course_module','sessions'),
+                        "eventname" => array('%mod_chat%')
                     )
                 );
 
