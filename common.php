@@ -1,14 +1,6 @@
 <?php
 
-/*
-
-  error_reporting(E_ALL);
-
-  ini_set('display_errors', true);
-
- */
 // error mode
-
 $error_mode = (isset($error_mode) AND in_array($error_mode, array("json", "moodle"))) ? $error_mode : "moodle";
 
 // define constants
@@ -35,8 +27,7 @@ $query = (isset($_REQUEST['q'])) ? addslashes($_REQUEST['q']) : '';
 // Please use this section to set server side and cliend side libraries to be included    
 // server side: please note that '.php' extension will be automatically added                                             
 
-$server_side_libraries = array("gismo" => array("FetchStaticDataMoodle", "GISMOutil"),
-    "third_parties" => array());
+$server_side_libraries = array("third_parties" => array());
 
 // client side: please note that '.js' extension will NOT be automatically added, in order to allow to create file thgat can be parsed by PHP
 
@@ -82,7 +73,7 @@ if (is_array($server_side_libraries) AND count($server_side_libraries) > 0) {
 
 if (!isset($_REQUEST["srv_data"])) {
 
-    GISMOutil::gismo_error('err_srv_data_not_set', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_srv_data_not_set', $error_mode);
 
     exit;
 }
@@ -97,7 +88,7 @@ $srv_data = (object) unserialize(base64_decode(urldecode($srv_data_encoded)));
 
 if (!property_exists($srv_data, "course_id")) {
 
-    GISMOutil::gismo_error('err_course_not_set', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_course_not_set', $error_mode);
 
     exit;
 }
@@ -108,7 +99,7 @@ if (!property_exists($srv_data, "course_id")) {
 
 if (!property_exists($srv_data, "block_instance_id")) {
 
-    GISMOutil::gismo_error('err_block_instance_id_not_set', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_block_instance_id_not_set', $error_mode);
 
     exit;
 }
@@ -126,7 +117,7 @@ switch ($error_mode) {
             require_login($srv_data->course_id, false, NULL, true, true);
         } catch (Exception $e) {
 
-            GISMOutil::gismo_error("err_authentication", $error_mode);
+            block_gismo\GISMOutil::gismo_error("err_authentication", $error_mode);
 
             exit;
         }
@@ -148,7 +139,7 @@ switch ($error_mode) {
 
 if (!$course = $DB->get_record("course", array("id" => intval($srv_data->course_id)))) {
 
-    GISMOutil::gismo_error('err_course_not_set', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_course_not_set', $error_mode);
 
     exit;
 }
@@ -171,7 +162,7 @@ $gismo_settings = $DB->get_field("block_instances", "configdata", array("id" => 
 
 if (is_null($gismo_settings) OR $gismo_settings === "") {
 
-    $gismo_settings = get_object_vars(GISMOutil::get_default_options());
+    $gismo_settings = get_object_vars(block_gismo\GISMOutil::get_default_options());
 } else {
 
     $gismo_settings = get_object_vars(unserialize(base64_decode($gismo_settings)));

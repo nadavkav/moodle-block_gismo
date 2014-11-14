@@ -15,7 +15,7 @@ require_once "common.php";
 if (!isset($_REQUEST["q"]) OR
         !isset($_REQUEST["from"]) OR
         !isset($_REQUEST["to"])) {
-    GISMOutil::gismo_error('err_missing_parameters', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_missing_parameters', $error_mode);
     exit;
 } else {
     $query = addslashes($_REQUEST["q"]);
@@ -38,19 +38,19 @@ $current_user_id = intval($USER->id);
 // get course
 $course = $DB->get_record("course", array("id" => $course_id));
 if ($course === FALSE) {
-    GISMOutil::gismo_error('err_course_not_set', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_course_not_set', $error_mode);
     exit;
 }
 
 // get users
 $context = context_course::instance($course->id);
 if ($context === FALSE) {
-    GISMOutil::gismo_error('err_missing_course_students', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_missing_course_students', $error_mode);
     exit;
 }
 $users = get_users_by_capability($context, "block/gismo:trackuser");
 if ($users === FALSE) {
-    GISMOutil::gismo_error('err_missing_course_students', $error_mode);
+    block_gismo\GISMOutil::gismo_error('err_missing_course_students', $error_mode);
     exit;
 }
 
@@ -133,7 +133,7 @@ switch ($query) {
                 $max_date = date("Y-m-d", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                 $max_datetime = date("Y-m-d H:i:s", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                 // diff
-                $days = intval(GISMOutil::days_between_dates($max_datetime, $min_datetime));
+                $days = intval(block_gismo\GISMOutil::days_between_dates($max_datetime, $min_datetime));
                 // save results
                 $extra_info = new stdClass();
                 $extra_info->min_date = $min_date;
@@ -182,7 +182,7 @@ switch ($query) {
                             $max_date = date("Y-m-d", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                             $max_datetime = date("Y-m-d H:i:s", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                             // diff
-                            $days = intval(GISMOutil::days_between_dates($max_datetime, $min_datetime));
+                            $days = intval(block_gismo\GISMOutil::days_between_dates($max_datetime, $min_datetime));
                             // save results
                             $extra_info = new stdClass();
                             $extra_info->min_date = $min_date;
@@ -272,7 +272,7 @@ switch ($query) {
                             $max_date = date("Y-m-d", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                             $max_datetime = date("Y-m-d H:i:s", mktime(0, 0, 0, $mad[1] + 1, 0, $mad[0]));
                             // diff
-                            $days = intval(GISMOutil::days_between_dates($max_datetime, $min_datetime));
+                            $days = intval(block_gismo\GISMOutil::days_between_dates($max_datetime, $min_datetime));
                             // save results
                             $extra_info = new stdClass();
                             $extra_info->min_date = $min_date;
@@ -530,9 +530,9 @@ switch ($query) {
             $keys = array_keys($activity_data);
             // extra info
             $extra_info = new stdClass();
-            $extra_info->min_date = GISMOutil::this_month_first_day_time($activity_data[$keys[0]]->time);
-            $extra_info->max_date = GISMOutil::this_month_last_day_time($activity_data[$keys[count($keys) - 1]]->time);
-            $extra_info->num_days = intval(GISMOutil::days_between_times($extra_info->max_date, $extra_info->min_date));
+            $extra_info->min_date = block_gismo\GISMOutil::this_month_first_day_time($activity_data[$keys[0]]->time);
+            $extra_info->max_date = block_gismo\GISMOutil::this_month_last_day_time($activity_data[$keys[count($keys) - 1]]->time);
+            $extra_info->num_days = intval(block_gismo\GISMOutil::days_between_times($extra_info->max_date, $extra_info->min_date));
             $extra_info->min_date = date("Y-m-d", $extra_info->min_date);
             $extra_info->max_date = date("Y-m-d", $extra_info->max_date);
             $result->extra_info = $extra_info;

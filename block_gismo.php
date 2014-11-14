@@ -96,12 +96,8 @@ class block_gismo extends block_base {
 
     public function check_data() {
         global $CFG;
-        // libraries
-        $lib_dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'gismo' . DIRECTORY_SEPARATOR . 'server_side' . DIRECTORY_SEPARATOR;
-        require_once $lib_dir . "GISMOutil.php";
-        require_once $lib_dir . "FetchStaticDataMoodle.php";
         // FetchStaticDataMoodle instance
-        $gismo_static_data = new FetchStaticDataMoodle($this->course->id, "teacher");
+        $gismo_static_data = new block_gismo\FetchStaticDataMoodle($this->course->id, "teacher");
         $gismo_static_data->init();
         // check
         return $gismo_static_data->checkData();

@@ -12,15 +12,10 @@
         }
     }
     
-    // libraries
-    $d = DIRECTORY_SEPARATOR;
-    $lib_dir = realpath(dirname( __FILE__ ) . $d . ".." . $d . ".." . $d . ".." . $d) . $d . 'lib' . $d . 'gismo' . $d . 'server_side' . $d;
-    require_once $lib_dir . "GISMOdata_manager.php";
-    
     // trace start
     echo "GISMO - export data (start)!<br />";
     
-    $gdm = new GISMOdata_manager(true);
+    $gdm = new block_gismo\GISMOdata_manager(true);
     
     // purge
     $purge_check = $gdm->purge_data();
