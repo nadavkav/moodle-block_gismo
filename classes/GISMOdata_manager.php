@@ -237,12 +237,14 @@ class GISMOdata_manager {
 
 
                     // max log id (value to be set after export)
-                    $max_log_id = $DB->get_records("logstore_standard_log", array('course' => $course->id), "id DESC", "id", 0, 1);
-                    if (!(is_array($max_log_id) AND count($max_log_id) === 1)) {
-                        return $this->return_error("Cannot extract max log id for course $course->id.", __FILE__, __FUNCTION__, __LINE__);
+                    $max_log = $DB->get_records("logstore_standard_log", array('courseid' => $course->id), "id DESC", "id", 0, 1);
+                    if (!(is_array($max_log) AND count($max_log) === 1)) {
+                        //return $this->return_error("Cannot extract max log id for course $course->id.", __FILE__, __FUNCTION__, __LINE__);
+                        echo("Cannot extract max log id for course $course->id");
+                        $max_log_id = 0;
+                    }else{
+                        $max_log_id = intval(array_pop($max_log)->id);
                     }
-                    $max_log_id = intval(array_pop($max_log_id)->id);
-
                     // set the filter (get newer data only for each course)
                     $filter = " AND {logstore_standard_log}.id > " . intval($last_export_max_log_id->value) . " AND {logstore_standard_log}.id <= " . $max_log_id;
                     if (!empty($CFG->loglifetime)) {    // !!! REMEBER: 0 is considered empty
