@@ -118,7 +118,7 @@ $string['gismo:view'] = "GISMO - Autorizzazione fallita";
 
 
 //OTHERS
-$string['welcome'] = "Benvenuti a GISMO v. 3.2";
+$string['welcome'] = "Benvenuti a GISMO v. 3.3";
 $string['processing_wait'] = "Calcolando i dati, per favore attendere!";
 
 //Graphs labels

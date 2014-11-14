@@ -1,9 +1,17 @@
 <?php
-//GISMO EN language file
+
+/**
+ * GISMO EN language file
+ *
+ * @package enrol_supsifb
+ * @copyright eLab
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 
 //ONLY IN ENGLISH
-$string['gismo_version_value']='3.2';
-$string['release_date_value']='2013-10-15';
+$string['gismo_version_value']='3.3';
+$string['release_date_value']='2014-11-14';
 
 // block title
 $string['pluginname'] = 'Gismo';
@@ -127,7 +135,7 @@ $string['gismo:view'] = "GISMO - Authorization failed";
 
 
 //OTHERS
-$string['welcome'] = "Welcome to GISMO v. 3.2";
+$string['welcome'] = "Welcome to GISMO v. 3.3";
 $string['processing_wait'] = "Processing data, please wait!";
 
 //Graphs labels
@@ -242,4 +250,7 @@ $string['homepage_chart_students_accesses_by_students']='Students: accesses by s
 
 //Added missing string 21.10.2013
 $string['accesses_tooltip']='accesses';
+
+$string['export_data_task']='GISMO data exporter task';
+
 ?>
