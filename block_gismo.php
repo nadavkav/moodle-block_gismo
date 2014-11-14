@@ -108,38 +108,9 @@ class block_gismo extends block_base {
     }
 
     public function cron() {
-        global $CFG;
-        // libraries
-        $lib_dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'gismo' . DIRECTORY_SEPARATOR . 'server_side' . DIRECTORY_SEPARATOR;
-        require_once $lib_dir . "GISMOutil.php";
-        require_once $lib_dir . "GISMOdata_manager.php";
-
-        // trace start
-        mtrace("\nGISMO - cron (start)!");
-
-        $gdm = new GISMOdata_manager(false);
-
-        // purge
-        $purge_check = $gdm->purge_data();
-        if ($purge_check === true) {
-            mtrace("Gismo data has been purged successfully!");
-        } else {
-            mtrace($purge_check);
-        }
-
-        // sync
-        $sync_check = $gdm->sync_data();
-        if ($sync_check === true) {
-            mtrace("Gismo data has been syncronized successfully!");
-        } else {
-            mtrace($sync_check);
-        }
-
-        // trace end
-        mtrace("GISMO - cron (end)!");
-
-        // ok     
-        return true;
+        //Disabled CRON
+        return false;
+        
     }
 
 }
