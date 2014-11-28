@@ -196,7 +196,7 @@ class GISMOdata_manager {
                     // set the filter (get newer data only)
                     $filter = " AND {logstore_standard_log}.id > " . intval($last_export_max_log_id->value) . " AND {logstore_standard_log}.id <= " . $max_log_id;
                     if (!empty($CFG->loglifetime)) {    // !!! REMEBER: 0 is considered empty
-                        $filter = $filter . " AND {logstore_standard_log}.time >= " . ($this->now_time - ($CFG->loglifetime * 86400));
+                        $filter = $filter . " AND {logstore_standard_log}.timecreated >= " . ($this->now_time - ($CFG->loglifetime * 86400));
                     }
                 }
 
@@ -248,7 +248,7 @@ class GISMOdata_manager {
                     // set the filter (get newer data only for each course)
                     $filter = " AND {logstore_standard_log}.id > " . intval($last_export_max_log_id->value) . " AND {logstore_standard_log}.id <= " . $max_log_id;
                     if (!empty($CFG->loglifetime)) {    // !!! REMEBER: 0 is considered empty
-                        $filter = $filter . " AND {logstore_standard_log}.time >= " . ($this->now_time - ($CFG->loglifetime * 86400));
+                        $filter = $filter . " AND {logstore_standard_log}.timecreated >= " . ($this->now_time - ($CFG->loglifetime * 86400));
                     }
                 }
 
