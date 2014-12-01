@@ -518,10 +518,11 @@ switch ($query) {
         // links
         $result->links = null;
         // add filters to extract data related to the selected activity only
-        $ctu_filters .= "AND activity = ? AND (context = ? OR context = ?)"; //sent or created
+        $ctu_filters .= "AND activity = ? AND (context = ? OR context = ? OR context = ?)"; //sent or created or updated
         array_push($ctu_params, $spec_info[$query]["activity"]);
         array_push($ctu_params, "sent"); 
         array_push($ctu_params, "created");
+        array_push($ctu_params, "updated");
         // chart data
         $activity_data = $DB->get_records_select("block_gismo_activity", $ctu_filters, $ctu_params, "time ASC");
         // result
