@@ -1,4 +1,5 @@
 <?php
+
 namespace block_gismo;
 
 use core\log\manager;
@@ -242,7 +243,7 @@ class GISMOdata_manager {
                         //return $this->return_error("Cannot extract max log id for course $course->id.", __FILE__, __FUNCTION__, __LINE__);
                         echo("Cannot extract max log id for course $course->id");
                         $max_log_id = 0;
-                    }else{
+                    } else {
                         $max_log_id = intval(array_pop($max_log)->id);
                     }
                     // set the filter (get newer data only for each course)
@@ -276,30 +277,10 @@ class GISMOdata_manager {
                     "chat" => array(
                         "action" => array('viewed', 'sent'),
                         "objecttable" => array('chat', 'chat_messages'),
-                        "target" => array('message', 'course_module','sessions'),
+                        "target" => array('message', 'course_module', 'sessions'),
                         "eventname" => array('%mod_chat%')
                     )
                 );
-
-//                $activities_actions = array(
-//                    "chat" => array(
-//                        "read" => array("view"),
-//                        "write" => array("talk"),
-//                    ),
-//                    "forum" => array(
-//                        "read" => array("view discussion"),
-//                        //Removed delete post, update post and delete discussion from write counter & moved in different actions	
-//                        //https://moodle.org/mod/forum/discuss.php?d=218561
-//                        //"write" => array("add post", "update post", "delete post", "add discussion", "delete discussion"), 
-//                        "write" => array("add post", "add discussion"), 
-//                        "delete" => array("delete post", "delete discussion"),
-//                        "update" => array("update post"),			                            
-//                    ),
-//                    "wiki" => array(
-//                        "read" => array("view"),
-//                        "write" => array("edit", "comments"),
-//                    ),
-//                );
 
                 foreach ($activity_actions as $activityname => $activity) {
                     // reset info
@@ -348,7 +329,7 @@ class GISMOdata_manager {
                                 $entry->timedate = $record->timedate;
                                 $entry->time = $record->time;
                                 $entry->numval = $record->numval;
-                                
+
                                 // try to add record
                                 try {
                                     $DB->insert_record("block_gismo_activity", $entry, true, "id");
@@ -457,7 +438,7 @@ class GISMOdata_manager {
                             $res_entry = new \stdClass();
                             $res_entry->course = $course->id;
                             $res_entry->resid = $action->res_id;
-                            $res_entry->restype = substr($action->res_type,4,strlen($action->res_type)); //Remove mod_
+                            $res_entry->restype = substr($action->res_type, 4, strlen($action->res_type)); //Remove mod_
                             $res_entry->userid = $action->userid;
                             $res_entry->timedate = $action->date_val;
                             $res_entry->time = $action->time;
@@ -515,7 +496,7 @@ class GISMOdata_manager {
         if ($this->debug_mode) {
             echo "\nMEMORY USAGE AFTER: " . number_format(memory_get_usage(), 0, ".", "'") . "\n";
         }
-        
+
         return $result;
     }
 
