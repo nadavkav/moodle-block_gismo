@@ -18,7 +18,7 @@ class block_gismo extends block_base {
     }
 
     public function get_content() {
-        global $OUTPUT, $DB;
+        global $OUTPUT, $DB, $CFG;
 
         if ($this->content !== NULL) {
             return $this->content;
@@ -26,18 +26,18 @@ class block_gismo extends block_base {
 
         // init content
         $this->content = new stdClass;
-        
+
         //Get block_gismo settings
         $gismoconfig = get_config('block_gismo');
-        
+
         if (isset($gismoconfig->student_reporting)) {
-            if($gismoconfig->student_reporting === "false"){
+            if ($gismoconfig->student_reporting === "false") {
                 //check gismo:view capability
-                if (!has_capability('block/gismo:view', context_block::instance($this->instance->id))) {        
+                if (!has_capability('block/gismo:view', context_block::instance($this->instance->id))) {
                     // return empty content
                     return $this->content;
                 }
-            }  
+            }
         }
         //Check if setting exportlogs exists
         if (empty($gismoconfig->exportlogs)) {
@@ -70,13 +70,28 @@ class block_gismo extends block_base {
         $this->content->text = html_writer::empty_tag('img', array('src' => '../blocks/gismo/images/gismo.gif', 'alt' => '', 'style' => $fix_style));
         $this->content->text .= html_writer::tag('span', '&nbsp;');
         if ($this->check_data() === true) {
-            $this->content->text .= html_writer::tag('a', get_string("gismo_report_launch", "block_gismo"), array('href' => '../blocks/gismo/main.php?srv_data=' . $srv_data_encoded, 'target' => '_blank'));
+            /**
+             * Modifications: remove 'target' => '_blank' when behat enable
+             * @link https://github.com/moodle/moodle/blob/MOODLE_25_STABLE/lib/behat/classes/util.php (is_test_mode_enabled() function)
+             * @author Corbière Alain <alain.corbiere@univ-lemans.fr>
+             */
+            $fileexist = false;
+            if(isset($CFG->behat_dataroot)){       
+                $testenvfile = $CFG->behat_dataroot . '/behat/test_environment_enabled.txt';
+                $fileexist = file_exists($testenvfile);
+            }
+            if (!$fileexist){
+                $this->content->text .= html_writer::tag('a', get_string("gismo_report_launch", "block_gismo"), array('href' => '../blocks/gismo/main.php?srv_data=' . $srv_data_encoded, 'target' => '_blank'));
+            }else{
+                $this->content->text .= html_writer::tag('a', get_string("gismo_report_launch", "block_gismo"), array('href' => '../blocks/gismo/main.php?srv_data=' . $srv_data_encoded));
+            }
+            
         } else {
             $this->content->text .= html_writer::tag('span', strtoupper(get_string("gismo", "block_gismo")) . ' (disabled)');
             $this->content->text .= $OUTPUT->help_icon('gismo', 'block_gismo');
         }
         $this->content->footer = '';
-        
+
 
         // return content
         return $this->content;
@@ -106,7 +121,6 @@ class block_gismo extends block_base {
     public function cron() {
         //Disabled CRON
         return false;
-        
     }
 
 }
