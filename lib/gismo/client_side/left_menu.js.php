@@ -1,13 +1,21 @@
-<?PHP        
-    //Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
-    header("Content-type: application/javascript ; charset=UTF-8") ;
+<?PHP      
 
-    // define constants
-    define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
-    define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);
-    
-    // include moodle config file
-    require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */  
+//Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
+header("Content-type: application/javascript ; charset=UTF-8") ;
+
+// define constants
+define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
+define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);
+
+// include moodle config file
+require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
 ?>
 function left_menu(g) {

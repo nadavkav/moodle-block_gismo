@@ -1,13 +1,21 @@
 <?PHP
-    //Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
-    header("Content-type: application/javascript ; charset=UTF-8") ;
 
-    // define constants
-    define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
-    define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);    
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+//Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
+header("Content-type: application/javascript ; charset=UTF-8") ;
 
-    // include moodle config file
-    require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+// define constants
+define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
+define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);    
+
+// include moodle config file
+require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
 ?>
 function gismo(config, srv_data, static_data, course_start_time, current_time, actor, completionenabled) { //Added completionenabled
