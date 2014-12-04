@@ -1,3 +1,15 @@
+Release 3.3 (2014-12-03)
+- New: Moved data exporter from cron to scheduled tasks
+- New: Added Behat tests thanks to Corbière Alain
+- Fix: Thanks to Tim Lock corrected a problem on a query with mdl_ forced in table names
+- Fix: Thanks to Tim Lock Fix up some page context warnings
+- Fix: Moved the main classes in the classes directory
+- Fix: Wiki/Forum/Chat charts modified "Write" in "Write & Update" events (it will sum them)
+- Fix: Added global $CFG to function FetchStartDateAndTime thanks to Nadav Kavalerchik
+- Fix: Changed all get_context_instance calls to context_*::instance thanks to Nadav Kavalerchik
+- Fix: Updated version and requires moodle 2.7.x
+- Fix: Updated all queries in exporter_data.php and ajax.php from log table to logstore_standard
+
 MOODLE_27 on master branch (2014-10-28)
 
 Release 3.2 (2013-10-15)
