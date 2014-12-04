@@ -16,6 +16,7 @@ define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);
 
 // include moodle config file
 require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+$PAGE->set_context(context_system::instance()); //Tim Lock Fix up some page context warnings
 
 ?>
 function left_menu(g) {
