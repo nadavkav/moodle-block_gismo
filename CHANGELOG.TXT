@@ -1,6 +1,7 @@
 Release 3.3 (2014-12-03)
 - New: Moved data exporter from cron to scheduled tasks
-- New: Added Behat tests thanks to Corbière Alain
+- New: Added Behat tests thanks to Corbière Alain, to run block_gismo tests use:
+  vendor/bin/behat --config /path/to/your/CFG_behat_dataroot/behat/behat.yml  --tags @block_gismo --format html --out results.html 
 - Fix: Thanks to Tim Lock corrected a problem on a query with mdl_ forced in table names
 - Fix: Thanks to Tim Lock Fix up some page context warnings
 - Fix: Moved the main classes in the classes directory
