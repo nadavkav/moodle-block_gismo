@@ -629,9 +629,9 @@ switch ($query) {
 
         $qry = "
                 SELECT cmc.id as cmc_id, cm.instance as item_id, cmc.completionstate as completionstate, cmc.timemodified as timemodified, cmc.userid as userid, m.name as type
-            FROM mdl_course_modules_completion cmc
-            INNER JOIN mdl_course_modules cm ON cmc.coursemoduleid = cm.id
-            INNER JOIN mdl_modules m ON cm.module = m.id
+            FROM {course_modules_completion} cmc
+            INNER JOIN {course_modules} cm ON cmc.coursemoduleid = cm.id
+            INNER JOIN {modules} m ON cm.module = m.id
             WHERE (cmc.completionstate = 1 OR cmc.completionstate = 2)
             AND (m.name = '" . $itemtype . "')
             AND cm.course = " . intval($course_id) . " AND cmc.timemodified BETWEEN " . $from . " AND " . $to;
