@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 //Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
 header("Content-type: application/json; charset=UTF-8");
 
@@ -12,9 +19,7 @@ require_once "common.php";
 // include specific libraries for quizzes
 // require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "mod"  . DIRECTORY_SEPARATOR . "quiz" . DIRECTORY_SEPARATOR . "lib.php");
 // check input data
-if (!isset($_REQUEST["q"]) OR
-        !isset($_REQUEST["from"]) OR
-        !isset($_REQUEST["to"])) {
+if (!isset($_REQUEST["q"]) OR ! isset($_REQUEST["from"]) OR ! isset($_REQUEST["to"])) {
     block_gismo\GISMOutil::gismo_error('err_missing_parameters', $error_mode);
     exit;
 } else {
@@ -520,7 +525,7 @@ switch ($query) {
         // add filters to extract data related to the selected activity only
         $ctu_filters .= "AND activity = ? AND (context = ? OR context = ? OR context = ?)"; //sent or created or updated
         array_push($ctu_params, $spec_info[$query]["activity"]);
-        array_push($ctu_params, "sent"); 
+        array_push($ctu_params, "sent");
         array_push($ctu_params, "created");
         array_push($ctu_params, "updated");
         // chart data
@@ -576,7 +581,7 @@ switch ($query) {
         if (!isset($itemtype)) {
             $itemtype = 'assignment';
             // chart title
-            $result->name = get_string("completion_assignment22_chart_title", "block_gismo");           
+            $result->name = get_string("completion_assignment22_chart_title", "block_gismo");
         }
     case "teacher@completion-resources":
     case "student@completion-resources":
@@ -617,12 +622,11 @@ switch ($query) {
         // links
         $result->links = null;
         // chart data
-
         //Completed when:
         //COMPLETION_COMPLETE = 1
         //COMPLETION_COMPLETE_PASS = 2
         //COMPLETION_COMPLETE_FAIL = 3
-        
+
         $qry = "
                 SELECT cmc.id as cmc_id, cm.instance as item_id, cmc.completionstate as completionstate, cmc.timemodified as timemodified, cmc.userid as userid, m.name as type
             FROM mdl_course_modules_completion cmc
@@ -631,9 +635,9 @@ switch ($query) {
             WHERE (cmc.completionstate = 1 OR cmc.completionstate = 2)
             AND (m.name = '" . $itemtype . "')
             AND cm.course = " . intval($course_id) . " AND cmc.timemodified BETWEEN " . $from . " AND " . $to;
-        
+
         // need to filter on user id ?
-        if ($query === "student@completion-assignments" || $query === "student@completion-assignments22" || $query === "student@completion-chats" || $query === "student@completion-forums" ||  $query === "student@completion-wikis" || $query === "student@completion-quizzes" || $query === "student@completion-resources") {
+        if ($query === "student@completion-assignments" || $query === "student@completion-assignments22" || $query === "student@completion-chats" || $query === "student@completion-forums" || $query === "student@completion-wikis" || $query === "student@completion-quizzes" || $query === "student@completion-resources") {
             $qry .= " AND cmc.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_gismo extends block_base {
 
     protected $course;
@@ -76,16 +83,15 @@ class block_gismo extends block_base {
              * @author Corbière Alain <alain.corbiere@univ-lemans.fr>
              */
             $fileexist = false;
-            if(isset($CFG->behat_dataroot)){       
+            if (isset($CFG->behat_dataroot)) {
                 $testenvfile = $CFG->behat_dataroot . '/behat/test_environment_enabled.txt';
                 $fileexist = file_exists($testenvfile);
             }
-            if (!$fileexist){
+            if (!$fileexist) {
                 $this->content->text .= html_writer::tag('a', get_string("gismo_report_launch", "block_gismo"), array('href' => '../blocks/gismo/main.php?srv_data=' . $srv_data_encoded, 'target' => '_blank'));
-            }else{
+            } else {
                 $this->content->text .= html_writer::tag('a', get_string("gismo_report_launch", "block_gismo"), array('href' => '../blocks/gismo/main.php?srv_data=' . $srv_data_encoded));
             }
-            
         } else {
             $this->content->text .= html_writer::tag('span', strtoupper(get_string("gismo", "block_gismo")) . ' (disabled)');
             $this->content->text .= $OUTPUT->help_icon('gismo', 'block_gismo');

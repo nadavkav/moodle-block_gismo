@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // error mode
 $error_mode = (isset($error_mode) AND in_array($error_mode, array("json", "moodle"))) ? $error_mode : "moodle";
 
@@ -152,7 +159,7 @@ $context_obj = context_block::instance(intval($srv_data->block_instance_id));
 
 //Get block_gismo settings
 $gismoconfig = get_config('block_gismo');
-if($gismoconfig->student_reporting === "false"){
+if ($gismoconfig->student_reporting === "false") {
     // check authorization
     require_capability('block/gismo:view', $context_obj);
 }

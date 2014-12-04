@@ -1,4 +1,11 @@
 <?php
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // libraries & acl
 require_once "common.php";
 
@@ -17,12 +24,12 @@ $gismo_static_data->init();
             foreach ($client_side_libraries as $key => $client_side_libs) {
                 if (is_array($client_side_libs) AND count($client_side_libs) > 0) {
                     foreach ($client_side_libs as $client_side_lib) {
-			$res=explode('.',$client_side_lib);		
-			$ext='';	
-			if(count($res) < 2 ) { //no extension inserted in the name included
-				$ext = '.js';
-			}
-				$lib_full_path = LIB_DIR . $key . DIRECTORY_SEPARATOR . "client_side" . DIRECTORY_SEPARATOR . $client_side_lib . $ext;
+                        $res = explode('.', $client_side_lib);
+                        $ext = '';
+                        if (count($res) < 2) { //no extension inserted in the name included
+                            $ext = '.js';
+                        }
+                        $lib_full_path = LIB_DIR . $key . DIRECTORY_SEPARATOR . "client_side" . DIRECTORY_SEPARATOR . $client_side_lib . $ext;
                         if (is_file($lib_full_path) AND is_readable($lib_full_path)) {
                             ?>
                             <script type="text/javascript" src="lib/<?php echo $key . "/client_side/" . $client_side_lib . $ext; ?>"></script>
@@ -33,7 +40,7 @@ $gismo_static_data->init();
             }
         }
         ?>
-        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="lib/third_parties/client_side/jqplot.1.0.8r1250/excanvas.js"></script><![endif]-->
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="lib/third_parties/client_side/jqplot.1.0.8r1250/excanvas.js"></script><![endif]-->
         <!-- client side libraries END -->
         <link rel="stylesheet" href="style/gismo.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="lib/third_parties/client_side/jquery-ui-1.10.3/css/ui-darkness/jquery-ui-1.10.3.custom.min.css" type="text/css" media="screen" charset="utf-8" />
@@ -62,29 +69,37 @@ $gismo_static_data->init();
                 static_data['course_full_name'] = '<?php echo str_replace("'", "\\'", $gismo_static_data->fullname); ?>';
                 var course_start_time = <?php echo $gismo_static_data->start_time; ?>;
                 var current_time = <?php echo $gismo_static_data->end_time; ?>;
-                var actor = '<?php echo $actor; ?>';                
-                var completionenabled = <?php if($CFG->enablecompletion && $course->enablecompletion){echo "true";}else{ echo "false";}  ?>; //Added completionenabled  
-                
+                var actor = '<?php echo $actor; ?>';
+                var completionenabled = <?php if ($CFG->enablecompletion && $course->enablecompletion) {
+            echo "true";
+        } else {
+            echo "false";
+        } ?>; //Added completionenabled  
+
                 // gismo instance
-                var g = new gismo(config, srv_data, static_data, course_start_time, current_time, actor,completionenabled); //Added completionenabled
-                
+                var g = new gismo(config, srv_data, static_data, course_start_time, current_time, actor, completionenabled); //Added completionenabled
+
                 // initialize application
-                $(document).ready(function() {
+                $(document).ready(function () {
                     // init
                     g.init();
 
                     // window resize event
-                    $(window).resize(function () { g.resize(); });
+                    $(window).resize(function () {
+                        g.resize();
+                    });
 
                     // force resize
-                    setTimeout(function() { g.resize(); }, 100);                
+                    setTimeout(function () {
+                        g.resize();
+                    }, 100);
                 });
 
                 // -->
             </script>
-            <?php
-        }
-        ?>
+    <?php
+}
+?>
     </head>
     <body>
         <div id="dialog"></div>
@@ -103,7 +118,7 @@ $gismo_static_data->init();
             // content and footer
             switch ($query) {
                 case "help":
-		    $content = "template" . DIRECTORY_SEPARATOR . "help.php";
+                    $content = "template" . DIRECTORY_SEPARATOR . "help.php";
                     $footer = false;
                     break;
                 default:
@@ -114,35 +129,35 @@ $gismo_static_data->init();
             require_once $content;
             ?>
         </div>
-        <?php
-            if ($footer) {
-        ?>
-        <div id="footer">
-            <input id="from_date" name="from_date" type="text" class="input_date" />
-            <div id="f1">
-                <input id="to_date" name="to_date" type="text" class="input_date" />
-                <div id="date_slider"></div>
+<?php
+if ($footer) {
+    ?>
+            <div id="footer">
+                <input id="from_date" name="from_date" type="text" class="input_date" />
+                <div id="f1">
+                    <input id="to_date" name="to_date" type="text" class="input_date" />
+                    <div id="date_slider"></div>
+                </div>
             </div>
-        </div>
-        <?php
-            }
-        ?>
-    </body>
     <?php
-        if (in_array($query, array("help"))) {
-        // HACK     
+}
+?>
+    </body>
+<?php
+if (in_array($query, array("help"))) {
+    // HACK     
     ?> 
         <script>
-            $(document).ready(function() {  
+            $(document).ready(function () {
                 $('#panelMenu > li').bind('mouseover', function () {
-                    $(this).children('a').addClass('menu_open');    
+                    $(this).children('a').addClass('menu_open');
                 });
-                $('#panelMenu > li').bind('mouseout',  function () {
-                    $(this).children('a').removeClass('menu_open');    
+                $('#panelMenu > li').bind('mouseout', function () {
+                    $(this).children('a').removeClass('menu_open');
                 });
             });
         </script>
     <?php
-        }
-    ?>	
+}
+?>	
 </html>
