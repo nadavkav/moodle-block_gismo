@@ -1,6 +1,13 @@
 <?php
-    // libraries & acl
-    require_once "common.php";
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+// libraries & acl
+require_once "common.php";
 ?>
 <div id="inner">
     <b>What is GISMO?</b>

@@ -1,6 +1,13 @@
 <?php
-    // libraries & acl
-    require_once "common.php";
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+// libraries & acl
+require_once "common.php";
 ?>
 <div id="app_content">
     <div id="left_menu">
@@ -34,10 +41,10 @@
             </div>
             <div id="welcome_page">
                 <h1 align="center"><?php print_string('homepage_title', 'block_gismo'); ?></h1>
-                
-		<div style="width:70%;text-align:center;margin:0 auto;font-size:130%;">
+
+                <div style="width:70%;text-align:center;margin:0 auto;font-size:130%;">
                     <p><?php print_string('homepage_text', 'block_gismo'); ?></p>
-		</div>
+                </div>
                 <div id="slideshowWrapper" style="margin: 0 auto; text-align: center;">
                     <h2><?php print_string('homepage_charts_preview_title', 'block_gismo'); ?></h2>
                     <ul id="slideshow" class="slideshow">                        
@@ -68,7 +75,7 @@
                     </ul><br clear="all" />
                 </div>
                 <script type="text/javascript">
-                    $(document).ready(function(){
+                    $(document).ready(function () {
                         $('#slideshow').fadeSlideShow();
                     });
                 </script>

@@ -1,20 +1,27 @@
 <?php
-    // libraries & acl
-    require_once "common.php";
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+// libraries & acl
+require_once "common.php";
 ?>
 <div id="inner">
     <b>Che cos'&egrave; GISMO?</b>
     <p>
         Sei il docente di uno o pi&ugrave; corsi a distanza, che gestisci con il CMS (Course Management System) Moodle. Forse i tuoi studenti sono a
-		centinaia di chilometri di distanza, o forse non sono cos&igrave; lontani, ma li vedi in classe solo una o due volte a semestre.
-		Essendo il docente del corso, sarai probabilmente interessato a sapere quel che succede ai tuoi studenti: stanno leggendo il materiale?
-		Stanno frequentando lo spazio online regolarmente? Ci sono alcuni quiz o compiti che risultano particolarmente problematici? Le consegne sono eseguite in tempo? 
+        centinaia di chilometri di distanza, o forse non sono cos&igrave; lontani, ma li vedi in classe solo una o due volte a semestre.
+        Essendo il docente del corso, sarai probabilmente interessato a sapere quel che succede ai tuoi studenti: stanno leggendo il materiale?
+        Stanno frequentando lo spazio online regolarmente? Ci sono alcuni quiz o compiti che risultano particolarmente problematici? Le consegne sono eseguite in tempo? 
         <br>
-        
-		Se questo &egrave; il tuo caso, GISMO ti pu&ograve; essere d'aiuto. GISMO &egrave; uno strumento grafico interattivo che permette il monitoraggio degli 
-		studenti e il tracciamento del sistema, estraendo i dati da Moodle. GISMO genera delle utili rappresentazioni grafiche che possono essere 
-		analizzate dai docenti per esaminare i vari aspetti degli studenti a distanza. 
-		
+
+        Se questo &egrave; il tuo caso, GISMO ti pu&ograve; essere d'aiuto. GISMO &egrave; uno strumento grafico interattivo che permette il monitoraggio degli 
+        studenti e il tracciamento del sistema, estraendo i dati da Moodle. GISMO genera delle utili rappresentazioni grafiche che possono essere 
+        analizzate dai docenti per esaminare i vari aspetti degli studenti a distanza. 
+
     </p>
     <p>
         <b>Come ottenere e installare il software</b>
@@ -31,7 +38,7 @@
     </p>
     <p>
         GISMO appare come qualsiasi altro blocco di Moodle. Per aggiungere GISMO al tuo corso dovrai innanzitutto cliccare su &quot;Attiva Modifica&quot;. 
-		Questo blocco sar&agrave; visibile solo ai docenti del corso. Per avviare l'applicazione, dovrai cliccare sul link &quot;GISMO&quot; che appare all'interno del blocco GISMO.
+        Questo blocco sar&agrave; visibile solo ai docenti del corso. Per avviare l'applicazione, dovrai cliccare sul link &quot;GISMO&quot; che appare all'interno del blocco GISMO.
     </p>
     <p>
         <b>Rappresentazioni grafiche</b>
@@ -60,7 +67,7 @@
     </p>
     <p>
         La figura<em> [Pagina di benvenuto] </em>
-		rappresenta la pagina di benvenuto di GISMO. Come puoi vedere, ci sono tre diverse aree (pannelli) nell'interfaccia dell'utente:
+        rappresenta la pagina di benvenuto di GISMO. Come puoi vedere, ci sono tre diverse aree (pannelli) nell'interfaccia dell'utente:
     </p>
     <ul style="list-style-position: inside;">
         <li>
@@ -83,7 +90,7 @@
     </p>
     <p>
         La figura <em>[Studenti: accessi degli studenti]</em> 
-		illustra un grafico sugli accessi degli studenti al corso. Una semplice matrice formata dal nome degli studenti (sull'asse Y) e le date del corso (sull'asse X) &egrave; utilizzata per raffigurare gli accessi al corso. Un segno corrispondente rappresenta almeno un accesso al corso da parte dello studente per la data selezionata.  
+        illustra un grafico sugli accessi degli studenti al corso. Una semplice matrice formata dal nome degli studenti (sull'asse Y) e le date del corso (sull'asse X) &egrave; utilizzata per raffigurare gli accessi al corso. Un segno corrispondente rappresenta almeno un accesso al corso da parte dello studente per la data selezionata.  
     </p>
     <p>
         <b>Studenti: panoramica degli accessi</b>
@@ -95,10 +102,10 @@
     </p>
     <p>
         La figura <em>[Studenti: panoramica degli accessi]</em> 
-		mostra un istogramma con il numero globale di visite al corso effettuate dagli studenti per ogni data. 
+        mostra un istogramma con il numero globale di visite al corso effettuate dagli studenti per ogni data. 
     </p>
     <p>
-       Grazie ai due grafici precedenti, il docente ha, in un solo colpo d'occhio, una panoramica degli accessi al corso effettuati dagli studenti. Inoltre, potr&agrave; identificare chiaramente modelli e tendenze e avere informazioni sulla presenza al corso di uno studente specifico.
+        Grazie ai due grafici precedenti, il docente ha, in un solo colpo d'occhio, una panoramica degli accessi al corso effettuati dagli studenti. Inoltre, potr&agrave; identificare chiaramente modelli e tendenze e avere informazioni sulla presenza al corso di uno studente specifico.
     </p>
     <p>
         <b>Studenti: Panoramica degli accessi alle risorse</b>
@@ -136,7 +143,7 @@
     </p>
     <p>
         I docenti potrebbero anche essere interessati ad avere i dettagli su quali risorse sono state utilizzate dagli studenti e quando. Una specifica rappresentazione grafica &egrave; stata concepita per fornire questa informazione.
-		La figura <em>[Risorse: panoramica degli studenti]</em>
+        La figura <em>[Risorse: panoramica degli studenti]</em>
         raffigura i nomi degli studenti sull'asse Y e i nomi delle risorse sull'asse X. Un segno indica se lo studente ha acceduto alla risorsa e il colore del segno varier&agrave; dal rosso-chiaro al rosso-scuro a seconda del numero di volte in cui lo studente ha acceduto alla risorsa.  
     </p>
     <p>
