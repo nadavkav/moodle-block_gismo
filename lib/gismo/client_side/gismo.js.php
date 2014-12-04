@@ -16,6 +16,7 @@ define('LIB_DIR', ROOT . "lib" . DIRECTORY_SEPARATOR);
 
 // include moodle config file
 require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+$PAGE->set_context(context_system::instance()); //Tim Lock Fix up some page context warnings
 
 ?>
 function gismo(config, srv_data, static_data, course_start_time, current_time, actor, completionenabled) { //Added completionenabled
