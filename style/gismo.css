@@ -1,3 +1,10 @@
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 html, body {
     font-family: Arial;
     font-size: 12px;
@@ -346,9 +353,9 @@ img {
 
 /* ---------------------- guide --------------------------- */
 a.guide{
-	background-color: #EEEEEE; 
-	color:#CC9999;
-	font-size: +3;
+    background-color: #EEEEEE; 
+    color:#CC9999;
+    font-size: +3;
 }
 
 /* ADDED 10.10.2013 */
