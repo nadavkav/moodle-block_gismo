@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // Sample copied from mod/forum/db/access.php
 //
 // Capability definitions for the this block.
@@ -32,7 +40,6 @@
 // For the core capabilities, the variable is $moodle_capabilities.
 
 $capabilities = array(
-    
     'block/gismo:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_BLOCK,
@@ -44,8 +51,7 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    
-    'block/gismo:trackuser' => array( //changed name from track-user
+    'block/gismo:trackuser' => array(//changed name from track-user
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -56,7 +62,7 @@ $capabilities = array(
             'manager' => CAP_PROHIBIT
         )
     ),
-    'block/gismo:trackteacher' => array( //changed name from track-teacher
+    'block/gismo:trackteacher' => array(//changed name from track-teacher
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -67,22 +73,18 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    
-     'block/gismo:addinstance' => array(
+    'block/gismo:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
-
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(            
+        'archetypes' => array(
             'student' => CAP_PROHIBIT,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
             'coursecreator' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         ),
-
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     )
-
 );
 ?>

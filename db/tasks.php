@@ -4,9 +4,9 @@
  * In this file are specified the timings that Moodle uses with cron in order to
  * periodically launch tasks.
  *
- * @package gismo
- * @copyright eLab
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $tasks = array(
     /**

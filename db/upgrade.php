@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // This file keeps track of upgrades to 
 // the moodle_gismo
 //
@@ -17,14 +24,14 @@
 // The commands in here will all be database-neutral,
 // using the functions defined in lib/ddllib.php
 
-function xmldb_block_gismo_upgrade($oldversion=0) {
+function xmldb_block_gismo_upgrade($oldversion = 0) {
     global $CFG, $DB;
-    
+
     // db manager
     // $dbman = $DB->get_manager();
-    
     // STUFFS HERE
 
     return true;
 }
+
 ?>
