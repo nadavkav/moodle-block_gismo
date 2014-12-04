@@ -1,15 +1,17 @@
 <?php
 
 /**
+ * GISMO block
  * This class represents the task that must be executed in order 
  * to export all the data from moodle tables to gismo tables
- *
- * @package gismo
- * @copyright eLab
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * 
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace block_gismo\task;
+
 use block_gismo;
 
 class export_data extends \core\task\scheduled_task {
@@ -18,9 +20,9 @@ class export_data extends \core\task\scheduled_task {
         return get_string('export_data_task', 'block_gismo');
     }
 
-    public function execute() {        
+    public function execute() {
         global $CFG;
-       
+
         // trace start
         mtrace("\nGISMO - task (start)!");
 
@@ -47,7 +49,6 @@ class export_data extends \core\task\scheduled_task {
 
         // ok     
         return true;
-            
     }
 
 }

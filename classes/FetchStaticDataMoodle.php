@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * GISMO block
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace block_gismo;
 
 // this class is used to fetch static data
@@ -169,7 +177,7 @@ class FetchStaticDataMoodle {
                 $tmp = get_all_instances_in_course($m, $course, $userid, $includeinvisible);
                 //Order by name
                 //Sort list by name
-                usort($tmp, array('\block_gismo\GISMOutil','sort_function'));
+                usort($tmp, array('\block_gismo\GISMOutil', 'sort_function'));
 
                 if (is_array($tmp) AND count($tmp) > 0) {
                     foreach ($tmp as $t) {
@@ -187,7 +195,7 @@ class FetchStaticDataMoodle {
                     $modules[$tm->coursemodule] = $tm;
                 }
                 unset($tmp_modules);
-                
+
                 //If orderbytype (resources) return the list ordered by name
                 if ($orderbytype) {
                     return $modules;
@@ -416,7 +424,7 @@ class FetchStaticDataMoodle {
 
     // fetch start date and time
     protected function FetchStartDateAndTime() {
-        global $DB,$CFG;
+        global $DB, $CFG;
 
         // check variable
         $check = true;
@@ -482,7 +490,7 @@ class FetchStaticDataMoodle {
     }
 
     public function checkData() {
-        return ($this->checkUsers() AND ($this->checkResources() OR $this->checkActivities())) ? true : false;
+        return ($this->checkUsers() AND ( $this->checkResources() OR $this->checkActivities())) ? true : false;
     }
 
     public function checkUsers() {
