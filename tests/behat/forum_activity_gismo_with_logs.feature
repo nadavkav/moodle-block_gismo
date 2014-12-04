@@ -39,5 +39,5 @@ Feature: Active the gismo block
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I go to the "Activities > Forums" report
-		And I should see "2" on "Activities > Forums over time" report
+		And I should see "1" on "Activities > Forums over time" report
 		And I wait "10" seconds
