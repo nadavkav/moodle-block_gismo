@@ -1,5 +1,12 @@
 <?php
-//GISMO DE language file
+
+/**
+ * GISMO block DE translation file
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // block title
 $string['pluginname'] = 'Gismo';
 $string['gismo'] = 'Gismo';
@@ -26,7 +33,6 @@ $string['close'] = 'Schliessen';
 
 $string['users'] = 'User'; //************
 $string['teachers'] = 'Dozent/innen'; //************
-
 // Students
 $string['students'] = 'Student/-innen';
 $string['student_accesses'] = 'Zugriffe durch Student/-innen';
@@ -45,7 +51,6 @@ $string['resources_students_overview_chart_title'] = 'Ressourcen: Übersicht üb
 $string['resources_access_overview'] = 'Übersicht über Zugriffe';
 $string['resources_access_overview_chart_title'] = 'Ressourcen: Übersicht über Zugriffe';
 $string['resources_access_detail_chart_title'] = 'Ressourcen: Einzelheiten bezüglich Zugriffe durch Student/-innen'; //**************
-
 // Activities
 $string['activities'] = 'Aktivitäten';
 $string['assignments'] = 'Aufgaben';
@@ -106,8 +111,6 @@ $string['info_text'] = '<p>Um das Diagramm individuell zu gestalten, können Sie
         message += "<li>Element Alt+Klick: nur das angeklickte Element auswählen.</li>";
         message += "<li><img src=\'images/eye.png\'> Einzelheiten zu Elementen anzeigen</li>";
         message += "</ul>'; //************
-
-
 // Errors
 $string['err_course_not_set'] = 'Die Identifikation (ID) für den Kurs ist nicht eingerichtet!';
 $string['err_block_instance_id_not_set'] = 'Die Block Instanz ID ist nicht eingerichtet!';
@@ -154,11 +157,11 @@ $string['no_chart_at_the_moment'] = 'Momentan existiert kein Diagramm!';
 
 
 $string['about_gismo'] = 'Über GISMO';
-$string['intro_information_about_gismo'] = 'Informationen zu dieser Version sind unten angezeigt:';  
+$string['intro_information_about_gismo'] = 'Informationen zu dieser Version sind unten angezeigt:';
 $string['gismo_version'] = 'Version ';
 $string['release_date'] = 'Freigabedatum ';
 $string['authors'] = 'Autoren ';
-$string['contact_us']= 'Bei Fragen oder wenn Sie irgendwelche Fehler melden möchten, wenden Sie sich bitte an die Autoren unter den nachstehenden Adressen: ';
+$string['contact_us'] = 'Bei Fragen oder wenn Sie irgendwelche Fehler melden möchten, wenden Sie sich bitte an die Autoren unter den nachstehenden Adressen: ';
 $string['close'] = 'Schliessen';
 $string['confirm_exiting'] = 'Möchten Sie Gismo wirklich verlassen?';
 
@@ -183,29 +186,28 @@ $string['completion_completed_on_tooltip'] = 'Beendet am ';
 $string['completion_completed_on_tooltip_months'] = "['Jan','Feb','M&auml;r','Apr','Mai','Jun','Jul','Aug','Sep','Oct','Nov','Dez']";
 
 // Fehlende Reihen hinzugefügt am 08.10.2013
-$string['err_missing_data'] ='Kann nicht mit der Analyse fortfahren, weil keine Daten zur Verf&uuml;gung stehen!';
-$string['err_no_data'] ='Keine Daten';
-$string['err_cannot_extract_data'] ='Kann nicht auf Serverdaten zugreifen!';
-$string['err_unknown'] ='Unbekannter Fehler!';
+$string['err_missing_data'] = 'Kann nicht mit der Analyse fortfahren, weil keine Daten zur Verf&uuml;gung stehen!';
+$string['err_no_data'] = 'Keine Daten';
+$string['err_cannot_extract_data'] = 'Kann nicht auf Serverdaten zugreifen!';
+$string['err_unknown'] = 'Unbekannter Fehler!';
 
 //Homepage Text
-$string['homepage_title']='Wilkommen bei GISMO';
-$string['homepage_processing_data_wait']='Datenverarbeitung, bitte warten!';
-$string['homepage_processing_data']='Datenverarbeitung';
-$string['homepage_text']='GISMO ist ein grafisches, interaktives System, das &uuml;ber ein Tool, Tracking-Daten aus dem Moodle Course Management-System extrahiert, mit denen Dozierende und Studierende ihre Aktivit&auml;ten &uuml;berwachen k&ouml;nnen.<br />
+$string['homepage_title'] = 'Wilkommen bei GISMO';
+$string['homepage_processing_data_wait'] = 'Datenverarbeitung, bitte warten!';
+$string['homepage_processing_data'] = 'Datenverarbeitung';
+$string['homepage_text'] = 'GISMO ist ein grafisches, interaktives System, das &uuml;ber ein Tool, Tracking-Daten aus dem Moodle Course Management-System extrahiert, mit denen Dozierende und Studierende ihre Aktivit&auml;ten &uuml;berwachen k&ouml;nnen.<br />
 Um GISMO zu starten w&auml;hlen Sie ein Men&uuml; oben auf dieser Seite aus.<br />
 Wenn Sie die Tutorials anschauen m&ouml;chten, klicken Sie bitte auf das Men&uuml; "Hilfe" > "Tutorials".';
 
-$string['hide_menu']='Menu verstecken';
-$string['show_menu']='Menu zeigen';
-$string['show_details']='Details zeigen';
+$string['hide_menu'] = 'Menu verstecken';
+$string['show_menu'] = 'Menu zeigen';
+$string['show_details'] = 'Details zeigen';
 
-$string['homepage_charts_preview_title']='Diagramm Vorschau';
-$string['homepage_chart_activities_assignments_overview']='Aktivit&auml;ten: &Uuml;bersicht der Aufgaben';
-$string['homepage_chart_resources_access_overview']='Ressourcen: Zugriffs&uuml;bersicht';
-$string['homepage_chart_resources_students_overview']='Ressourcen: Studenten&uuml;bersicht';
-$string['homepage_chart_students_access_overview_on_resources']='Studenten: Studenentzugriffe und ressourcen';
-$string['homepage_chart_students_access_overview']='Studenten: Zugriffs&uuml;bersicht';
-$string['homepage_chart_students_accesses_by_students']='Studenten: Zugriffe durch Studenten';
-
+$string['homepage_charts_preview_title'] = 'Diagramm Vorschau';
+$string['homepage_chart_activities_assignments_overview'] = 'Aktivit&auml;ten: &Uuml;bersicht der Aufgaben';
+$string['homepage_chart_resources_access_overview'] = 'Ressourcen: Zugriffs&uuml;bersicht';
+$string['homepage_chart_resources_students_overview'] = 'Ressourcen: Studenten&uuml;bersicht';
+$string['homepage_chart_students_access_overview_on_resources'] = 'Studenten: Studenentzugriffe und ressourcen';
+$string['homepage_chart_students_access_overview'] = 'Studenten: Zugriffs&uuml;bersicht';
+$string['homepage_chart_students_accesses_by_students'] = 'Studenten: Zugriffe durch Studenten';
 ?>

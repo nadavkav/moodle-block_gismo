@@ -1,5 +1,12 @@
 <?php
-//GISMO EN language file
+
+/**
+ * GISMO block HE translation file
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // block title
 $string['pluginname'] = 'דוחות GISMO';
 $string['gismo'] = 'Gismo';
@@ -28,7 +35,6 @@ $string['close'] = 'סיום';
 
 $string['users'] = 'משתמשים'; //************
 $string['teachers'] = 'מורים'; //************
-
 // Students
 $string['students'] = 'תלמידים';
 $string['student_accesses'] = 'גישת תלמידים לקורס';
@@ -47,7 +53,6 @@ $string['resources_students_overview_chart_title'] = 'Resources: students overvi
 $string['resources_access_overview'] = 'גישה למשאבים לאורך זמן';
 $string['resources_access_overview_chart_title'] = 'Resources: accesses overview';
 $string['resources_access_detail_chart_title'] = 'Resources: resource details on students'; //**************
-
 // Activities
 $string['activities'] = 'פעילויות';
 $string['assignments'] = 'מטלות';
@@ -104,8 +109,6 @@ $string['info_text'] = '<p>To customize the chart you can select/unselect items 
         message += "<li>Item Alt+Click: select only the clicked item</li>";
         message += "<li><img src=\'images/eye.png\'> show item details</li>";
         message += "</ul>'; //************
-
-
 // Errors
 $string['err_course_not_set'] = 'Course id is not set!';
 $string['err_block_instance_id_not_set'] = 'Block instance id is not set!';
@@ -156,7 +159,7 @@ $string['intro_information_about_gismo'] = 'Information about this release is re
 $string['gismo_version'] = 'Version ';
 $string['release_date'] = 'Release date ';
 $string['authors'] = 'Authors ';
-$string['contact_us']= 'Please feel free to contact authors for questions or for reporting bugs at the following addresses: ';
+$string['contact_us'] = 'Please feel free to contact authors for questions or for reporting bugs at the following addresses: ';
 $string['close'] = 'Close';
 $string['confirm_exiting'] = 'Do you really want to exit Gismo?';
 

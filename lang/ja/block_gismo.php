@@ -1,5 +1,12 @@
 <?php
-//GISMO JA language file
+
+/**
+ * GISMO block JA translation file
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // block title
 $string['pluginname'] = 'Gismo';
 $string['gismo'] = 'Gismo';
@@ -37,7 +44,6 @@ $string['close'] = '閉じる';
 
 $string['users'] = 'ユーザ'; //************
 $string['teachers'] = '教師'; //************
-
 // Students
 $string['students'] = '学生';
 $string['student_accesses'] = '学生によるアクセス';
@@ -113,7 +119,6 @@ $string['info_text'] = '<p>グラフをカスタマイズする場合、あな�
         message += "<li>アイテム Alt+クリック: クリックされたアイテムのみ選択します。</li>";
         message += "<li><img src=\'images/eye.png\'> アイテム詳細を表示します。</li>";
         message += "</ul>'; //************
-
 // Errors
 $string['err_course_not_set'] = 'コースIDが設定されていません!';
 $string['err_block_instance_id_not_set'] = 'ブロックインスタンスIDが設定されていません!';
@@ -230,5 +235,4 @@ $string['homepage_chart_students_accesses_by_students'] = '学生: 学生によ�
 $string['hide_menu'] = 'メニューを隠す';
 $string['show_menu'] = 'メニューを表示する';
 $string['show_details'] = '詳細を表示する';
-
 ?>

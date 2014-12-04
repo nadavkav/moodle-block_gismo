@@ -1,5 +1,11 @@
 <?php
-//GISMO IT language file
+/**
+ * GISMO block IT translation file
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // block title
 $string['pluginname'] = 'Gismo';
 $string['gismo'] = 'Gismo';

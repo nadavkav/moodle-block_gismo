@@ -1,5 +1,12 @@
 <?php
-//GISMO FR language file
+
+/**
+ * GISMO block FR translation file
+ *
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // block title
 $string['pluginname'] = 'Gismo';
 $string['gismo'] = 'Gismo';
@@ -25,7 +32,6 @@ $string['close'] = 'Fermer';
 
 $string['users'] = 'utilisateur-e-s'; //************
 $string['teachers'] = 'professeur-e-s'; //************
-
 // Students
 $string['students'] = 'Étudiant-e-s';
 $string['student_accesses'] = 'Accès par les étudiant-e-s';
@@ -44,7 +50,6 @@ $string['resources_students_overview_chart_title'] = 'Ressources : aperçu des �
 $string['resources_access_overview'] = 'Aperçu des accès';
 $string['resources_access_overview_chart_title'] = 'Ressources : aperçu des accès';
 $string['resources_access_detail_chart_title'] = 'Ressources : détails des accès par les étudiant-e-s'; //**************
-
 // Activities
 $string['activities'] = 'Activités';
 $string['assignments'] = 'Devoirs';
@@ -105,8 +110,6 @@ $string['info_text'] = '<p>Pour personnaliser le graphique, vous pouvez sélecti
         message += "<li>Alt+Clic d\'article : sélectionner uniquement l\'article cliqué.</li>";
         message += "<li><img src=\'images/eye.png\'> afficher les détails de l\'article</li>";
         message += "</ul>'; //************
-
-
 // Errors
 $string['err_course_not_set'] = 'L\'id du cours n\'est pas défini !';
 $string['err_block_instance_id_not_set'] = 'L\'id d\'instance de bloc n\'est pas défini !';
@@ -153,57 +156,57 @@ $string['no_chart_at_the_moment'] = 'Il n\'existe pas de graphique pour le momen
 
 
 $string['about_gismo'] = 'À propos de GISMO';
-$string['intro_information_about_gismo'] = 'Les informations concernant cette version sont indiquées ci-dessous :';  
+$string['intro_information_about_gismo'] = 'Les informations concernant cette version sont indiquées ci-dessous :';
 $string['gismo_version'] = 'Version ';
 $string['release_date'] = 'Date de publication ';
 $string['authors'] = 'Auteurs ';
-$string['contact_us']= 'N\'hésitez pas à contacter les auteurs pour des questions ou pour signaler des erreurs à l\'adresse suivante : ';
+$string['contact_us'] = 'N\'hésitez pas à contacter les auteurs pour des questions ou pour signaler des erreurs à l\'adresse suivante : ';
 $string['close'] = 'Fermer';
 $string['confirm_exiting'] = 'Souhaitez vous vraiment quitter Gismo?';
 
 //Completion
 $string['completion'] = 'Achèvement';
-$string['completion_quiz_menu'] = 'Tests'; 
-$string['completion_quiz_chart_title'] = 'Achèvement tests'; 
-$string['completion_assignment_menu'] = 'Devoirs'; 
-$string['completion_assignment_chart_title'] = 'Achèvement devoirs'; 
-$string['completion_assignment22_menu'] = 'Devoirs 2.2'; 
-$string['completion_assignment22_chart_title'] = 'Achèvement devoirs 2.2'; 
-$string['completion_resource_menu'] = 'Ressources'; 
-$string['completion_resource_chart_title'] = 'Achèvement ressources'; 
-$string['completion_forum_menu'] = 'Forums'; 
-$string['completion_forum_chart_title'] = 'Achèvement forums'; 
-$string['completion_wiki_menu'] = 'Wikis'; 
-$string['completion_wiki_chart_title'] = 'Achèvement wikis'; 
+$string['completion_quiz_menu'] = 'Tests';
+$string['completion_quiz_chart_title'] = 'Achèvement tests';
+$string['completion_assignment_menu'] = 'Devoirs';
+$string['completion_assignment_chart_title'] = 'Achèvement devoirs';
+$string['completion_assignment22_menu'] = 'Devoirs 2.2';
+$string['completion_assignment22_chart_title'] = 'Achèvement devoirs 2.2';
+$string['completion_resource_menu'] = 'Ressources';
+$string['completion_resource_chart_title'] = 'Achèvement ressources';
+$string['completion_forum_menu'] = 'Forums';
+$string['completion_forum_chart_title'] = 'Achèvement forums';
+$string['completion_wiki_menu'] = 'Wikis';
+$string['completion_wiki_chart_title'] = 'Achèvement wikis';
 $string['completion_chat_menu'] = 'Chats';
-$string['completion_chat_chart_title'] = 'Achèvement chats'; 
-$string['completion_completed_on_tooltip'] = 'Achevé le '; 
+$string['completion_chat_chart_title'] = 'Achèvement chats';
+$string['completion_completed_on_tooltip'] = 'Achevé le ';
 $string['completion_completed_on_tooltip_months'] = "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']";
 
 //Added missing string 08.10.2013
-$string['err_missing_data'] ='Il est impossible de procéder à l&#39;analyse car il n&#39;y a aucune donnée disponible!'; 
-$string['err_no_data'] ='Pas de données'; 
-$string['err_cannot_extract_data'] ='Il est impossible d&#39;extraire des données du serveur!'; 
-$string['err_unknown'] ='Erreur inconnue!';
+$string['err_missing_data'] = 'Il est impossible de procéder à l&#39;analyse car il n&#39;y a aucune donnée disponible!';
+$string['err_no_data'] = 'Pas de données';
+$string['err_cannot_extract_data'] = 'Il est impossible d&#39;extraire des données du serveur!';
+$string['err_unknown'] = 'Erreur inconnue!';
 
 //Homepage text
-$string['homepage_title']='Bienvenus sur GISMO'; 
-$string['homepage_processing_data_wait']='Traitement de données , attendre svp!'; 
-$string['homepage_processing_data']= 'Traitement de données'; 
-$string['homepage_text']='GISMO est un système graphique interactif servant d\'outil de contrôle et de suivi d\'étudiant, celui-ci extrait les données de suivi à partir du système de gestion de cours Moodle. Il produit également des représentations graphiques très utiles qui peuvent être examinées par les enseignants et les étudiants afin d\'obtenir un aperçu général des activités d\'apprentissage.<br /> S\'il vous plaît sélectionner un des menus en haut de cette page pour commencer à utiliser GISMO.<br />Si vous souhaitez regarder le tutoriel il vous suffit de cliquer sur le menu "Aide" > "Tutorial".';
+$string['homepage_title'] = 'Bienvenus sur GISMO';
+$string['homepage_processing_data_wait'] = 'Traitement de données , attendre svp!';
+$string['homepage_processing_data'] = 'Traitement de données';
+$string['homepage_text'] = 'GISMO est un système graphique interactif servant d\'outil de contrôle et de suivi d\'étudiant, celui-ci extrait les données de suivi à partir du système de gestion de cours Moodle. Il produit également des représentations graphiques très utiles qui peuvent être examinées par les enseignants et les étudiants afin d\'obtenir un aperçu général des activités d\'apprentissage.<br /> S\'il vous plaît sélectionner un des menus en haut de cette page pour commencer à utiliser GISMO.<br />Si vous souhaitez regarder le tutoriel il vous suffit de cliquer sur le menu "Aide" > "Tutorial".';
 
-$string['hide_menu']='Cacher menu';
-$string['show_menu']='Afficher menu';
-$string['show_details']='Afficher details';
+$string['hide_menu'] = 'Cacher menu';
+$string['show_menu'] = 'Afficher menu';
+$string['show_details'] = 'Afficher details';
 
-$string['homepage_charts_preview_title']='Aperçu des graphiques';
-$string['homepage_chart_activities_assignments_overview']='Activités: aperçu des devoirs';
-$string['homepage_chart_resources_access_overview']='Ressources: aperçu des accès';
-$string['homepage_chart_resources_students_overview']='Ressources: aperçu des étudiant-e-s';
-$string['homepage_chart_students_access_overview_on_resources']='Étudiant-e-s: aperçu des accès aux ressources';
-$string['homepage_chart_students_access_overview']='Étudiant-e-s: aperçu des accès';
-$string['homepage_chart_students_accesses_by_students']='Étudiant-e-s: accès par les étudiant-e-s';
+$string['homepage_charts_preview_title'] = 'Aperçu des graphiques';
+$string['homepage_chart_activities_assignments_overview'] = 'Activités: aperçu des devoirs';
+$string['homepage_chart_resources_access_overview'] = 'Ressources: aperçu des accès';
+$string['homepage_chart_resources_students_overview'] = 'Ressources: aperçu des étudiant-e-s';
+$string['homepage_chart_students_access_overview_on_resources'] = 'Étudiant-e-s: aperçu des accès aux ressources';
+$string['homepage_chart_students_access_overview'] = 'Étudiant-e-s: aperçu des accès';
+$string['homepage_chart_students_accesses_by_students'] = 'Étudiant-e-s: accès par les étudiant-e-s';
 
 //Added missing string 21.10.2013
-$string['accesses_tooltip']='accès';
+$string['accesses_tooltip'] = 'accès';
 ?>

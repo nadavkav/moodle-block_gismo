@@ -1,17 +1,15 @@
 <?php
 
 /**
- * GISMO EN language file
+ * GISMO block EN translation file
  *
- * @package enrol_supsifb
- * @copyright eLab
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_gismo
+ * @copyright  eLab Christian Milani
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 //ONLY IN ENGLISH
-$string['gismo_version_value']='3.3';
-$string['release_date_value']='2014-11-14';
+$string['gismo_version_value'] = '3.3';
+$string['release_date_value'] = '2014-11-14';
 
 // block title
 $string['pluginname'] = 'Gismo';
@@ -41,7 +39,6 @@ $string['close'] = 'Close';
 
 $string['users'] = 'users'; //************
 $string['teachers'] = 'teachers'; //************
-
 // Students
 $string['students'] = 'Students';
 $string['student_accesses'] = 'Accesses by students';
@@ -60,7 +57,6 @@ $string['resources_students_overview_chart_title'] = 'Resources: students overvi
 $string['resources_access_overview'] = 'Accesses overview';
 $string['resources_access_overview_chart_title'] = 'Resources: accesses overview';
 $string['resources_access_detail_chart_title'] = 'Resources: resource details on students'; //**************
-
 // Activities
 $string['activities'] = 'Activities';
 $string['assignments'] = 'Assignments';
@@ -121,8 +117,6 @@ $string['info_text'] = '<p>To customize the chart you can select/unselect items 
         message += "<li>Item Alt+Click: select only the clicked item</li>";
         message += "<li><img src=\'images/eye.png\'> show item details</li>";
         message += "</ul>'; //************
-
-
 // Errors
 $string['err_course_not_set'] = 'Course id is not set!';
 $string['err_block_instance_id_not_set'] = 'Block instance id is not set!';
@@ -169,11 +163,11 @@ $string['no_chart_at_the_moment'] = 'There isn\'t any chart at the moment!';
 
 
 $string['about_gismo'] = 'About GISMO';
-$string['intro_information_about_gismo'] = 'Information about this release is reported below:';  
+$string['intro_information_about_gismo'] = 'Information about this release is reported below:';
 $string['gismo_version'] = 'Version ';
 $string['release_date'] = 'Release date ';
 $string['authors'] = 'Authors ';
-$string['contact_us']= 'Please feel free to contact authors for questions or for reporting bugs at the following addresses: ';
+$string['contact_us'] = 'Please feel free to contact authors for questions or for reporting bugs at the following addresses: ';
 $string['close'] = 'Close';
 $string['confirm_exiting'] = 'Do you really want to exit Gismo?';
 
@@ -223,34 +217,33 @@ $string['completion_completed_on_tooltip'] = 'Completed on ';
 $string['completion_completed_on_tooltip_months'] = "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']";
 
 //Added missing string 08.10.2013
-$string['err_missing_data'] ='Cannot proceed with the analysis beacuse there isn\'t any data to work on!'; 
-$string['err_no_data'] ='No data'; 
-$string['err_cannot_extract_data'] ='Cannot extract data from server!'; 
-$string['err_unknown'] ='Unknown error!'; 
+$string['err_missing_data'] = 'Cannot proceed with the analysis beacuse there isn\'t any data to work on!';
+$string['err_no_data'] = 'No data';
+$string['err_cannot_extract_data'] = 'Cannot extract data from server!';
+$string['err_unknown'] = 'Unknown error!';
 
 //Homepage text
-$string['homepage_title']='Welcome to GISMO';
-$string['homepage_processing_data_wait']='Processing data, please wait!';
-$string['homepage_processing_data']='Processing data';
-$string['homepage_text']='GISMO is a graphical interactive student monitoring and tracking system tool that extracts tracking data from the Moodle Course Management System. It generates also useful graphical representations that can be explored by course instructors and students to get an overview of the learning activities.<br />
+$string['homepage_title'] = 'Welcome to GISMO';
+$string['homepage_processing_data_wait'] = 'Processing data, please wait!';
+$string['homepage_processing_data'] = 'Processing data';
+$string['homepage_text'] = 'GISMO is a graphical interactive student monitoring and tracking system tool that extracts tracking data from the Moodle Course Management System. It generates also useful graphical representations that can be explored by course instructors and students to get an overview of the learning activities.<br />
 Please select one of the menus on the top of this page to start using GISMO.<br />
 If you would like to have a look at the tutorial please click on the menu "Help"> "Tutorial".';
 
-$string['hide_menu']='Hide menu';
-$string['show_menu']='Show menu';
-$string['show_details']='Show details';
+$string['hide_menu'] = 'Hide menu';
+$string['show_menu'] = 'Show menu';
+$string['show_details'] = 'Show details';
 
-$string['homepage_charts_preview_title']='Charts preview';
-$string['homepage_chart_activities_assignments_overview']='Activities: assignments overview';
-$string['homepage_chart_resources_access_overview']='Resources: accesses overview';
-$string['homepage_chart_resources_students_overview']='Resources: students overview';
-$string['homepage_chart_students_access_overview_on_resources']='Students: accesses overview on resources';
-$string['homepage_chart_students_access_overview']='Students: accesses overview';
-$string['homepage_chart_students_accesses_by_students']='Students: accesses by students';
+$string['homepage_charts_preview_title'] = 'Charts preview';
+$string['homepage_chart_activities_assignments_overview'] = 'Activities: assignments overview';
+$string['homepage_chart_resources_access_overview'] = 'Resources: accesses overview';
+$string['homepage_chart_resources_students_overview'] = 'Resources: students overview';
+$string['homepage_chart_students_access_overview_on_resources'] = 'Students: accesses overview on resources';
+$string['homepage_chart_students_access_overview'] = 'Students: accesses overview';
+$string['homepage_chart_students_accesses_by_students'] = 'Students: accesses by students';
 
 //Added missing string 21.10.2013
-$string['accesses_tooltip']='accesses';
+$string['accesses_tooltip'] = 'accesses';
 
-$string['export_data_task']='GISMO data exporter task';
-
+$string['export_data_task'] = 'GISMO data exporter task';
 ?>
