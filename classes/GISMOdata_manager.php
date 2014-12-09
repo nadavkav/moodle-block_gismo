@@ -84,7 +84,10 @@ class GISMOdata_manager {
         }
 
         // Adjust some php variables to the execution of this script
-        @ini_set("max_execution_time", "7200");
+        //Upping the max execution time is fine for the CRON but during unit tests there is code that fails if the max execution time isn't 0. (MDL-38989) Thanks to Tim Lock
+        if (!PHPUNIT_TEST) {
+            @ini_set("max_execution_time", "7200"); 
+        }
         if (function_exists("raise_memory_limit")) {
             raise_memory_limit("192M");
         }
