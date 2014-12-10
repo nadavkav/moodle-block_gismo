@@ -116,7 +116,7 @@ switch ($query) {
         $student_resource_access = false;
         //postgreSQL solve problem on GROUP BY
         if($CFG->dbtype === "pgsql"){           
-            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval FROM {block_gismo_sl} WHERE course = ? AND time BETWEEN ? AND ? AND userid IN (?,?) GROUP BY course, timedate, userid ORDER BY time ASC) as a",$ctu_params);
+            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval FROM {block_gismo_sl} WHERE course = ? AND time BETWEEN ? AND ? AND userid IN (?,?) GROUP BY course, timedate, userid ORDER BY timedate ASC) as a",$ctu_params);
         }else{
             $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
             $sort = "time ASC";
