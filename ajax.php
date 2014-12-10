@@ -112,12 +112,18 @@ switch ($query) {
         $result->name = get_string($lang_index, "block_gismo");
         // links
         $result->links = null;
-
-        $ctu_filters .= " GROUP BY course, timedate, time, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
-        $sort = "time ASC";
-        $fields = "id, course, userid, timedate, time, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY        
-        // chart data
-        $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, $fields);
+        
+        $student_resource_access = false;
+        //postgreSQL solve problem on GROUP BY
+        if($CFG->dbtype === "pgsql"){           
+            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval FROM {block_gismo_sl} WHERE course = ? AND time BETWEEN ? AND ? AND userid IN (?,?) GROUP BY course, timedate, userid ORDER BY time ASC) as a",$ctu_params);
+        }else{
+            $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
+            $sort = "time ASC";
+            $fields = " id, course, userid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY        
+            // chart data
+            $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, $fields);
+        }
         // build result 
         if ($student_resource_access !== false) {
             // evaluate start date and end date
