@@ -25,12 +25,15 @@
 
     Please remove any old version of the plugin.
 
-    b) INSTALL FILES
+    b) INSTALL FILES    
     
     Please follow the standard procedure to install Moodle plugins:
     - copy the gismo folder into the moodle blocks directory (MOODLE_DOCUMENT_ROOT/blocks)
     - logon to moodle as administrator and visit the Notifications page
     - configure the new settings page
+
+    With git:
+        git clone https://steveorulez@bitbucket.org/steveorulez/block_gismo.git gismo
 
     c) LAUNCH DATA EXPORTER FOR THE FIRST TIME
     
