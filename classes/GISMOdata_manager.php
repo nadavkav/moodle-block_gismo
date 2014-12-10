@@ -315,8 +315,8 @@ class GISMOdata_manager {
                     $qry = "SELECT MAX({logstore_standard_log}.id) as id, " . $this->get_time2date_code("timecreated") . " AS timedate, MAX({logstore_standard_log}.timecreated) as time, userid, " .
                             "{course_modules}.instance AS actid, COUNT({logstore_standard_log}.contextinstanceid) AS numval, {logstore_standard_log}.action " .
                             "FROM {logstore_standard_log}, {course_modules} " .
-                            "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = ? AND {logstore_standard_log}.action $action_sql AND {logstore_standard_log}.objecttable $objecttable_sql AND {logstore_standard_log}.target $target_sql AND $eventname_sql $filter " . //AND eventname like '%mod_forum%' " .
-                            "GROUP BY contextinstanceid, component, action, timedate, userid ORDER BY timedate";
+                            "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = ? AND {logstore_standard_log}.action $action_sql AND {logstore_standard_log}.objecttable $objecttable_sql AND {logstore_standard_log}.target $target_sql AND $eventname_sql $filter " . 
+                            "GROUP BY contextinstanceid, actid, component, action, timedate, userid ORDER BY timedate";
 
                     // loop
                     while ($loop === true) {

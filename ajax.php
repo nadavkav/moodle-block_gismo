@@ -113,7 +113,7 @@ switch ($query) {
         // links
         $result->links = null;
 
-        $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
+        $ctu_filters .= " GROUP BY course, timedate, time, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
         $sort = "time ASC";
         $fields = "id, course, userid, timedate, time, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY        
         // chart data
