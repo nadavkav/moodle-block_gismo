@@ -27,8 +27,11 @@ if (!defined('LIB_DIR')) {
 
 require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
+$q = optional_param('q', '', PARAM_TEXT);
+$srv_data_encoded = required_param('srv_data',PARAM_TEXT);
+
 // query filter between pages
-$query = (isset($_REQUEST['q'])) ? addslashes($_REQUEST['q']) : '';
+$query = (isset($q)) ? addslashes($q) : '';
 
 // LIBRARIES MANAGEMENT
 // Please use this section to set server side and cliend side libraries to be included    
@@ -78,14 +81,12 @@ if (is_array($server_side_libraries) AND count($server_side_libraries) > 0) {
 
 // check input data
 
-if (!isset($_REQUEST["srv_data"])) {
+if (!isset($srv_data_encoded)) {
 
     block_gismo\GISMOutil::gismo_error('err_srv_data_not_set', $error_mode);
 
     exit;
 }
-
-$srv_data_encoded = $_REQUEST["srv_data"];
 
 $srv_data = (object) unserialize(base64_decode(urldecode($srv_data_encoded)));
 
