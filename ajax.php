@@ -16,25 +16,29 @@ $error_mode = "json";
 // libraries & acl
 require_once "common.php";
 
+
+$q = optional_param('q', '', PARAM_TEXT);
+$from = optional_param('from', '', PARAM_INT);
+$to = optional_param('to', '', PARAM_INT);
+$subtype = optional_param('subtype', '', PARAM_TEXT);
+$id =  optional_param('id', '', PARAM_INT);
+
 // include specific libraries for quizzes
 // require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "mod"  . DIRECTORY_SEPARATOR . "quiz" . DIRECTORY_SEPARATOR . "lib.php");
 // check input data
-if (!isset($_REQUEST["q"]) OR ! isset($_REQUEST["from"]) OR ! isset($_REQUEST["to"])) {
+if (!isset($q) OR ! isset($from) OR ! isset($to)) {
     block_gismo\GISMOutil::gismo_error('err_missing_parameters', $error_mode);
     exit;
 } else {
-    $query = addslashes($_REQUEST["q"]);
+    $query = addslashes($q);
     $course_id = intval($srv_data->course_id);
-    $from = intval($_REQUEST["from"]);
-    $to = intval($_REQUEST["to"]);
+    $from = intval($from);
+    $to = intval($to);
 }
 
 // SECURITY (prevent users hacks)
 $query = explode("@", $query);
 $query = $actor . "@" . $query[1];
-
-// details
-$subtype = (isset($_REQUEST["subtype"])) ? $_REQUEST["subtype"] : "";
 
 // current user id
 $current_user_id = intval($USER->id);
@@ -159,7 +163,7 @@ switch ($query) {
         switch ($subtype) {
             case "users-details":
                 // check student id
-                if (isset($_REQUEST["id"])) {
+                if (isset($id)) {
                     // chart title
                     $result->name = get_string("student_resources_details_chart_title", "block_gismo");
                     //$result->name = get_string("student_resources_overview_chart_title", "block_gismo");
@@ -168,7 +172,7 @@ switch ($query) {
                     // filters
                     $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "userid = ?")));  // remove null values / empty strings / ... before imploding
                     $filters .= " GROUP BY course,resid,timedate,userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & RESOURCEID!!!
-                    $params = array_merge($course_params, $time_params, array(intval($_REQUEST["id"])));
+                    $params = array_merge($course_params, $time_params, array(intval($id)));
                     $sort = "time ASC";
                     $fields = "id, course, userid, restype, resid, timedate, time, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // get data
@@ -250,7 +254,7 @@ switch ($query) {
         switch ($subtype) {
             case "resources-details":
                 // check resource id
-                if (isset($_REQUEST["id"])) {
+                if (isset($id)) {
                     // chart title
                     $result->name = get_string("student_resources_details_chart_title", "block_gismo");
                     // links
@@ -258,7 +262,7 @@ switch ($query) {
                     // filters
                     $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "resid = ?")));  // remove null values / empty strings / ... before imploding
                     $filters .= " GROUP BY course,timedate,resid,userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate, resrouceid & userid
-                    $params = array_merge($course_params, $time_params, array(intval($_REQUEST["id"])));
+                    $params = array_merge($course_params, $time_params, array(intval($id)));
                     $sort = "time ASC";
                     $fields = "id, course, userid, restype, resid, timedate, time, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // chart data
@@ -478,7 +482,7 @@ switch ($query) {
             case "users-details":
                 // user id filter
                 $ctu_filters .= "AND userid = ?";
-                array_push($ctu_params, (isset($_REQUEST["id"])) ? intval($_REQUEST["id"]) : -1);
+                array_push($ctu_params, (isset($id)) ? intval($id) : -1);
                 // chart title
                 $result->name = get_string($spec_info[$query]["subtitle"], "block_gismo");
                 // links
