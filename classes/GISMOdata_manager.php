@@ -24,8 +24,6 @@ class GISMOdata_manager {
     protected $manual;
     protected $config;
 
-    /** @var manager log manager */
-    //protected $logmanager;
     // constructor
     public function __construct($manual = false) {
         $this->now_time = time();
@@ -44,8 +42,6 @@ class GISMOdata_manager {
         if (isset($config->exportlogs)) {
             $this->exportlogs = $config->exportlogs;
         }
-
-        //$this->logmanager = get_log_manager()->get_readers()['logstore_standard'];
     }
 
     protected function get_time2date_code($field) {
@@ -86,7 +82,7 @@ class GISMOdata_manager {
         // Adjust some php variables to the execution of this script
         //Upping the max execution time is fine for the CRON but during unit tests there is code that fails if the max execution time isn't 0. (MDL-38989) Thanks to Tim Lock
         if (!PHPUNIT_TEST) {
-            @ini_set("max_execution_time", "7200"); 
+            \core_php_time_limit::raise(7200);
         }
         if (function_exists("raise_memory_limit")) {
             raise_memory_limit("192M");
@@ -113,7 +109,7 @@ class GISMOdata_manager {
         $max_log_id = intval(array_pop($max_log_id)->id);
 
 
-        //Start Sync                   
+        //Start Sync
         // lock gismo tables
         // TODO
 
@@ -315,7 +311,7 @@ class GISMOdata_manager {
                     $qry = "SELECT MAX({logstore_standard_log}.id) as id, " . $this->get_time2date_code("timecreated") . " AS timedate, MAX({logstore_standard_log}.timecreated) as time, userid, " .
                             "{course_modules}.instance AS actid, COUNT({logstore_standard_log}.contextinstanceid) AS numval, {logstore_standard_log}.action " .
                             "FROM {logstore_standard_log}, {course_modules} " .
-                            "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = ? AND {logstore_standard_log}.action $action_sql AND {logstore_standard_log}.objecttable $objecttable_sql AND {logstore_standard_log}.target $target_sql AND $eventname_sql $filter " . 
+                            "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = ? AND {logstore_standard_log}.action $action_sql AND {logstore_standard_log}.objecttable $objecttable_sql AND {logstore_standard_log}.target $target_sql AND $eventname_sql $filter " .
                             "GROUP BY contextinstanceid, actid, component, action, timedate, userid ORDER BY timedate";
 
                     // loop
@@ -374,7 +370,7 @@ class GISMOdata_manager {
                 $offset = 0;
                 $loop = true;
 
-                // retrieve users actions 
+                // retrieve users actions
                 $qry = "SELECT MAX(id), " . $this->get_time2date_code("timecreated") . " AS date_val, MAX(timecreated) AS time, COUNT(id) AS count, userid FROM " .
                         "{logstore_standard_log} WHERE courseid = " . $course->id . " $filter GROUP BY userid, date_val LIMIT " . $this->limit_records . " OFFSET ";
 
@@ -433,7 +429,7 @@ class GISMOdata_manager {
                         . "{course_modules}.instance AS res_id, COUNT({logstore_standard_log}.contextid) AS count FROM {logstore_standard_log}, {course_modules} "
                         . "WHERE {course_modules}.id = {logstore_standard_log}.contextinstanceid AND {logstore_standard_log}.courseid = " . $course->id . " AND {logstore_standard_log}.action = 'viewed' AND "
                         . "{logstore_standard_log}.component IN('mod_resource','mod_book','mod_folder','mod_url','mod_page','mod_imscp') $filter GROUP BY res_type, res_id, date_val, userid LIMIT " . $this->limit_records . " OFFSET ";
-                //'folder', 'imscp', 'page', 'resource', 'url', 'book'
+
                 // loop
                 while ($loop === true) {
                     $actions = $DB->get_records_sql($qry . $offset);
@@ -502,7 +498,7 @@ class GISMOdata_manager {
         }
 
         // unlock gismo tables
-        // TODO        
+        // TODO
         // DEBUG: MEMORY USAGE
         if ($this->debug_mode) {
             echo "\nMEMORY USAGE AFTER: " . number_format(memory_get_usage(), 0, ".", "'") . "\n";
@@ -583,7 +579,6 @@ class GISMOdata_manager {
     protected function return_error($msg, $file, $function, $line) {
         return "Error: " . strtolower($msg) . sprintf(" [ File: '%s',  Function: '%s',  Line: '%s' ]", $file, $function, $line);
     }
-
 }
 
 ?>
