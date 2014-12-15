@@ -1,3 +1,8 @@
+Release 3.3 (2014-12-15)
+- Fix: Thanks to Tim Lock export_data.php & reset_data.php are only executable from CLI
+- Fix: Thanks to Tim Lock updated all $_REQUEST/$_GET/$_POST to optional_param/required_param
+- Fix: Solved a problem on Postgre on a query (ajax.php line 122)
+
 Release 3.3 (2014-12-03)
 - New: Moved data exporter from cron to scheduled tasks
 - New: Added Behat tests thanks to Corbière Alain, to run block_gismo tests use:
