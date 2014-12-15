@@ -44,9 +44,9 @@
     but can be changed in Site Administration -> Server -> Scheduled tasks -> GIMSO data exporter task
 
     When you install  Gismo block and you don't want to wait 
-    the next day to see the result, you can lunch this script manually:
+    the next day to see the result, you can lunch this script manually (ONLY FROM CLI):
 
-    MOODLE_MAIN_URL/blocks/gismo/lib/gismo/server_side/export_data.php?password=yourpassword
+    php blocks/gismo/lib/gismo/server_side/export_data.php?password=yourpassword
 
 2)  Configuration
 
