@@ -14,17 +14,17 @@ $error_mode = "json";
 require_once "common.php";
 
 // query
-$q = (isset($_REQUEST["q"])) ? $_REQUEST["q"] : "";
-
+//$q = optional_param('q', '', PARAM_TEXT);
+$config_data = optional_param_array('config_data',array(),PARAM_INT);
 // decide what to do
 switch ($q) {
     case "save":
         $result = array("status" => "false");
-        if (isset($_REQUEST["config_data"]) AND is_array($_REQUEST["config_data"]) AND count($_REQUEST["config_data"]) > 0) {
+        if (isset($config_data ) AND is_array($config_data ) AND count($config_data ) > 0) {
             // serialize and encode config data
-            $config_data = base64_encode(serialize((object) $_REQUEST["config_data"]));
+            $config_data_encode = base64_encode(serialize((object) $config_data ));
             // update config
-            $check = $DB->set_field("block_instances", "configdata", $config_data, array("id" => $srv_data->block_instance_id));
+            $check = $DB->set_field("block_instances", "configdata", $config_data_encode, array("id" => $srv_data->block_instance_id));
             if ($check !== false) {
                 $result["status"] = "true";
             }
