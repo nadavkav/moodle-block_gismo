@@ -9,7 +9,7 @@
  */
 //ONLY IN ENGLISH
 $string['gismo_version_value'] = '3.3';
-$string['release_date_value'] = '2014-11-14';
+$string['release_date_value'] = '2014-12-15';
 
 // block title
 $string['pluginname'] = 'Gismo';
