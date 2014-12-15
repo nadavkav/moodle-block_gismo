@@ -7,6 +7,9 @@
  * @copyright  eLab Christian Milani
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+define('CLI_SCRIPT', true);
+
 define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
 require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
