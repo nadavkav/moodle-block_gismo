@@ -28,7 +28,7 @@ if (!defined('LIB_DIR')) {
 require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
 
 $q = optional_param('q', '', PARAM_TEXT);
-$srv_data_encoded = required_param('srv_data',PARAM_TEXT);
+$srv_data_encoded = required_param('srv_data',PARAM_RAW);
 
 // query filter between pages
 $query = (isset($q)) ? addslashes($q) : '';
