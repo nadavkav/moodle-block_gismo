@@ -33,5 +33,3 @@ function xmldb_block_gismo_upgrade($oldversion = 0) {
 
     return true;
 }
-
-?>
