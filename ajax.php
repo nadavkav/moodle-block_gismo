@@ -275,7 +275,7 @@ switch ($query) {
                     $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // chart data
                     if ($CFG->dbtype === "pgsql") {
-                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields 
+                        $resource_accesses = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields 
                             + FROM {block_gismo_resource} 
                             + WHERE $filters 
                             + ORDER BY $sort) as a", $params);
