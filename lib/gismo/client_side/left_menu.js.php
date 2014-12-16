@@ -407,16 +407,7 @@ function left_menu(g) {
             result = (type_field != undefined && item[type_field] != undefined) ? item[type_field] : item_type;
             result += "-" + item[id_field];
         }
-        return result;
-        /*
-        // defaults
-        id_field = (id_field == undefined) ? "id" : id_field;
-        type_field = (type_field == undefined) ? "type" : type_field;
-        // build result
-        var result = (item[type_field] != undefined) ? item[type_field] : item_type;
-        result += "-" + item[id_field];
-        return result;
-        */
+        return result;        
     }
     
     // init lm content method
@@ -431,8 +422,6 @@ function left_menu(g) {
             // list
             element = $('<div></div>').attr('id', this.get_list_container_id(item));
             if (count > 0) {
-                //var lab = (item == 'users') ? "students" : item;    // WORKAROUND
-		///*
 		var lab = "<?php print_string('students', 'block_gismo'); ?>";		// WORKAROUND
 		switch (item) {
 			case 'users':
@@ -465,8 +454,7 @@ function left_menu(g) {
 			default:
 				lab = "<?php print_string('items', 'block_gismo'); ?>";
 		}
-		//*/
-		
+                
                 // add header with a checkbox to control items selection
                 element.append(
                     $('<div></div>').addClass("cb_main").append(
@@ -731,10 +719,8 @@ function left_menu(g) {
 
     // info
     this.show_info = function() {
-        var title = "<?php print_string('info_title', 'block_gismo'); ?>";
-	    
+        var title = "<?php print_string('info_title', 'block_gismo'); ?>";	    
         var message = "<?php print_string('info_text', 'block_gismo'); ?>";
-	
         this.gismo.util.show_modal_dialog(title, message);
     };
 }

@@ -474,27 +474,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                             yticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
                             yticks_pos.push(uid);
                         }    
-                    }			
-			
-			
-		//
-		    /*
-		    for (item in this.static_data["resources"]) {
-                        uid = this.lm.get_unique_id("resources", this.static_data["resources"][item], "id", "type");
-                        if ($.inArray(uid, selected_items["resources"]) != -1) {
-                            yticks.unshift(this.util.intelligent_substring(this.static_data["resources"][item].name, false));
-                            yticks_pos.unshift(uid);
-                        }    
-                    }
-		    
-                    for (item in this.static_data["users"]) {
-                        uid = this.lm.get_unique_id("users", this.static_data["users"][item], "id", "type");
-                        if ($.inArray(uid, selected_items["users"]) != -1) {
-                            xticks.push(this.util.intelligent_substring(this.static_data["users"][item].name, false));
-                            xticks_pos.push(uid);
-                        }    
-                    }
-		    //*/
+                    }	
 		    
                     // aggregate data (keep only selected users / resources)
                     var aggregated_data = new Array();
@@ -562,20 +542,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
                         prepared_data["yticks_min_len"] = 18;
 			prepared_data["x_label"] = "<?php print_string('resources', 'block_gismo'); ?>";
                         prepared_data["y_label"] = "<?php print_string('students', 'block_gismo'); ?>";   
-			    
-			//
-			    /*    
-			prepared_data["lines"] = used_lines;
-                        prepared_data["genseries"] = used_genseries;
-			prepared_data["xticks"] = xticks;
-                        prepared_data["yticks"] = yticks;	    			    
-                        prepared_data["xticks_num"] = xticks.length;
-                        prepared_data["xticks_min_len"] = 18;
-                        prepared_data["yticks_num"] = yticks.length;
-                        prepared_data["yticks_min_len"] = 18;
-			prepared_data["x_label"] = "<?php print_string('students', 'block_gismo'); ?>";
-                        prepared_data["y_label"] = "<?php print_string('resources', 'block_gismo'); ?>";
-			//*/
+			  
                     }       
                 }
                 break;
@@ -1200,14 +1167,7 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
             // evaluate number of pixels
             var w = parseInt(parseFloat($("#" + this.plot_id).width() - 200.0) / this.current_analysis.prepared_data.xticks.length) - 4.0;
             var h = parseInt(parseFloat($("#" + this.plot_id).height() - 200.0)/ this.current_analysis.prepared_data.yticks.length) - 4.0;
-            num_pixel = (w < h) ? w : h;
-            // check against minimum
-            /*
-            var min_w = parseFloat(this.current_analysis.prepared_data.xticks_min_len) - 4.0;
-            var min_h = parseFloat(this.current_analysis.prepared_data.yticks_min_len) - 4.0;
-            num_pixel = (num_pixel < min_w) ? min_w : num_pixel;
-            num_pixel = (num_pixel < min_h) ? min_h : num_pixel;
-            */    
+            num_pixel = (w < h) ? w : h;           
         }
         return num_pixel;    
     };
@@ -1875,14 +1835,11 @@ function gismo(config, srv_data, static_data, course_start_time, current_time, a
     // show short_overview
     this.show_short_overview = function () {
 	<?php
-	
 	$path_teacher="";
 	$path_student="";
-	
 	if(!isset($SESSION->lang)){
 		$SESSION->lang=$USER->lang;
 	}
-	
 	switch($SESSION->lang){
 		case "de":
 			$path_teacher="http://moclog.ch/de/tutorials/moclog-gismo-fur-dozenten/";
