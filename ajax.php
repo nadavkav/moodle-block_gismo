@@ -123,9 +123,9 @@ switch ($query) {
         //postgreSQL solve problem on GROUP BY
         if ($CFG->dbtype === "pgsql") {
             $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields"
-                    . " FROM {block_gismo_sl} "
-                    . "WHERE $ctu_filters "
-                    . "ORDER BY $sort) as a", $ctu_params);
+                    . " FROM {block_gismo_sl}"
+                    . " WHERE $ctu_filters"
+                    . " ORDER BY $sort) as a", $ctu_params);
         } else {
             // chart data
             $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, "id, " . $fields);
@@ -179,10 +179,10 @@ switch ($query) {
                     $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // get data
                     if ($CFG->dbtype === "pgsql") {
-                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields "
-                                . "FROM {block_gismo_resource} "
-                                . "WHERE $filters "
-                                . "ORDER BY $sort) as a", $params);
+                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields"
+                                . " FROM {block_gismo_resource}"
+                                . " WHERE $filters"
+                                . " ORDER BY $sort) as a", $params);
                     } else {
                         $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, " . $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     }
@@ -276,10 +276,10 @@ switch ($query) {
                     $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // chart data
                     if ($CFG->dbtype === "pgsql") {
-                        $resource_accesses = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields "
-                                . "FROM {block_gismo_resource} "
-                                . "WHERE $filters "
-                                . "ORDER BY $sort) as a", $params);
+                        $resource_accesses = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields"
+                                . " FROM {block_gismo_resource}"
+                                . " WHERE $filters"
+                                . " ORDER BY $sort) as a", $params);
                     } else {
                         $resource_accesses = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, ".$fields);
                     }
