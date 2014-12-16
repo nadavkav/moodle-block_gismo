@@ -10,8 +10,7 @@
 
 define('CLI_SCRIPT', true);
 
-define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
-require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+require_once __DIR__ . "/../../../../../config.php";
 
 $config = get_config('block_gismo');
 // This script is being called via the web, so check the password if there is one.

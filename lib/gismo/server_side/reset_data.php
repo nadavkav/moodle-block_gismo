@@ -10,8 +10,7 @@
 
 define('CLI_SCRIPT', true);
 
-define('ROOT', (realpath(dirname( __FILE__ )) . DIRECTORY_SEPARATOR));
-require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config.php");
+require_once __DIR__ . "/../../../../../config.php";
 
 // trace start
 echo "GISMO - reset data (start)!<br />";
