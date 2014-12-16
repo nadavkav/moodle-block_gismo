@@ -118,17 +118,16 @@ switch ($query) {
         $student_resource_access = false;
         $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
         $sort = "timedate ASC";
-
+        $fields = " course, userid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
         //postgreSQL solve problem on GROUP BY
         if ($CFG->dbtype === "pgsql") {
-            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval "
-                    . "FROM {block_gismo_sl} "
-                    . "WHERE $ctu_filters "
-                    . "ORDER BY $sort) as a", $ctu_params);
+            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields
+                    + FROM {block_gismo_sl} 
+                    + WHERE $ctu_filters 
+                    + ORDER BY $sort) as a", $ctu_params);
         } else {
-            $fields = " id, course, userid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
             // chart data
-            $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, $fields);
+            $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, "id, " . $fields);
         }
         // build result 
         if ($student_resource_access !== false) {
@@ -176,15 +175,15 @@ switch ($query) {
                     $filters .= " GROUP BY  course, userid, restype, resid, timedate"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & RESOURCEID!!!
                     $params = array_merge($course_params, $time_params, array(intval($id)));
                     $sort = "timedate ASC";
-                    $fields = "id, course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
+                    $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // get data
                     if ($CFG->dbtype === "pgsql") {
-                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields "
-                            . "FROM {block_gismo_resource} "
-                            . "WHERE $filters "
-                            . "ORDER BY $sort) as a", $params);
+                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields 
+                            + FROM {block_gismo_resource} 
+                            + WHERE $filters 
+                            + ORDER BY $sort) as a", $params);
                     } else {
-                        $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
+                        $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, " . $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     }
                     // build result 
                     if ($student_resource_access !== false) {
