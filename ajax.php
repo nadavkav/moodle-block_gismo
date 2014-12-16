@@ -3,9 +3,9 @@
 /**
  * GISMO block
  *
- * @package    block_gismo
- * @copyright  eLab Christian Milani
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     block_gismo
+ * @copyright   eLab Christian Milani
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 //Fix from Corbière Alain - http://sourceforge.net/p/gismo/wiki/Home/#cf25
 header("Content-type: application/json; charset=UTF-8");
@@ -23,8 +23,6 @@ $to = optional_param('to', '', PARAM_INT);
 $subtype = optional_param('subtype', '', PARAM_TEXT);
 $id = optional_param('id', '', PARAM_INT);
 
-// include specific libraries for quizzes
-// require_once realpath(ROOT . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "mod"  . DIRECTORY_SEPARATOR . "quiz" . DIRECTORY_SEPARATOR . "lib.php");
 // check input data
 if (!isset($q) OR ! isset($from) OR ! isset($to)) {
     block_gismo\GISMOutil::gismo_error('err_missing_parameters', $error_mode);
@@ -103,11 +101,11 @@ switch ($query) {
     case "teacher@student-accesses-overview":
         // chart title
         switch ($query) {
-            //LkM79 - error: it was the followinbg: case "student-accesses-overview":	    
+            //LkM79 - error: it was the followinbg: case "student-accesses-overview":
             case "teacher@student-accesses-overview":
                 $lang_index = "student_accesses_overview_chart_title";
                 break;
-            //LkM79 - error: it was the followinbg: case "student-accesses":		    
+            //LkM79 - error: it was the followinbg: case "student-accesses":
             case "teacher@student-accesses":
             default:
                 $lang_index = "student_accesses_chart_title";
@@ -120,12 +118,15 @@ switch ($query) {
         $student_resource_access = false;
         $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
         $sort = "timedate ASC";
-        
-        //postgreSQL solve problem on GROUP BY        
+
+        //postgreSQL solve problem on GROUP BY
         if ($CFG->dbtype === "pgsql") {
-            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval FROM {block_gismo_sl} WHERE $ctu_filters ORDER BY $sort) as a", $ctu_params);
+            $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT course, userid, timedate, sum(numval) as numval "
+                    . "FROM {block_gismo_sl} "
+                    . "WHERE $ctu_filters "
+                    . "ORDER BY $sort) as a", $ctu_params);
         } else {
-            $fields = " id, course, userid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY        
+            $fields = " id, course, userid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
             // chart data
             $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, $fields);
         }
@@ -171,7 +172,7 @@ switch ($query) {
                     // links
                     $result->links = "<a href='javascript:void(0);' onclick='javascript:g.analyse(\"student-resources-access\");'><img src=\"images/back.png\" alt=\"Close details\" title=\"Close details\" /></a>";
                     // filters
-                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "userid = ?")));  // remove null values / empty strings / ... before imploding
+                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "userid = ?")));// remove null values / empty strings / ... before imploding
                     $filters .= " GROUP BY course,resid,timedate,userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & RESOURCEID!!!
                     $params = array_merge($course_params, $time_params, array(intval($id)));
                     $sort = "time ASC";
@@ -410,7 +411,7 @@ switch ($query) {
                         "userid" => $entry->userid,
                         "user_grade" => $entry->grade, // -1 if it hasn't been corrected
                         "user_grade_label" => sprintf("%s / %s", $entry->grade, $entry->test_max_grade),
-                        "test_timemarked" => $entry->timemarked         // 0 if it hasn't been corrected
+                        "test_timemarked" => $entry->timemarked // 0 if it hasn't been corrected
                     );
                     // net to extract custom grade scale ?
                     if (intval($entry->test_max_grade) < 0 AND intval($entry->grade) !== -1) {
