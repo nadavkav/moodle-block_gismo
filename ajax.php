@@ -130,7 +130,7 @@ switch ($query) {
             // chart data
             $student_resource_access = $DB->get_records_select("block_gismo_sl", $ctu_filters, $ctu_params, $sort, "id, " . $fields);
         }
-        // build result 
+        // build result
         if ($student_resource_access !== false) {
             // evaluate start date and end date
             // 1. get min date and max date
@@ -186,7 +186,7 @@ switch ($query) {
                     } else {
                         $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, " . $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     }
-                    // build result 
+                    // build result
                     if ($student_resource_access !== false) {
                         // evaluate start date and end date
                         // 1. get min date and max date
@@ -223,7 +223,7 @@ switch ($query) {
                 $result->name = get_string("student_resources_overview_chart_title", "block_gismo");
                 // get data
                 $student_resource_access = $DB->get_records_select("block_gismo_resource", $ctu_filters, $ctu_params, "time ASC");
-                // build result 
+                // build result
                 if ($student_resource_access !== false) {
                     $result->data = $student_resource_access;
                 }
@@ -271,7 +271,7 @@ switch ($query) {
                     // filters
                     $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "resid = ?", "restype = ?")));  // remove null values / empty strings / ... before imploding
                     $filters .= " GROUP BY course, userid, restype, resid, timedate"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate, resrouceid & userid
-                    $params = array_merge($course_params, $time_params, array(intval($id),$restype));
+                    $params = array_merge($course_params, $time_params, array(intval($id), $restype));
                     $sort = "timedate ASC";
                     $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // chart data
@@ -281,7 +281,7 @@ switch ($query) {
                                 . " WHERE $filters"
                                 . " ORDER BY $sort) as a", $params);
                     } else {
-                        $resource_accesses = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, ".$fields);
+                        $resource_accesses = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, "id, " . $fields);
                     }
                     // result
                     if ($resource_accesses !== false) {
@@ -352,8 +352,8 @@ switch ($query) {
         $result->links = null;
         // chart data
         $qry = "
-                SELECT g.id, g.userid, g.grade, g.timemodified, a.id AS test_id, a.grade AS test_max_grade 
-                FROM {assign} AS a INNER JOIN {assign_grades} AS g ON a.id = g.assignment 
+                SELECT g.id, g.userid, g.grade, g.timemodified, a.id AS test_id, a.grade AS test_max_grade
+                FROM {assign} AS a INNER JOIN {assign_grades} AS g ON a.id = g.assignment
                 WHERE a.course = " . intval($course_id) . " AND g.timemodified BETWEEN " . $from . " AND " . $to . "
             ";
         // need to filter on user id ?
@@ -361,7 +361,7 @@ switch ($query) {
             $qry .= " AND g.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);
-        // build result 
+        // build result
         if (is_array($entries) AND count($entries) > 0 AND
                 is_array($users) AND count($users) > 0) {
             foreach ($entries as $entry) {
@@ -404,8 +404,8 @@ switch ($query) {
         $result->links = null;
         // chart data (select s.id because the stupid moodle get_records__sql function set array key with the first selected field (use a unique key to avoid data loss))
         $qry = "
-                SELECT s.id, s.userid, s.grade, s.timemarked, a.id AS test_id, a.grade AS test_max_grade 
-                FROM {assignment} AS a INNER JOIN {assignment_submissions} AS s ON a.id = s.assignment 
+                SELECT s.id, s.userid, s.grade, s.timemarked, a.id AS test_id, a.grade AS test_max_grade
+                FROM {assignment} AS a INNER JOIN {assignment_submissions} AS s ON a.id = s.assignment
                 WHERE a.course = " . intval($course_id) . " AND s.timemodified BETWEEN " . $from . " AND " . $to . "
             ";
         // need to filter on user id ?
@@ -458,8 +458,8 @@ switch ($query) {
         $result->links = null;
         // chart data
         $qry = "
-                SELECT g.id, g.userid, g.grade, g.timemodified, q.id AS test_id, q.grade AS test_max_grade, q.decimalpoints AS decimalpoints 
-                FROM {quiz} AS q INNER JOIN {quiz_grades} AS g ON q.id = g.quiz 
+                SELECT g.id, g.userid, g.grade, g.timemodified, q.id AS test_id, q.grade AS test_max_grade, q.decimalpoints AS decimalpoints
+                FROM {quiz} AS q INNER JOIN {quiz_grades} AS g ON q.id = g.quiz
                 WHERE q.course = " . intval($course_id) . " AND g.timemodified BETWEEN " . $from . " AND " . $to . "
             ";
         // need to filter on user id ?
@@ -467,7 +467,7 @@ switch ($query) {
             $qry .= " AND g.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);
-        // build result 
+        // build result
         if (is_array($entries) AND count($entries) > 0 AND
                 is_array($users) AND count($users) > 0) {
             foreach ($entries as $entry) {
@@ -528,7 +528,7 @@ switch ($query) {
     case "student@chats-over-time":
     case "student@forums-over-time":
     case "student@wikis-over-time":
-        // add filters to extract data related to the current student only and then do 
+        // add filters to extract data related to the current student only and then do
         // the same things as for teacher
         $ctu_filters .= "AND userid = ? ";
         array_push($ctu_params, $current_user_id);
@@ -668,7 +668,7 @@ switch ($query) {
         }
         $entries = $DB->get_records_sql($qry);
 
-        // build result 
+        // build result
         if (is_array($entries) AND count($entries) > 0 AND
                 is_array($users) AND count($users) > 0) {
             foreach ($entries as $entry) {

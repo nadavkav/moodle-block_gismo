@@ -2,7 +2,6 @@
                                       G I S M O
                     
                           Version 3.3 - December 3, 2014 
-	
 		
 		Università della svizzera italiana, Lugano, Switzerland
                     
