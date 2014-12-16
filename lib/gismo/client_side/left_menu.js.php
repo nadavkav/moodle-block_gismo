@@ -600,7 +600,6 @@ function left_menu(g) {
                                     var options = $(this).attr("id").split("_");
                                     if(g.current_analysis.type == "resources-access"){
                                         g.analyse(g.current_analysis.type, {subtype: options[0] + "-details", id: options[1], restype: $(this).attr("restype")});
-                                        
                                     }else{
                                         g.analyse(g.current_analysis.type, {subtype: options[0] + "-details", id: options[1]});
                                     }
