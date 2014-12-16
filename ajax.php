@@ -172,13 +172,20 @@ switch ($query) {
                     // links
                     $result->links = "<a href='javascript:void(0);' onclick='javascript:g.analyse(\"student-resources-access\");'><img src=\"images/back.png\" alt=\"Close details\" title=\"Close details\" /></a>";
                     // filters
-                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "userid = ?")));// remove null values / empty strings / ... before imploding
-                    $filters .= " GROUP BY course,resid,timedate,userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & RESOURCEID!!!
+                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "userid = ?"))); // remove null values / empty strings / ... before imploding
+                    $filters .= " GROUP BY  course, userid, restype, resid, timedate"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & RESOURCEID!!!
                     $params = array_merge($course_params, $time_params, array(intval($id)));
-                    $sort = "time ASC";
-                    $fields = "id, course, userid, restype, resid, timedate, time, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
+                    $sort = "timedate ASC";
+                    $fields = "id, course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // get data
-                    $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
+                    if ($CFG->dbtype === "pgsql") {
+                        $student_resource_access = $DB->get_records_sql("SELECT ROW_NUMBER() over(), a.* FROM (SELECT $fields "
+                            . "FROM {block_gismo_resource} "
+                            . "WHERE $filters "
+                            . "ORDER BY $sort) as a", $params);
+                    } else {
+                        $student_resource_access = $DB->get_records_select("block_gismo_resource", $filters, $params, $sort, $fields); //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
+                    }
                     // build result 
                     if ($student_resource_access !== false) {
                         // evaluate start date and end date
