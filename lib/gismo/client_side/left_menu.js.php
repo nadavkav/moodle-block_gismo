@@ -587,6 +587,7 @@ function left_menu(g) {
                             .append(
                                 $("<image style='float: left; margin-top: 3px; margin-left: 5px;'></image>")
                                 .attr("id", item + "_" + this.gismo.static_data[item][k].id)
+                                .attr("restype", oldtype)
                                 .attr({src: "images/eye.png", title: "<?php print_string('details', 'block_gismo'); ?>"})
                                 .addClass(item + "_details image_link float_right")
                                 .mouseover(function () {
@@ -597,7 +598,12 @@ function left_menu(g) {
                                 })
                                 .click(function () {
                                     var options = $(this).attr("id").split("_");
-                                    g.analyse(g.current_analysis.type, {subtype: options[0] + "-details", id: options[1]});
+                                    if(g.current_analysis.type == "resources-access"){
+                                        g.analyse(g.current_analysis.type, {subtype: options[0] + "-details", id: options[1], restype: $(this).attr("restype")});
+                                        
+                                    }else{
+                                        g.analyse(g.current_analysis.type, {subtype: options[0] + "-details", id: options[1]});
+                                    }
                                 })
                             )
                         );

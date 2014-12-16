@@ -22,6 +22,7 @@ $from = optional_param('from', '', PARAM_INT);
 $to = optional_param('to', '', PARAM_INT);
 $subtype = optional_param('subtype', '', PARAM_TEXT);
 $id = optional_param('id', '', PARAM_INT);
+$restype = optional_param('restype', '', PARAM_TEXT);
 
 // check input data
 if (!isset($q) OR ! isset($from) OR ! isset($to)) {
@@ -268,9 +269,9 @@ switch ($query) {
                     // links
                     $result->links = "<a href='javascript:void(0);' onclick='javascript:g.analyse(\"resources-access\");'><img src=\"images/back.png\" alt=\"Close details\" title=\"Close details\" /></a>";
                     // filters
-                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "resid = ?")));  // remove null values / empty strings / ... before imploding
+                    $filters = implode(" AND ", array_filter(array($course_sql, $time_sql, "resid = ?", "restype = ?")));  // remove null values / empty strings / ... before imploding
                     $filters .= " GROUP BY course, userid, restype, resid, timedate"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate, resrouceid & userid
-                    $params = array_merge($course_params, $time_params, array(intval($id)));
+                    $params = array_merge($course_params, $time_params, array(intval($id),$restype));
                     $sort = "timedate ASC";
                     $fields = "course, userid, restype, resid, timedate, sum(numval) as numval"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY
                     // chart data
