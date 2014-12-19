@@ -1,5 +1,6 @@
 Release 3.3 (2014-12-15)
 - Fix: Thanks to Tim Lock export_data.php & reset_data.php are only executable from CLI
+       If you want to run behat acceptance tests please comment the line "define('CLI_SCRIPT', true);" in the file lib/gismo/server/side/export_data.php
 - Fix: Thanks to Tim Lock updated all $_REQUEST/$_GET/$_POST to optional_param/required_param
 - Fix: Thanks to Tim Lock solved problems on Postgre for different queries
 - Fix: Solved bug on charts teacher@resources-access:resources-details
