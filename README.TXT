@@ -47,6 +47,9 @@
 
     php blocks/gismo/lib/gismo/server_side/export_data.php?password=yourpassword
 
+    If you want to run behat acceptance tests please comment this line: define('CLI_SCRIPT', true); 
+    in the file lib/gismo/server/side/export_data.php
+
 2)  Configuration
 
     Gismo doesn't need any specific configuration. Everything runs out of the box.
