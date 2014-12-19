@@ -8,8 +8,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define('CLI_SCRIPT', true);
-
+if (!defined('BEHAT_SITE_RUNNING')) {
+    define('CLI_SCRIPT', true);
+}
 require_once __DIR__ . "/../../../../../config.php";
 
 $config = get_config('block_gismo');
