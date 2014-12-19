@@ -115,7 +115,7 @@ switch ($query) {
         $result->name = get_string($lang_index, "block_gismo");
         // links
         $result->links = null;
-
+        
         $student_resource_access = false;
         $ctu_filters .= " GROUP BY course, timedate, userid"; //BUG FIX WHEN GISMO EXPORTER RUN MORE THEN ONCE A DAY, we need to group by course,timedate & USERID
         $sort = "timedate ASC";
@@ -515,12 +515,12 @@ switch ($query) {
         $ctu_filters .= "AND activity = ?";
         array_push($ctu_params, $spec_info[$query]["activity"]);
         // chart data
-
+        
         $activity_data = $DB->get_records_select("block_gismo_activity", $ctu_filters, $ctu_params, "time ASC");
         // result
         $result->error = $ctu_filters;
         $result->arr = $ctu_params;
-
+        
         if (is_array($activity_data) AND count($activity_data) > 0) {
             $result->data = $activity_data;
         }
@@ -644,7 +644,7 @@ switch ($query) {
             // chart title
             $result->name = get_string("completion_quiz_chart_title", "block_gismo");
         }
-
+        
         // links
         $result->links = null;
         // chart data
@@ -652,7 +652,7 @@ switch ($query) {
         //COMPLETION_COMPLETE = 1
         //COMPLETION_COMPLETE_PASS = 2
         //COMPLETION_COMPLETE_FAIL = 3
-
+        
         $qry = "
                 SELECT cmc.id as cmc_id, cm.instance as item_id, cmc.completionstate as completionstate, cmc.timemodified as timemodified, cmc.userid as userid, m.name as type
             FROM {course_modules_completion} cmc
@@ -661,13 +661,13 @@ switch ($query) {
             WHERE (cmc.completionstate = 1 OR cmc.completionstate = 2)
             AND (m.name = '" . $itemtype . "')
             AND cm.course = " . intval($course_id) . " AND cmc.timemodified BETWEEN " . $from . " AND " . $to;
-
+        
         // need to filter on user id ?
         if ($query === "student@completion-assignments" || $query === "student@completion-assignments22" || $query === "student@completion-chats" || $query === "student@completion-forums" || $query === "student@completion-wikis" || $query === "student@completion-quizzes" || $query === "student@completion-resources") {
             $qry .= " AND cmc.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);
-
+        
         // build result
         if (is_array($entries) AND count($entries) > 0 AND
                 is_array($users) AND count($users) > 0) {

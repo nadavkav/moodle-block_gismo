@@ -53,7 +53,7 @@
 
 3)  Use
     
-    Please access your course as teacher and add a Gismo block instance, then follows instructions.  
+    Please access your course as teacher and add a Gismo block instance, then follows instructions.
 
 4)  Further information
     
