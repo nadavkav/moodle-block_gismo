@@ -1,12 +1,13 @@
 @block @block_gismo @_file_upload
-Feature: Active the gismo block
-	In order to show tracks on gismo interfaces
+Feature: Using two imscp type resources is viewed in GISMO overviews
+	In order to enrol one student in course composed by 
+    two imscp type resources
 	As a admin
-	I need one student enrolled to the course and 
-    at least one instance of resource
+	I need to have the right data on GISMO overviews 
+	after use of two imscp type resources
 
 	@javascript
-	Scenario: Add two resources and access Gismo overviews
+	Scenario: Add two imscp type resources and access GISMO overviews
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
