@@ -7,9 +7,9 @@
  * @copyright  eLab Christian Milani
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-if (!defined('BEHAT_SITE_RUNNING')) {
-    define('CLI_SCRIPT', true);
-}
+
+define('CLI_SCRIPT', true);//Comment this if u want to run behat tests
+
 require_once __DIR__ . "/../../../../../config.php";
 
 // trace start
