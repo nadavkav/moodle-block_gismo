@@ -93,8 +93,13 @@ $gismo_static_data->init();
                     setTimeout(function () {
                         g.resize();
                     }, 100);
+                    //If you want to go directly to a chart uncomment this
+                    <?php //if(optional_param('chart', NULL, PARAM_TEXT)){?>
+                        //g.analyse('<?php //echo optional_param('chart', NULL, PARAM_TEXT) ?>');
+                    <?php //} ?>
                 });
 
+                
                 // -->
             </script>
     <?php
