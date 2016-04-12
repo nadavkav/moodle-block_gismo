@@ -1,5 +1,7 @@
 Release 3.4 (2016-04-16)
-- Fix: Updated version and requires moodle 2.9.x
+- Updated version and requires moodle 2.9.x
+- Updated README instructions to run gismo task manually
+- Updated jqplot.1.0.9.d96a669
 
 MOODLE_29 on master branch (2016-04-16)
 
