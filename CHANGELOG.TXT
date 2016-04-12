@@ -1,3 +1,8 @@
+Release 3.4 (2016-04-16)
+- Fix: Updated version and requires moodle 2.9.x
+
+MOODLE_29 on master branch (2016-04-16)
+
 Release 3.3 (2014-12-15)
 - Fix: Thanks to Tim Lock export_data.php & reset_data.php are only executable from CLI
        If you want to run behat acceptance tests please comment the line "define('CLI_SCRIPT', true);" in the file lib/gismo/server/side/export_data.php

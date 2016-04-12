@@ -8,8 +8,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 //ONLY IN ENGLISH
-$string['gismo_version_value'] = '3.3';
-$string['release_date_value'] = '2014-12-15';
+$string['gismo_version_value'] = '3.4';
+$string['release_date_value'] = '2016-04-12';
 
 // block title
 $string['pluginname'] = 'Gismo';
@@ -129,7 +129,7 @@ $string['gismo:view'] = "GISMO - Authorization failed";
 
 
 //OTHERS
-$string['welcome'] = "Welcome to GISMO v. 3.3";
+$string['welcome'] = "Welcome to GISMO v. 3.4";
 $string['processing_wait'] = "Processing data, please wait!";
 
 //Graphs labels
