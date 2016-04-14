@@ -6,8 +6,7 @@ Feature: Using a forum activity is viewed in GISMO overviews
 	I need to have the right data on GISMO overviews 
 	after use of forum activity
 
-	@javascript
-	Scenario: Add one forum and access GISMO overviews
+	Background:
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
@@ -17,8 +16,11 @@ Feature: Using a forum activity is viewed in GISMO overviews
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
-		And I log in as "admin"
-		And I am on homepage
+	
+	@javascript
+	Scenario: Add one forum and access GISMO overviews
+		When I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
 		And I add the "Gismo" block
@@ -28,15 +30,15 @@ Feature: Using a forum activity is viewed in GISMO overviews
 			| Description | Test forum description |
 		And I wait until the page is ready
 		And I log out
-		When I log in as "student1"
+		And I log in as "student1"
 		And I am on homepage
 		And I follow "Course 1"
 		And I add a new discussion to "Test forum name" forum with:
 		  | Subject | Post with attachment |
 		  | Message | This is the body |
-		And I am on homepage
 		And I log out
 		Then I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I go to the "Activities > Forums" report

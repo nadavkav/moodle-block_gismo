@@ -1,12 +1,12 @@
 @block @block_gismo
-Feature: Active the gismo block
-	In order to show tracks on gismo interfaces
+Feature: Using an assignment activity is viewed in GISMO overviews
+	In order to enrol one student in course composed by
+    one assignment activity
 	As a admin
-	I need one student enrolled to the course and 
-    at least one instance of resource
+	I need to have the right data on GISMO overviews 
+	after use of assignment activity
 
-	@javascript
-	Scenario: Add one assignment and access Gismo overviews
+	Background:
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
@@ -16,8 +16,11 @@ Feature: Active the gismo block
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
-		And I log in as "admin"
-		And I am on homepage
+	
+	@javascript
+	Scenario: Add one assignment and access Gismo overviews
+		Given I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
 		And I add the "Gismo" block
@@ -33,9 +36,9 @@ Feature: Active the gismo block
 		And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
 		And I wait until the page is ready
 		And I press "Save changes"
-		And I am on homepage
 		And I log out
 		Then I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I follow "Test assignment name"
 		And I follow "View/grade all submissions"
@@ -44,7 +47,7 @@ Feature: Active the gismo block
 		And I press "Save all quick grading changes"
 		And I should see "The grade changes were saved"
 		And I press "Continue"
-		And I am on homepage
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I go to the "Activities > Assignments" report

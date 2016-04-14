@@ -19,7 +19,7 @@
  *
  * @package    core_gismo
  * @category   test
- * @copyright  2014 Corbière Alain 
+ * @copyright  2015 Corbière Alain 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
@@ -39,7 +39,7 @@ use Behat\Behat\Context\Step\Given as Given,
  *
  * @package    core_gismo
  * @category   test
- * @copyright  2014 Corbière Alain <alain.corbiere@univ-lemans.fr>
+ * @copyright  2015 Corbière Alain <alain.corbiere@univ-lemans.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_block_gismo extends behat_base {
@@ -50,8 +50,21 @@ class behat_block_gismo extends behat_base {
      * @Given /^I synchronize gismo data$/
      */
     public function i_synchronize_gismo_data() {
-        $this->getSession()->visit($this->locate_path('/blocks/gismo/lib/gismo/server_side/export_data.php?password='));
-        $this->getSession()->back();
+		$plugin = new stdClass();
+		include(__DIR__ . "/../../version.php") ;
+		if ($plugin->version > 2013101501) {
+			// Version 3.3+
+			ob_start();
+			include(__DIR__ . "/../../lib/gismo/server_side/export_data.php") ;
+			$endOkMessageExportData = "GISMO - export data (end)!<br />" ;
+			if (substr_compare(ob_get_clean(), $endOkMessageExportData, -strlen($endOkMessageExportData))!== 0)
+				throw new Exception('Export data problem in the GISMO block (export_data.php)');
+		}
+		else {
+			// Version 3.2-
+			$this->getSession()->visit($this->locate_path('/blocks/gismo/lib/gismo/server_side/export_data.php?password=')) ;
+			$this->getSession()->back() ;
+		}
     }
 
     /**
@@ -164,5 +177,28 @@ class behat_block_gismo extends behat_base {
     public function iMoveBackwardOnePage() {
         $this->getSession()->back();
     }
+	
+	/**
+     * Opens Moodle site homepage. (New step in version 2.9)
+     *
+     * @Given /^I am on site homepage \(New step defintion in version 2.9\)$/
+	 * https://github.com/moodle/moodle/blob/v2.9.0/lib/tests/behat/behat_general.php#L87
+     */
+    public function i_am_on_site_homepage_new_step_in_version() {
+        $this->getSession()->visit($this->locate_path('/?redirect=0'));
+    }
 
+    /**
+     * Clicks link specific link to the cat.
+     *
+     * @When /^I follow chat link "(?P<link_string>(?:[^"]|\\")*)"$/
+     * @throws ElementNotFoundException Thrown by behat_base::find
+     * @param string $link
+     */
+    public function click_chat_link($link) {
+
+        $linknode = $this->find_link($link);
+		$this->getSession()->visit($linknode->getAttribute("href")) ;
+    }
+	
 }

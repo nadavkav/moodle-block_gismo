@@ -5,9 +5,8 @@ Feature: Using an wiki activity is viewed in GISMO overviews
 	As a admin
 	I need to have the right data on GISMO overviews 
 	after use of wiki activity
-
-	@javascript
-	Scenario: Add one wiki and access GISMO overviews
+	
+	Background:
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
@@ -17,8 +16,11 @@ Feature: Using an wiki activity is viewed in GISMO overviews
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
-		And I log in as "admin"
-		And I am on homepage
+
+	@javascript
+	Scenario: Add one wiki and access GISMO overviews
+		When I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
 		And I add the "Gismo" block
@@ -28,7 +30,7 @@ Feature: Using an wiki activity is viewed in GISMO overviews
 			| First page name | Collaborative index |
 			| Wiki mode | Collaborative wiki |
 		And I log out
-		When I log in as "student1"
+		And I log in as "student1"
 		And I am on homepage
 		And I follow "Course 1"
 		And I follow "Collaborative wiki name"
@@ -39,6 +41,7 @@ Feature: Using an wiki activity is viewed in GISMO overviews
 		And I am on homepage
 		And I log out
 		Then I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I go to the "Activities > Wikis" report

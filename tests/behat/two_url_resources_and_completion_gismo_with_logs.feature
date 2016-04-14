@@ -5,9 +5,8 @@ Feature: Using two url type resources is viewed in GISMO completion overviews
 	As a admin
 	I need to have the right data on GISMO completion overviews 
 	after use of two url type resources
-
-	@javascript
-	Scenario: Add two url type resources with completion and access GISMO overviews
+	
+	Background:
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
@@ -17,20 +16,22 @@ Feature: Using two url type resources is viewed in GISMO completion overviews
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
-		And I log in as "admin"
+
+	@javascript
+	Scenario: Add two url type resources with completion and access GISMO overviews
+		When I log in as "admin"
+		# "Access" is the common word of a property that has changed its name:
+		# the "Enable restricted access" (version 3.0) to "Enable conditional access" (version <3.0). 
 		And I set the following administration settings values:
 			| Enable completion tracking | 1 |
-			| Enable conditional access | 1 |
-		And I am on homepage
+			| access | 1 |
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
 		And I follow "Edit settings"
-		# Moodle 2.7.2
 		And I set the following fields to these values:
-		# Moodle 2.7.1
-		# And I fill the moodle form with:
 			| Enable completion tracking | Yes |
-		And I press "Save changes"
+		And I press "Save"
 		And I add the "Gismo" block
 		And I add a "URL" to section "1" and I fill the form with:
 			| Name | univ-lemans |
@@ -45,13 +46,14 @@ Feature: Using two url type resources is viewed in GISMO completion overviews
 			| Completion tracking | Show activity as complete when conditions are met |
 			| Student must view this activity to complete it | 1 |
 		And I log out
-		When I log in as "student1"
+		And I log in as "student1"
 		And I am on homepage
 		And I follow "Course 1"
 		And I follow "univ-lemans"
 		And I follow "openStreetMap"
 		And I log out
 		Then I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I should see "Completed" on "Completion > Resources" report

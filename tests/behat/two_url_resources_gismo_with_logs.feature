@@ -5,9 +5,8 @@ Feature: Using two url type resources is viewed in GISMO overviews
 	As a admin
 	I need to have the right data on GISMO overviews 
 	after use of two url type resources
-
-	@javascript
-	Scenario: Add two url type resources and access GISMO overviews
+	
+	Background:
 		Given the following "courses" exist:
 			| fullname | shortname | category |
 			| Course 1 | C1 | 0 |
@@ -17,8 +16,11 @@ Feature: Using two url type resources is viewed in GISMO overviews
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
-		And I log in as "admin"
-		And I am on homepage
+
+	@javascript
+	Scenario: Add two url type resources and access GISMO overviews
+		When I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
 		And I add the "Gismo" block
@@ -31,13 +33,14 @@ Feature: Using two url type resources is viewed in GISMO overviews
 			| Description | Test URL description |
 			| External URL | http://www.openstreetmap.org |
 		And I log out
-		When I log in as "student1"
+		And I log in as "student1"
 		And I am on homepage
 		And I follow "Course 1"
 		And I follow "univ-lemans"
 		And I follow "openStreetMap"
 		And I log out
 		Then I log in as "admin"
+		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
 		And I go to the "Students > Accesses by students" report
