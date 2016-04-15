@@ -344,10 +344,10 @@ switch ($query) {
             $result->data = $resource_accesses;
         }
         break;
-    case "teacher@assignments":
-    case "student@assignments":
+    case "teacher@assignmentgrades":
+    case "student@assignmentgrades":
         // chart title
-        $result->name = get_string("assignments_chart_title", "block_gismo");
+        $result->name = get_string("assignmentgrades_chart_title", "block_gismo");
         // links
         $result->links = null;
         // chart data
@@ -357,7 +357,7 @@ switch ($query) {
                 WHERE a.course = " . intval($course_id) . " AND g.timemodified BETWEEN " . $from . " AND " . $to . "
             ";
         // need to filter on user id ?
-        if ($query === "student@assignments") {
+        if ($query === "student@assignmentgrades") {
             $qry .= " AND g.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);
@@ -450,10 +450,10 @@ switch ($query) {
             }
         }
         break;
-    case "teacher@quizzes":
-    case "student@quizzes":
+    case "teacher@quizgrades":
+    case "student@quizgrades":
         // chart title
-        $result->name = get_string("quizzes_chart_title", "block_gismo");
+        $result->name = get_string("quizgrades_chart_title", "block_gismo");
         // links
         $result->links = null;
         // chart data
@@ -463,7 +463,7 @@ switch ($query) {
                 WHERE q.course = " . intval($course_id) . " AND g.timemodified BETWEEN " . $from . " AND " . $to . "
             ";
         // need to filter on user id ?
-        if ($query === "student@quizzes") {
+        if ($query === "student@quizgrades") {
             $qry .= " AND g.userid = " . $current_user_id;
         }
         $entries = $DB->get_records_sql($qry);
@@ -485,13 +485,17 @@ switch ($query) {
             }
         }
         break;
+    case "teacher@assignments":
     case "teacher@chats":
     case "teacher@forums":
+    case "teacher@quizzes":
     case "teacher@wikis":
         // specific info
         $spec_info = array(
+            "teacher@assignments" => array("title" => "assignments_chart_title", "subtitle" => "assignments_ud_chart_title", "activity" => "assignment", "back" => "assignments"),
             "teacher@chats" => array("title" => "chats_chart_title", "subtitle" => "chats_ud_chart_title", "activity" => "chat", "back" => "chats"),
             "teacher@forums" => array("title" => "forums_chart_title", "subtitle" => "forums_ud_chart_title", "activity" => "forum", "back" => "forums"),
+            "teacher@quizzes" => array("title" => "quizzes_chart_title", "subtitle" => "quizzes_ud_chart_title", "activity" => "quiz", "back" => "quizzes"),
             "teacher@wikis" => array("title" => "wikis_chart_title", "subtitle" => "wikis_ud_chart_title", "activity" => "wiki", "back" => "wikis")
         );
         switch ($subtype) {
@@ -572,13 +576,17 @@ switch ($query) {
             $result->data = $activity_data;
         }
         break;
+    case "student@assignments":
     case "student@chats":
     case "student@forums":
+    case "student@quizzes":
     case "student@wikis":
         // specific info
         $spec_info = array(
+            "student@assignments" => array("title" => "assignments_chart_title", "activity" => "assignment"),
             "student@chats" => array("title" => "chats_chart_title", "activity" => "chat"),
             "student@forums" => array("title" => "forums_chart_title", "activity" => "forum"),
+            "student@quizzes" => array("title" => "quizzes_chart_title", "activity" => "quiz"),
             "student@wikis" => array("title" => "wikis_chart_title", "activity" => "wiki")
         );
         // chart title

@@ -1,9 +1,11 @@
-Release 3.4 (2016-04-16)
-- Updated version and requires moodle 2.9.x
-- Updated README instructions to run gismo task manually
-- Updated jqplot.1.0.9.d96a669
+Release 3.4 (2016-04-15)
+- New: Thanks to Luke Tucker added 2 new charts: submissions/updates/views on assignments and quizzes
+- Update: Thanks to Alain Corbière updated behat tests
+- Update: version 3.4 and requires moodle 2.9.x
+- Update: README instructions to run gismo task manually
+- Update: jqplot.1.0.9.d96a669
 
-MOODLE_29 on master branch (2016-04-16)
+MOODLE_29 & MOODLE_30 on master branch (2016-04-12)
 
 Release 3.3 (2014-12-15)
 - Fix: Thanks to Tim Lock export_data.php & reset_data.php are only executable from CLI
