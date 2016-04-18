@@ -50,6 +50,6 @@ Feature: Using an assignment activity is viewed in GISMO overviews
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
-		And I go to the "Activities > Assignments" report
-		And I should see "Grade: 100.00 / 100.00" on "Activities > Assignments" report
+		And I go to the "Activities > Assignment grades" report
+		And I should see "Grade: 100.00 / 100.00" on "Activities > Assignment grades" report
 		And I wait "10" seconds
