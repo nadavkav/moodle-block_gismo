@@ -46,9 +46,6 @@
     you can run the task manually (ONLY FROM CLI):
     php admin/tool/task/cli/schedule_task.php --execute=\\block_gismo\\task\\export_data
 
-    If you want to run behat acceptance tests please comment this line: define('CLI_SCRIPT', true); 
-    in the file lib/gismo/server/side/export_data.php
-
 2)  Configuration
 
     Gismo doesn't need any specific configuration. Everything runs out of the box.
