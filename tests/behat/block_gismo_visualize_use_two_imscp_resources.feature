@@ -1,10 +1,8 @@
 @block @block_gismo @_file_upload
-Feature: Using two imscp type resources is viewed in GISMO overviews
-	In order to enrol one student in course composed by 
-    two imscp type resources
-	As a admin
-	I need to have the right data on GISMO overviews 
-	after use of two imscp type resources
+Feature: Visualize the use of imscp type resources
+	In order to visualize the use of imscp type resources
+	As a teacher
+	I need to have the graphical representation of use of two imscp type resources
 	
 	Background:
 		Given the following "courses" exist:
@@ -13,13 +11,15 @@ Feature: Using two imscp type resources is viewed in GISMO overviews
 		And the following "users" exist:
 			| username | firstname | lastname | email |
 			| student1 | Student | 1 | student1@asd.com |
+            | teacher1 | Teacher | 1 | teacher1@example.com |
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
+			| teacher1 | C1 | editingteacher |
 
 	@javascript
 	Scenario: Add two imscp type resources and access GISMO overviews
-		When I log in as "admin"
+		When I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
@@ -47,7 +47,7 @@ Feature: Using two imscp type resources is viewed in GISMO overviews
 		And I follow "IMS CP 1"
 		And I follow "IMS CP 2"
 		And I log out
-		Then I log in as "admin"
+		Then I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data

@@ -1,10 +1,8 @@
 @block @block_gismo
-Feature: Using two url type resources is viewed in GISMO completion overviews
-	In order to enrol one student in course composed by 
-    two url type resources
-	As a admin
-	I need to have the right data on GISMO completion overviews 
-	after use of two url type resources
+Feature: Visualize the use of url type resources
+	In order to visualize the use of url type resources
+	As a teacher
+	I need to have the graphical representation of use of two url type resources
 	
 	Background:
 		Given the following "courses" exist:
@@ -13,38 +11,27 @@ Feature: Using two url type resources is viewed in GISMO completion overviews
 		And the following "users" exist:
 			| username | firstname | lastname | email |
 			| student1 | Student | 1 | student1@asd.com |
+			| teacher1 | Teacher | 1 | teacher1@asd.com |
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
+			| teacher1 | C1 | editingteacher |
 
 	@javascript
-	Scenario: Add two url type resources with completion and access GISMO overviews
-		When I log in as "admin"
-		# "Access" is the common word of a property that has changed its name:
-		# the "Enable restricted access" (version 3.0) to "Enable conditional access" (version <3.0). 
-		And I set the following administration settings values:
-			| Enable completion tracking | 1 |
-			| access | 1 |
+	Scenario: Add two url type resources and access GISMO overviews
+		When I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
-		And I follow "Edit settings"
-		And I set the following fields to these values:
-			| Enable completion tracking | Yes |
-		And I press "Save"
 		And I add the "Gismo" block
 		And I add a "URL" to section "1" and I fill the form with:
 			| Name | univ-lemans |
 			| Description | Test URL description |
 			| External URL | http://www.univ-lemans.fr |
-			| Completion tracking | Show activity as complete when conditions are met |
-			| Student must view this activity to complete it | 1 |
 		And I add a "URL" to section "1" and I fill the form with:
 			| Name | openStreetMap |
 			| Description | Test URL description |
 			| External URL | http://www.openstreetmap.org |
-			| Completion tracking | Show activity as complete when conditions are met |
-			| Student must view this activity to complete it | 1 |
 		And I log out
 		And I log in as "student1"
 		And I am on homepage
@@ -52,9 +39,11 @@ Feature: Using two url type resources is viewed in GISMO completion overviews
 		And I follow "univ-lemans"
 		And I follow "openStreetMap"
 		And I log out
-		Then I log in as "admin"
+		Then I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
-		And I should see "Completed" on "Completion > Resources" report
+		And I go to the "Students > Accesses by students" report
+		And I go to the "Students > Accesses overview" report
+		And I should see "3" on "Students > Accesses overview" report
 		And I wait "10" seconds

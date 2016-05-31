@@ -1,10 +1,8 @@
 @block @block_gismo
-Feature: Using a forum activity is viewed in GISMO overviews
-	In order to enrol one student in course composed by 
-    one forum activity
-	As a admin
-	I need to have the right data on GISMO overviews 
-	after use of forum activity
+Feature: Visualize the use of forum activity
+	In order to visualize the use of forum activity
+	As a teacher
+	I need to have the graphical representation of use of one forum activity
 
 	Background:
 		Given the following "courses" exist:
@@ -13,13 +11,15 @@ Feature: Using a forum activity is viewed in GISMO overviews
 		And the following "users" exist:
 			| username | firstname | lastname | email |
 			| student1 | Student | 1 | student1@asd.com |
+			| teacher1 | Teacher | 1 | teacher1@asd.com |
 		And the following "course enrolments" exist:
 			| user | course | role |
 			| student1 | C1 | student |
+			| teacher1 | C1 | editingteacher |
 	
 	@javascript
 	Scenario: Add one forum and access GISMO overviews
-		When I log in as "admin"
+		When I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I turn editing mode on
@@ -37,7 +37,7 @@ Feature: Using a forum activity is viewed in GISMO overviews
 		  | Subject | Post with attachment |
 		  | Message | This is the body |
 		And I log out
-		Then I log in as "admin"
+		Then I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data

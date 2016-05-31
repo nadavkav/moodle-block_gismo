@@ -1,10 +1,8 @@
 @block @block_gismo
-Feature: Using a quiz activity is viewed in GISMO overviews
-	In order to enrol one student in course composed by 
-    one quiz activity
-	As a admin
-	I need to have the right data on GISMO overviews 
-	after use of quiz activity
+Feature: Visualize the use of quiz activity
+	In order to visualize the use of quiz activity
+	As a teacher
+	I need to have the graphical representation of use of one quiz activity
 	
 	Background:
 		Given the following "courses" exist:
@@ -28,7 +26,6 @@ Feature: Using a quiz activity is viewed in GISMO overviews
  		And I add a "Quiz" to section "1" and I fill the form with:
 			| Name        | Test quiz name        |
 			| Description | Test quiz description |
-			| Attempts allowed | 1 |
  		And I add a "True/False" question to the "Test quiz name" quiz with:
 			| Question name                      | First question                          |
 			| Question text                      | Answer the first question               |
@@ -38,19 +35,17 @@ Feature: Using a quiz activity is viewed in GISMO overviews
 		And I follow "Course 1"
 		And I follow "Test quiz name"
 		And I press "Attempt quiz now"
-		And I press "Start attempt"
 		And I should see "Question 1"
 		And I should see "Answer the first question"
 		And I set the field "True" to "1"
-		And I press "Next"
-		And I should see "Answer saved"
+		And I follow "Finish attempt" 
 		And I press "Submit all and finish"
 		And I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
 		And I log out
-		Then I log in as "admin"
+		Then I log in as "teacher1"
 		And I am on site homepage (New step defintion in version 2.9)
 		And I follow "Course 1"
 		And I synchronize gismo data
-		And I go to the "Activities > Quiz grades" report
+		And I go to the "Activities > Quizzes" report
 		And I should see "Grade: 0.00 / 10.00" on "Activities > Quiz grades" report
 		And I wait "10" seconds
