@@ -39,14 +39,22 @@ Feature: Visualize the use of url type resources with completion
 			| Name | univ-lemans |
 			| Description | Test URL description |
 			| External URL | http://www.univ-lemans.fr |
+		And I follow "univ-lemans"
+		And I navigate to "Edit settings" node in "URL module administration"
+		And I set the following fields to these values:
 			| Completion tracking | Show activity as complete when conditions are met |
 			| Student must view this activity to complete it | 1 |
+		And I press "Save and return to course"
 		And I add a "URL" to section "1" and I fill the form with:
 			| Name | openStreetMap |
 			| Description | Test URL description |
 			| External URL | http://www.openstreetmap.org |
+		And I follow "openStreetMap"
+		And I navigate to "Edit settings" node in "URL module administration"
+		And I set the following fields to these values:
 			| Completion tracking | Show activity as complete when conditions are met |
 			| Student must view this activity to complete it | 1 |
+		And I press "Save and return to course"
 		And I log out
 		And I log in as "student1"
 		And I am on homepage
