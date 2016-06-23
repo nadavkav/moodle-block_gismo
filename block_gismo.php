@@ -91,6 +91,11 @@ class block_gismo extends block_base {
             $this->content->text .= html_writer::tag('span', strtoupper(get_string("gismo", "block_gismo")) . ' (disabled)');
             $this->content->text .= $OUTPUT->help_icon('gismo', 'block_gismo');
         }
+        $course_groups = groups_get_all_groups($this->course->id);
+        foreach ($course_groups as $groupid => $group) {
+            $groups[$groupid] = html_writer::tag('a', $group->name, array('href' => '../blocks/gismo/main.php?groupid='.$groupid.'&srv_data=' . $srv_data_encoded, 'target' => '_blank'));
+        }
+        $this->content->text .= html_writer::alist($groups);
         $this->content->footer = '';
 
 

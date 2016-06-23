@@ -102,7 +102,11 @@ class FetchStaticDataMoodle {
                 // fetch students
                 $context = \context_course::instance($this->course->id);
                 if ($context !== FALSE) {
-                    $users = get_users_by_capability($context, "block/gismo:trackuser", "", "lastname, firstname");
+                    if (!empty($_GET['groupid'])) {
+                        $users = groups_get_members($_GET['groupid'], $fields='u.*', $sort='lastname ASC');
+                    } else {
+                        $users = get_users_by_capability($context, "block/gismo:trackuser", "", "lastname, firstname");
+                    }
                     // save data
                     if ($users !== FALSE) {
                         $json_users = array();
